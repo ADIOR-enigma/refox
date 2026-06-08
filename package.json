@@ -1,0 +1,132 @@
+{
+  "name": "refox",
+  "version": "3.0.3",
+  "description": "Extension for dynamic theming of your browser using your native colors ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ADIOR-enigma/refox"
+  },
+  "bugs": {
+    "url": "https://github.com/ADIOR-enigma/refox/issues"
+  },
+  "author": "adior (https://github.com/ADIOR-enigma)",
+  "license": "MPL-2.0",
+  "scripts": {
+    "watch": "rollup -cw",
+    "browser": "web-ext run",
+    "browser:keep": "web-ext run --keep-profile-changes --firefox-profile=/home/johan/Repos/pywalfox/.firefox-profile",
+    "web-ext-lint": "web-ext lint",
+    "eslint": "eslint ./src/**/*.ts",
+    "eslint-watch": "esw -w --cache --color --ext .ts",
+    "eslint-fix": "eslint --fix ./src/**/*.ts",
+    "tests": "jest --verbose",
+    "debug": "run-p watch browser",
+    "debug:keep": "run-p watch browser:keep",
+    "build": "run-s 'build:*' tests eslint web-ext-lint",
+    "build:compile": "rollup -c",
+    "build:dist": "web-ext build",
+    "build:source": "bestzip artifacts/source.zip extension src tsconfig.json package.json yarn.lock rollup.config.mjs LICENSE README.md"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "@types/firefox-webext-browser": "^143.0.0",
+    "@types/jest": "^30.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "bestzip": "^2.1.5",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-watch": "^8.0.0",
+    "jest": "^30.2.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
+    "postcss-url": "^10.1.3",
+    "rollup": "^4.54.0",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript-paths": "^1.2.2",
+    "ts-jest": "^29.4.6",
+    "tslib": "^2.0.0",
+    "typescript": "^5.9.3",
+    "web-ext": "^9.2.0"
+  },
+  "webExt": {
+    "verbose": false,
+    "sourceDir": "./extension",
+    "artifactsDir": "./artifacts",
+    "build": {
+      "overwriteDest": true
+    },
+    "run": {
+      "startUrl": [
+        "about:debugging"
+      ],
+      "pref": [
+        "toolkit.legacyUserProfileCustomizations.stylesheets=true"
+      ]
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@ui/(.*)$": [
+        "<rootDir>/src/ui/$1"
+      ],
+      "^@pywalfox/(.*)$": [
+        "<rootDir>/src/$1"
+      ],
+      "^@utils/(.*)$": [
+        "<rootDir>/src/utils/$1"
+      ],
+      "^@config/(.*)$": [
+        "<rootDir>/src/config/$1"
+      ],
+      "^@definitions": [
+        "<rootDir>/src/definitions"
+      ],
+      "^@communication/(.*)$": [
+        "<rootDir>/src/communication/$1"
+      ]
+    }
+  },
+  "eslintConfig": {
+    "extends": "airbnb-typescript/base",
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "warnOnUnsupportedTypeScriptVersion": false
+    },
+    "env": {
+      "es2017": true,
+      "browser": true,
+      "webextensions": true
+    },
+    "rules": {
+      "no-console": "off",
+      "no-param-reassign": "off",
+      "no-prototype-builtins": "off",
+      "class-methods-use-this": "off",
+      "object-curly-newline": "off",
+      "no-plusplus": [
+        "warn",
+        {
+          "allowForLoopAfterthoughts": true
+        }
+      ],
+      "@typescript-eslint/no-use-before-define": "off",
+      "@typescript-eslint/lines-between-class-members": "off",
+      "@typescript-eslint/no-unused-expressions": [
+        "warn",
+        {
+          "allowShortCircuit": true
+        }
+      ],
+      "import/extensions": "off",
+      "import/no-extraneous-dependencies": "off"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Refox - Connection error</title>
+    <link rel="stylesheet" href="../dist/styles.bundle.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="container row v-center h-center margin-bottom margin-top-lg">
+        <h1 id="logo" class="logo-fixed-size">Refox<span id="version"></span></h1>
+      </header>
+      <main class="container">
+        <section class="card expand space-between margin-bottom-lg" open>
+          <div class="card-header no-hover expand row v-center">
+            <i icon="message"></i>
+            <p class="card-title">Native messenger connection error</p>
+          </div>
+          <div class="card-content card-subsection column expand align-left" open>
+            <h3 class="card-help-title">Why am I getting this?</h3>
+            <p class="card-help-description">
+              The Refox extension could not create a connection to the native messenger.
+              This might happen if the native messenger is outdated or if it is not installed correctly.
+              Because of this, the extension will not work as expected.<br><br>
+              Please refer to the following links or try the suggested fix below.
+            </p>
+            <div class="row v-center margin-top-sm">
+              <a
+                class="row v-center btn btn-sm btn-lighter margin-right-sm"
+                href="https://github.com/ADIOR-enigma/refox/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i icon="external-link"></i>
+                GitHub issues
+              </a>
+              <a
+                class="row v-center btn btn-sm btn-lighter margin-right-sm"
+                href="https://github.com/ADIOR-enigma/refox#installation"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i icon="external-link"></i>
+                Installation guide
+              </a>
+              <a
+                class="row v-center btn btn-sm btn-lighter"
+                href="https://github.com/ADIOR-enigma/refox#troubleshooting"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i icon="external-link" class="icon-md"></i>
+                Troubleshooting guide
+              </a>
+            </div>
+          </div>
+          <div class="card-content card-content-lg-padding padding-v-lg column expand">
+            <div class="box">
+              <p>The following error occured when trying to connect to the native messenger:</p>
+              <code id="error-message"></code>
+            </div>
+            <div class="box row expand v-center margin-bottom-sm margin-top">
+              <button class="btn btn-default expand margin-right" id="retry-button">
+                  Retry connection
+              </button>
+              <button class="btn btn-primary expand" id="disable-button">
+                  Do not show this again
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="../dist/native-error.bundle.js"></script>
+  </body>
+</html>

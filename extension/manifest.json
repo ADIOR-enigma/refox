@@ -1,0 +1,89 @@
+{
+    "manifest_version": 2,
+    "name": "Re:Fox",
+    "version": "3.0.3",
+    "description": "Dynamic theming of the browser using your native color scheme generator",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "refox@adior.org",
+            "strict_min_version": "142.0",
+            "data_collection_permissions": {
+                  "required": ["none"]
+            }
+        }
+    },
+    "icons": {
+        "48": "icons/ext-logo.svg"
+    },
+    "browser_action": {
+        "default_icon": "icons/logo.svg",
+        "default_title": "Re:Fox"
+    },
+    "background": {
+        "scripts": [
+            "dist/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.duckduckgo.com/*"],
+            "js": ["dist/duckduckgo.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["dist/website.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "commands": {
+        "fetch_pywal_colors": {
+            "description": "Fetches your colors and updates your browser theme",
+            "suggested_key": {
+                "default": "Ctrl+Alt+F",
+                "mac": "MacCtrl+Alt+F"
+            }
+        },
+        "disable_theme": {
+            "description": "Disables the Fox theme",
+            "suggested_key": {
+                "default": "Ctrl+Alt+R",
+                "mac": "MacCtrl+Alt+R"
+            }
+        },
+        "enable_dark_mode": {
+            "description": "Enables the Fox Dark mode",
+            "suggested_key": {
+                "default": "Ctrl+Alt+D",
+                "mac": "MacCtrl+Alt+D"
+            }
+        },
+        "enable_light_mode": {
+            "description": "Enables the Fox Light mode",
+            "suggested_key": {
+                "default": "Ctrl+Alt+L",
+                "mac": "MacCtrl+Alt+L"
+            }
+        },
+        "enable_auto_mode": {
+            "description": "Enables the Fox Auto mode",
+            "suggested_key": {
+                "default": "Ctrl+Alt+A",
+                "mac": "MacCtrl+Alt+A"
+            }
+        },
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+Alt+P",
+                "mac": "MacCtrl+Alt+P"
+            }
+        }
+    },
+    "permissions": [
+        "nativeMessaging",
+        "theme",
+        "storage",
+        "tabs",
+        "alarms",
+        "<all_urls>"
+    ]
+}

@@ -1,0 +1,223 @@
+.btn {
+  height: var(--button-height);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  line-height: 1rem;
+  box-shadow: var(--box-shadow);
+  text-decoration: none;
+}
+
+.btn > i {
+  margin-right: var(--spacing-xsm);
+}
+
+.btn::-moz-focus-inner {
+  border: 0;
+}
+
+.btn-sm {
+  font-size: var(--font-size-sm);
+  height: var(--button-height-sm);
+  padding: var(--spacing-md) var(--spacing);
+}
+
+.btn-sm > i {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
+.btn-fixed-width {
+  border-radius: var(--border-radius-sm);
+  width: 4em;
+}
+
+.btn-default {
+  background-color: var(--button-background);
+  color: var(--button-text);
+}
+
+.btn-default:hover, .btn-default:focus {
+  background-color: var(--button-background-hover);
+  box-shadow: var(--box-shadow-button-hover);
+}
+
+.btn-default[selected] {
+  background-color: var(--accent-secondary);
+  color: var(--button-text-accent);
+  box-shadow: none;
+}
+
+.btn-lighter {
+  background-color: var(--lighter-background);
+  color: var(--button-text);
+}
+
+.btn-lighter:hover, .btn-lighter:focus {
+  background-color: var(--lighter-background-hover);
+}
+
+.btn[loading]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+  border-radius: inherit;
+}
+
+.btn[loading]::after {
+  content: '';
+  position: absolute;
+  width: var(--spinner-width);
+  height: calc(var(--spinner-width) / 2);
+  border: var(--spinner-thickness) solid var(--text-focus);
+  border-bottom: 0;
+  border-top-right-radius: var(--spinner-width);
+  border-top-left-radius: var(--spinner-width);
+  margin-bottom: calc(var(--spinner-width) / 2);
+  transform: rotate(0deg);
+  transform-origin: bottom;
+  animation-name: loading-animation;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes loading-animation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn-color {
+  width: var(--button-height-sm);
+  height: var(--button-height-sm);
+  padding: 0;
+  z-index: var(--z-index-color-button);
+  border: 2px solid transparent;
+  transition: border-radius, border-color, var(--transition-time);
+}
+
+.dialog-arrow[selected]::after {
+  width: 0;
+  height: 0;
+  border-top: var(--arrow-size) solid transparent;
+  border-bottom: var(--arrow-size) solid transparent;
+  border-right: var(--arrow-size) solid var(--background-light);
+  position: absolute;
+  content: '';
+  top: calc(50% - var(--arrow-size));
+  left: calc(100% + var(--spacing-lg) * 1.5);
+  pointer-events: none;
+}
+
+#theme-select.dialog-arrow[selected]::after {
+  right: calc(-1 * (var(--spacing-md) + var(--arrow-size)));
+  left: unset;
+}
+
+.btn-palette-color {
+  height: var(--button-height-sm);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--background);
+  flex-basis: calc(50% - var(--spacing-xsm) + 1px);
+  padding: 0;
+  border: 2px solid transparent;
+  transform: translateY(0px);
+  box-shadow: var(--box-shadow-palette-color);
+  transition: border-radius, border-color, var(--transition-time);
+}
+
+.btn-palette-color:hover,
+.btn-palette-color:focus {
+  border-color: var(--text-focus);
+}
+
+.btn-color[selected],
+.btn-palette-color:focus {
+  outline: none;
+}
+
+.btn-color[selected],
+.btn-palette-color[selected] {
+  border-color: var(--text-focus);
+  border-radius: 50%;
+}
+
+.btn-dialog {
+  background-color: transparent;
+  color: var(--text-focus);
+  font-size: var(--font-size-md);
+  box-shadow: none;
+}
+
+.btn-dialog[selected],
+.btn-dialog[selected]:hover,
+.btn-dialog[selected]:focus {
+  color: var(--background);
+  background-color: var(--accent-secondary);
+}
+
+body.light .btn-dialog[selected] {
+  color: var(--background-light);
+}
+
+.btn-dialog:hover,
+.btn-dialog:focus {
+  background-color: var(--lighter-background-hover);
+}
+
+.btn-dialog[selected] > i,
+body.light .btn-dialog > i {
+  filter: invert(100%);
+}
+
+body.light .btn-dialog[selected] > i {
+  filter: none;
+}
+
+.btn-header {
+  border-radius: var(--border-radius);
+  background-color: var(--background-light);
+  color: var(--text-focus);
+  box-shadow: var(--box-shadow-card);
+}
+
+.btn-primary {
+  background-color: var(--accent-primary);
+  color: var(--button-text-accent);
+}
+
+.btn-secondary {
+  background-color: var(--accent-secondary);
+  color: var(--button-text-accent);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  filter: var(--brightness-filter);
+}
+
+body.light .btn-primary:not(.btn-header),
+body.light .btn-secondary {
+  box-shadow: none;
+}
+
+#theme-select {
+  width: 9.5rem; /* Fixed width to prevent flickering when changing themes */
+}
