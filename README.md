@@ -10,7 +10,7 @@
 
 Pywalfox does a great job theming the Firefox UI ~ toolbar, tabs, the works. But the moment you load a website, you're back to whatever colors that site decided on. This fork fixes that by pushing your Color palette into websites too, via CSS custom properties injected at page load. And since it hot reloads, running pywalfox update updates every open tab on the spot ~ no explicit tab refresh needed.
 
-![](images/recordings/showcase_refox.mp4)
+https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
 
 
 ## ⏺ Installation
