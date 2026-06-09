@@ -1,40 +1,24 @@
 <h1 align="center" - click me!>
-  <a name="logo"><img src="images/logo.svg" alt="Pywalfox icon" width="150"></a>
+  <a name="logo"><img src="https://github.com/user-attachments/assets/9491d540-937e-4022-a0e9-4b3f37c916f6" alt="Pywalfox icon" width="150"></a>
   <br>
-  Pywalfox
+  Re:fox
 </h1>
-<h4 align="center">🎨 Dynamic theming of Firefox 🦊 (and Thunderbird 🐦) using your Pywal colors</h4>
+<h4 align="center">🎨 Dynamic theming of Firefox 🦊 using your Native color scheme generator, [A fork of Pywalfox]</h4>
 
-<div align="center">
-     <a href="https://addons.mozilla.org/en-US/firefox/addon/pywalfox"><img src="https://img.shields.io/amo/v/pywalfox"/></a>
-     <a href="https://addons.mozilla.org/en-US/firefox/addon/pywalfox"><img src="https://img.shields.io/amo/stars/pywalfox"/></a>
-     <a href="https://addons.mozilla.org/en-US/firefox/addon/pywalfox"><img src="https://img.shields.io/amo/users/pywalfox"/></a>
-     <a href="https://addons.mozilla.org/en-US/firefox/addon/pywalfox"><img src="https://img.shields.io/amo/dw/pywalfox"/></a>
-     <a href="https://pypi.org/project/pywalfox/"><img src="https://img.shields.io/pypi/v/pywalfox"/></a>
-     <a href="https://www.mozilla.org/en-US/MPL/2.0/FAQ"><img src="https://img.shields.io/github/license/frewacom/pywalfox"/></a>
-</div>
 
-<br>
+## What's new?
 
-- Tired of Firefox and Thunderbird not respecting your gorgeous Pywal colors like the rest of your system?
-- Looking to rack up some karma :arrow_up: on [/r/unixporn](https://reddit.com/r/unixporn)?
+Pywalfox does a great job theming the Firefox UI ~ toolbar, tabs, the works. But the moment you load a website, you're back to whatever colors that site decided on. This fork fixes that by pushing your Color palette into websites too, via CSS custom properties injected at page load. And since it hot reloads, running pywalfox update updates every open tab on the spot ~ no explicit tab refresh needed.
 
-Introducing **Pywalfox**, an add-on that themes [Firefox](https://addons.mozilla.org/firefox/addon/pywalfox/) and [Thunderbird](https://addons.thunderbird.net/thunderbird/addon/pywalfox/) with your [Pywal](https://github.com/dylanaraps/pywal) colors using the official [Theme API](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme) from Mozilla!
 
-With Pywalfox you can:
-- [x] Customize the colors of almost every UI element
-- [x] Easily update the theme using the add-on GUI and/or the command line
-- [x] Automatically theme DuckDuckGo :duck: searches in Firefox *(optional)*
-- [x] Have bold text, styled dropdowns and much more *(optional)*
-- [x] Automatically switch between a dark and a light theme based on the time of day
+https://github.com/user-attachments/assets/c8f412a9-30a9-444d-a450-7e181b8b9234
 
-![](images/demo_v207_ffproton.gif)
 
-## 👨‍💻 Installation
+## ⏺ Installation
 
-1. Get the add-on for
+1. Get the latest add-on from
    - [Firefox](https://addons.mozilla.org/firefox/addon/pywalfox/)
-   - [Thunderbird](https://addons.thunderbird.net/thunderbird/addon/pywalfox/)
+   > - It does autoupdate 😅
 1. Install the [native messaging application](https://github.com/Frewacom/pywalfox-native) ([PyPI](https://pypi.org/project/pywalfox/)) using your preferred method, with e.g. `pip` or `pipx`:
    ```sh
    pipx install pywalfox
@@ -46,21 +30,23 @@ With Pywalfox you can:
    > - **Windows:** `winget install Python.Python.3.14`, then `pip install pywalfox` instead
 1. Run `pywalfox install` in your terminal.
    - Firefox forks (e.g. LibreWolf) require [extra arguments](#firefox-forks). Flatpaks require [extra steps](#flatpaks).
-1. Restart Firefox and/or Thunderbird.
-1. Generate a theme with [Pywal](https://github.com/dylanaraps/pywal) or equivalent (e.g., `wal --theme gruvbox`). You may refer to [this guide](https://github.com/dylanaraps/pywal/wiki/Getting-Started).
-1. Click the Pywalfox icon in the Firefox/Thunderbird UI and then "Fetch Pywal colors". 
+1. Run `sudo python setup.py` to make this extension compatible with pywalfox-native.
+   > - It is currently tested on Arch/CachyOS only, u guys can post PRs/Issues if it works on ur system.
+1. Restart Firefox.
+1. Generate a theme with [Matugen](https://github.com/InioX/matugen) or equivalent. You may refer to there guide.
+1. Click the Refox icon in the Firefox UI and then "Fetch Native colors". 
 <!--(or use the [AUR package](https://aur.archlinux.org/packages/python-pywalfox/))-->
 
-This should apply a theme with your Pywal colors!
+This should apply a theme with your Native colors!
 
 > [!NOTE]
 > If you have problems: please review the Troubleshooting section below before opening a Github issue.
 
-## 🎨 Usage
+## ⏺ Usage
 
 ### Update the theme through your terminal
 Run `pywalfox update` in your terminal to trigger an update of the browser theme.
-This command can integrate Pywalfox into e.g. system theming scripts, and is functionally equivalent to clicking "Fetch Pywal colors" in the add-on settings GUI (accessible from your toolbar).
+This command can integrate Refox into e.g. system theming scripts, and is functionally equivalent to clicking "Fetch Native colors" in the add-on settings GUI (accessible from your toolbar).
 
 ### Customization
 The add-on settings GUI comes with extensive customization options divided into the following sections:
@@ -74,11 +60,11 @@ The add-on settings GUI comes with extensive customization options divided into 
 
 <table><tr><td>
 
-The palette in the "Palette" section is used to temporarily customize one or more colors from the Pywal palette.
+The palette in the "Palette" section is used to temporarily customize one or more colors from the Native color generated palette.
 You can use one of the generated colors, or choose any color from a colorwheel.
 
 > **Warning** <br>
-> Changes to the palette will be reset when you click "Fetch Pywal colors" and when you run `pywalfox update`.
+> Changes to the palette will be reset when you click "Fetch Native colors" and when you run `pywalfox update`.
 
 </td></tr></table>
 
@@ -95,11 +81,11 @@ You can use one of the generated colors, or choose any color from a colorwheel.
 
 If you want your palette customizations to be persistent (unlike the regular palette) you must save your current palette as a *palette template*:
 
-1. Click "Fetch Pywal colors" in the add-on settings GUI or run `pywalfox update`
+1. Click "Fetch Native colors" in the add-on settings GUI or run `pywalfox update`
 2. Customize the colors to your liking in the "Palette" section
-   - ❗ *Colors from outside the Pywal palette (i.e. from the colorwheel) cannot be used in a template*.
+   - ❗ *Colors from outside the Native color generated palette (i.e. from the colorwheel) cannot be used in a template*.
 3. Click "Load from current" in the "Palette template" section below.
-   - ❗ *The colors can also be set directly in the "Palette template" section using Pywal color indices.*
+   - ❗ *The colors can also be set directly in the "Palette template" section using Native color indices.*
 4. Click "Save palette"
 
 Your custom palette will now be applied whenever you update the browser theme.
@@ -128,20 +114,20 @@ The colors are identified by their names as seen in the "Palette template" secti
 
 
 ### Theme modes
-There are three different theme modes: "Dark" (🌙), "Light" (☀) and "Auto" (👁)️. Selecting "Auto" will automatically switch between the other two modes based on a time interval found in the "General" section of the add-on settings GUI.
+There are three different theme modes: "Dark" (❨), "Light" (𖤓) and "Auto" (👁)️. Selecting "Auto" will automatically switch between the other two modes based on a time interval found in the "General" section of the add-on settings GUI.
 
 > [!Note]
 > The dark and light modes have *separate* theme and palette templates. You will always modifiy the template for the currently selected mode.
 
 ### Further theming with the included userChrome.css and userContent.css in Firefox
 
-Some browser elements (e.g. the context menus) are not available through the [Theme API](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme). Pywalfox includes two custom CSS stylesheets (for Firefox) which apply your theme to some of these browser elements.
+Some browser elements (e.g. the context menus) are not available through the [Theme API](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme). Refox includes two custom CSS stylesheets (for Firefox) which apply your theme to some of these browser elements.
 
 <table><tr><td>
 Before you enable the custom CSS sheets in the add-on settings GUI you must navigate to <code>about:config</code> and set <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> to <code>true</code>.
 </td></tr></table>
 
-## ❎ Uninstall
+## ⏺ Uninstall
 To uninstall Pywalfox from your system, run
 ```bash
 pywalfox uninstall # Removes the manifest from native-messaging-hosts
@@ -160,8 +146,8 @@ depending on your chosen installation method.
 This section lists some common problems and how to (hopefully) fix them.
 This [troubleshooting guide from Mozilla](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Native_messaging#Troubleshooting) may be of use if you encounter an error that is not listed here.
 First of all:
-- Check the log in the Debugging section at the bottom of the Pywalfox settings page for any errors.
-- Verify that `~/.cache/wal/colors` exists and contains colors generated by Pywal.
+- Check the log in the Debugging section at the bottom of the Refox settings page for any errors.
+- Verify that `~/.cache/wal/colors` exists and contains colors generated by Your Native color scheme generator.
 - Verify that `path` in `~/<native-messaging-hosts-folder>/pywalfox.json` is a valid path.
 
 ### Firefox forks
@@ -201,7 +187,7 @@ You may need to adapt the instructions for your particular browser.
      "description": "Automatically theme your browser using the colors generated by Pywal",
      "path": "/home/<USER>/.var/app/io.gitlab.librewolf-community/pywalfox-wrapper.sh",
      "type": "stdio",
-     "allowed_extensions": [ "pywalfox@frewacom.org" ]
+     "allowed_extensions": [ "pywalfox@frewacom.org", "refox@adior.org" ]
    }
    ```
 1. Grant Talk permissions:
@@ -232,14 +218,14 @@ It is a good idea to check the Firefox browser console (`Tools > Web developer >
 Common errors include:
 
 <details><summary>
-<b><code>ExtensionError: No such native application pywalfox</code></b>
+<b><code>ExtensionError: No such native application refox</code></b>
 </summary>
 
 <table><tr><td>
 
    The manifest is not installed properly. Try installing the manifest manually by following the instructions [here](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Native_manifests.).
 
-   The manifest is located at `<path-to-python-site-packages>/pywalfox/assets/manifest.json`.
+   The manifest is located at `<path-to-python-site-packages>/refox/assets/manifest.json`.
 
    After you have copied over the manifest to the correct path, make sure to also update the `path` property in the copied manifest. The `path` should point to `<path-to-python-site-packages>/pywalfox/bin/main.sh` (or `win.bat` if you are on Windows).
 
@@ -249,12 +235,12 @@ Common errors include:
 </details>
 
 <details><summary>
-<b><code>stderr output from native app pywalfox: <installation-path>/main.sh: line 3: pywalfox: command not found</code></b>
+<b><code>stderr output from native app refox: <installation-path>/main.sh: line 3: pywalfox: command not found</code></b>
 </summary>
 
 <table><tr><td>
 
-  Pywalfox assumes that the `pywalfox` executable is in your `PATH`.
+  Refox assumes that the `pywalfox` executable is in your `PATH`.
 
   If you can not run `pywalfox` from the command line (without specifying an absolute path), you must either add the path to the execuatable to your `PATH` variable, or move the executable to a path that already is in your `PATH`.
 
@@ -264,13 +250,13 @@ Common errors include:
 <br>
 
 > [!IMPORTANT]
-> The errors in the browser console are not limited to just Pywalfox!
+> The errors in the browser console are not limited to just Refox!
 
 ## 🚧 Development setup
-Do you want to hack on the Pywalfox add-on? Start here:
+Do you want to hack on the Refox add-on? Start here:
 ```bash
-git clone git@github.com:Frewacom/pywalfox.git # or use your own fork
-cd pywalfox
+git clone https://github.com/ADIOR-enigma/refox.git # or use your own fork
+cd refox
 yarn install # or npm if you do not have yarn installed
 yarn run debug
 ```
