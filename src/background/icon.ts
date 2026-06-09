@@ -1,8 +1,7 @@
 import { IPalette } from '@definitions';
 
 const ICON_SIZES = [16, 32, 48];
-const LOGO_TEMPLATE_PATH = 'icons/logo.svg';
-const DEFAULT_ICON_PATH = 'icons/logo-accent.svg';
+const DEFAULT_ICON_PATH = 'icons/logo.svg';
 const SVG_COLOR_MAP = {
   '#ed7979': 'background',
   '#edb979': 'backgroundLight',
@@ -24,7 +23,7 @@ let logoSvgPromise: Promise<string> = null;
 
 function getLogoSvg() {
   if (logoSvgPromise === null) {
-    logoSvgPromise = fetch(browser.runtime.getURL(LOGO_TEMPLATE_PATH)).then((response) => response.text());
+    logoSvgPromise = fetch(browser.runtime.getURL(DEFAULT_ICON_PATH)).then((response) => response.text());
   }
 
   return logoSvgPromise;
