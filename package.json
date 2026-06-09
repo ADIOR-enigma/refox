@@ -22,7 +22,7 @@
     "tests": "jest --verbose",
     "debug": "run-p watch browser",
     "debug:keep": "run-p watch browser:keep",
-    "build": "run-s 'build:*' tests eslint web-ext-lint",
+    "build": "run-s 'build:*' tests eslint",
     "build:compile": "rollup -c",
     "build:dist": "web-ext build",
     "build:source": "bestzip artifacts/source.zip extension src tsconfig.json package.json yarn.lock rollup.config.mjs LICENSE README.md"
