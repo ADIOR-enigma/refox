@@ -1,4 +1,4 @@
-<h1 align="center" - click me!>
+<h1 align="center">
   <a name="logo"><img src="https://github.com/user-attachments/assets/9491d540-937e-4022-a0e9-4b3f37c916f6" alt="Pywalfox icon" width="150"></a>
   <br>
   Re:fox
