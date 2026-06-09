@@ -3,8 +3,8 @@
     "re-fox@adior.org": {
       "updates": [
         {
-          "version": "3.0.5",
-          "update_link": "https://github.com/ADIOR-enigma/test_extension/releases/download/v3.0.5/re-fox@adior.org.xpi"
+          "version": "3.0.6",
+          "update_link": "https://github.com/ADIOR-enigma/refox/releases/download/v3.0.6/re-fox@adior.org.xpi"
         }
       ]
     }
