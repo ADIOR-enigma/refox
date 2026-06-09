@@ -1,3 +1,5 @@
+> [!Note]
+> The Website templates are in WIP.
 <h1 align="center">
   <a name="logo"><img src="images/refox_animated_logo.gif" alt="Pywalfox icon" width="150"></a>
   <br>
