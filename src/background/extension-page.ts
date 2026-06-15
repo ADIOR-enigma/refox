@@ -1,5 +1,5 @@
-import { IExtensionTheme } from '@definitions';
-import { EXTENSION_MESSAGES } from '@config/general';
+import { IExtensionTheme } from "@definitions";
+import { EXTENSION_MESSAGES } from "@config/general";
 
 export default class ExtensionPage {
   protected tab: browser.tabs.Tab;
@@ -53,7 +53,7 @@ export default class ExtensionPage {
   }
 
   private onUpdated(tabId: number, changeInfo: any) {
-    if (changeInfo.status === 'loading') {
+    if (changeInfo.status === "loading") {
       // The 'url' attribute is only available on loading
       if (changeInfo.url === this.url || changeInfo.url === undefined) {
         this.setTheme(this.currentTheme);
@@ -69,7 +69,7 @@ export default class ExtensionPage {
     browser.tabs.onRemoved.addListener(this.onClosed.bind(this));
     browser.tabs.onUpdated.addListener(this.onUpdated.bind(this), {
       tabId: this.tab.id,
-      properties: ['status'],
+      properties: ["status"],
     });
   }
 

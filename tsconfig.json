@@ -11,18 +11,14 @@
     "removeComments": true,
     "baseUrl": ".",
     "paths": {
-      "@ui/*": [ "src/ui/*" ],
-      "@pywalfox/*": [ "src/*" ],
-      "@utils/*": [ "src/utils/*" ],
-      "@config/*": [ "src/config/*" ],
-      "@definitions": [ "src/definitions" ],
-      "@communication/*": [ "src/communication/*" ]
-    }
+      "@ui/*": ["src/ui/*"],
+      "@pywalfox/*": ["src/*"],
+      "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
+      "@definitions": ["src/definitions"],
+      "@communication/*": ["src/communication/*"],
+    },
   },
-  "include": [
-    "./src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./src"],
+  "exclude": ["node_modules"],
 }

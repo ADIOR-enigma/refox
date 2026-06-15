@@ -1,0 +1,16 @@
+@-moz-document domain("chess.com") {
+    :root {
+        --theme-background-color: var(
+            --pywalfox-background,
+            #302e2b
+        ) !important;
+        --color-gray-900: var(--pywalfox-background-light, #262421) !important;
+        --color-gray-800: var(--pywalfox-background, #312e2b) !important;
+        --color-gray-700: var(--pywalfox-background-light, #4b4847) !important;
+        --color-green-200: var(--pywalfox-accent-secondary, #b2e068) !important;
+        --color-green-300: var(--pywalfox-accent-primary, #81b64c) !important;
+        --color-green-400: var(--pywalfox-background-extra, #5d9948) !important;
+        --color-green-500: var(--pywalfox-background-extra, #45753c) !important;
+        --color-neutrals-white: var(--pywalfox-text, #ffffff) !important;
+    }
+}

@@ -1,11 +1,8 @@
-import {
-  ITimeIntervalEndpoint,
-  IAutoModeTriggerCallback,
-} from '@definitions';
+import { ITimeIntervalEndpoint, IAutoModeTriggerCallback } from "@definitions";
 
-import { sendDebuggingOutput } from '@communication/content-scripts/ui';
+import { sendDebuggingOutput } from "@communication/content-scripts/ui";
 
-export const AUTO_MODE_ALARM_ID = 'pywalfox-auto-mode-alarm';
+export const AUTO_MODE_ALARM_ID = "pywalfox-auto-mode-alarm";
 
 export default class AutoMode {
   private startTime: ITimeIntervalEndpoint;
@@ -60,11 +57,14 @@ export default class AutoMode {
     }
   }
 
-  public start(startTime: ITimeIntervalEndpoint, endTime: ITimeIntervalEndpoint) {
+  public start(
+    startTime: ITimeIntervalEndpoint,
+    endTime: ITimeIntervalEndpoint,
+  ) {
     this.startTime = startTime;
     this.endTime = endTime;
     this.update();
-    sendDebuggingOutput('Started auto theme mode');
+    sendDebuggingOutput("Started auto theme mode");
   }
 
   public setStartTime(startTime: ITimeIntervalEndpoint, isApplied: boolean) {
@@ -77,11 +77,15 @@ export default class AutoMode {
     isApplied && this.update();
   }
 
-  public getStartTime() { return this.startTime; }
-  public getEndTime() { return this.endTime; }
+  public getStartTime() {
+    return this.startTime;
+  }
+  public getEndTime() {
+    return this.endTime;
+  }
 
   public stop() {
     browser.alarms.clear(AUTO_MODE_ALARM_ID);
-    sendDebuggingOutput('Stopped auto theme mode');
+    sendDebuggingOutput("Stopped auto theme mode");
   }
 }

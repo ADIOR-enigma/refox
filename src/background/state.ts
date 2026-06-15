@@ -19,10 +19,13 @@ import {
   TemplateTypes,
   ColorschemeTypes,
   PaletteColors,
-} from '@definitions';
+} from "@definitions";
 
-import { DEFAULT_CSS_FONT_SIZE } from '@config/general';
-import { DEFAULT_THEME_DARK, DEFAULT_THEME_LIGHT } from '@config/default-themes';
+import { DEFAULT_CSS_FONT_SIZE } from "@config/general";
+import {
+  DEFAULT_THEME_DARK,
+  DEFAULT_THEME_LIGHT,
+} from "@config/default-themes";
 
 export default class State {
   private initialState: IExtensionState;
@@ -30,7 +33,7 @@ export default class State {
 
   constructor() {
     this.initialState = {
-      version: '0',
+      version: "0",
       connected: false,
       nativeError: null,
       theme: {
@@ -56,8 +59,8 @@ export default class State {
         websiteCssVariables: false,
         darkreader: false,
         fetchOnStartup: true,
-        autoTimeStart: { hour: 10, minute: 0, stringFormat: '10:00' },
-        autoTimeEnd: { hour: 19, minute: 0, stringFormat: '19:00' },
+        autoTimeStart: { hour: 10, minute: 0, stringFormat: "10:00" },
+        autoTimeEnd: { hour: 19, minute: 0, stringFormat: "19:00" },
         updateMuted: false,
         nativeErrorMuted: false,
       },
@@ -69,7 +72,10 @@ export default class State {
     await browser.storage.local.set(newState);
   }
 
-  private setIndividualTemplate(key: keyof IColorschemeTemplate, template: TemplateTypes) {
+  private setIndividualTemplate(
+    key: keyof IColorschemeTemplate,
+    template: TemplateTypes,
+  ) {
     const currentThemeMode = this.getTemplateThemeMode();
 
     return this.set({
@@ -86,7 +92,10 @@ export default class State {
     });
   }
 
-  private setColorschemeProperty(property: keyof IColorscheme, value: ColorschemeTypes) {
+  private setColorschemeProperty(
+    property: keyof IColorscheme,
+    value: ColorschemeTypes,
+  ) {
     return this.set({
       theme: {
         ...this.currentState.theme,
@@ -165,7 +174,10 @@ export default class State {
   }
 
   public getTemplate() {
-    return this.getProperty(this.currentState.theme.templates, this.getTemplateThemeMode());
+    return this.getProperty(
+      this.currentState.theme.templates,
+      this.getTemplateThemeMode(),
+    );
   }
 
   public getIsDay() {
@@ -199,23 +211,23 @@ export default class State {
   }
 
   public getPaletteHash() {
-    return this.getProperty(this.getColorscheme(), 'hash');
+    return this.getProperty(this.getColorscheme(), "hash");
   }
 
   public getPalette() {
-    return this.getProperty(this.getColorscheme(), 'palette');
+    return this.getProperty(this.getColorscheme(), "palette");
   }
 
   public getBrowserTheme() {
-    return this.getProperty(this.getColorscheme(), 'browser');
+    return this.getProperty(this.getColorscheme(), "browser");
   }
 
   public getExtensionTheme() {
-    return this.getProperty(this.getColorscheme(), 'extension');
+    return this.getProperty(this.getColorscheme(), "extension");
   }
 
   public getDDGTheme() {
-    return this.getProperty(this.getColorscheme(), 'duckduckgo');
+    return this.getProperty(this.getColorscheme(), "duckduckgo");
   }
 
   public getDDGThemeEnabled() {
@@ -255,7 +267,7 @@ export default class State {
     Object.keys(this.currentState.options).forEach((key) => {
       const value = this.currentState.options[key];
 
-      if (typeof value === 'boolean') {
+      if (typeof value === "boolean") {
         data.push({ option: key, enabled: value });
       } else {
         data.push({ option: key, enabled: true, value });
@@ -278,47 +290,47 @@ export default class State {
   }
 
   public setPaletteTemplate(template: IPaletteTemplate) {
-    return this.setIndividualTemplate('palette', template);
+    return this.setIndividualTemplate("palette", template);
   }
 
   public setThemeTemplate(template: IThemeTemplate) {
-    return this.setIndividualTemplate('browser', template);
+    return this.setIndividualTemplate("browser", template);
   }
 
   public setDDGThemeTemplate(template: IDuckDuckGoThemeTemplate) {
-    return this.setIndividualTemplate('duckduckgo', template);
+    return this.setIndividualTemplate("duckduckgo", template);
   }
 
   public setPaletteHash(hash: IPaletteHash) {
-    return this.setColorschemeProperty('hash', hash);
+    return this.setColorschemeProperty("hash", hash);
   }
 
   public setBrowserTheme(browserTheme: IBrowserTheme) {
-    return this.setColorschemeProperty('browser', browserTheme);
+    return this.setColorschemeProperty("browser", browserTheme);
   }
 
   public setUpdateMuted(enabled: boolean) {
-    return this.setOption('updateMuted', enabled);
+    return this.setOption("updateMuted", enabled);
   }
 
   public setNativeErrorMuted(enabled: boolean) {
-    return this.setOption('nativeErrorMuted', enabled);
+    return this.setOption("nativeErrorMuted", enabled);
   }
 
   public setDDGThemeEnabled(enabled: boolean) {
-    return this.setOption('duckduckgo', enabled);
+    return this.setOption("duckduckgo", enabled);
   }
 
   public setWebsiteCssVariablesEnabled(enabled: boolean) {
-    return this.setOption('websiteCssVariables', enabled);
+    return this.setOption("websiteCssVariables", enabled);
   }
 
   public setDarkreaderEnabled(enabled: boolean) {
-    return this.setOption('darkreader', enabled);
+    return this.setOption("darkreader", enabled);
   }
 
   public setFetchOnStartupEnabled(enabled: boolean) {
-    return this.setOption('fetchOnStartup', enabled);
+    return this.setOption("fetchOnStartup", enabled);
   }
 
   public setCssEnabled(target: CSSTargets, enabled: boolean) {
@@ -326,7 +338,7 @@ export default class State {
   }
 
   public setCssFontSize(size: number) {
-    return this.setOption('fontSize', size);
+    return this.setOption("fontSize", size);
   }
 
   public setApplied(isApplied: boolean) {
@@ -362,7 +374,7 @@ export default class State {
   }
 
   public resetVersion() {
-    return this.setVersion('0');
+    return this.setVersion("0");
   }
 
   public setColors(pywalColors: IPywalColors, colorscheme: IColorscheme) {
@@ -417,43 +429,53 @@ export default class State {
     this.currentState = await browser.storage.local.get(this.initialState);
 
     // Temporary state migration until a real migration system is implemented
-    if (this.getTemplate().duckduckgo.hasOwnProperty('modifier')) {
-      this.currentState.theme.templates.dark.duckduckgo = DEFAULT_THEME_DARK.duckduckgo;
-      this.currentState.theme.templates.light.duckduckgo = DEFAULT_THEME_LIGHT.duckduckgo;
+    if (this.getTemplate().duckduckgo.hasOwnProperty("modifier")) {
+      this.currentState.theme.templates.dark.duckduckgo =
+        DEFAULT_THEME_DARK.duckduckgo;
+      this.currentState.theme.templates.light.duckduckgo =
+        DEFAULT_THEME_LIGHT.duckduckgo;
     }
 
     // Fix for v89 tab border
-    if (browserInfo?.version && browserInfo.version.split('.')[0] === '89') {
+    if (browserInfo?.version && browserInfo.version.split(".")[0] === "89") {
       const { dark, light } = this.currentState.theme.templates;
 
       // We make sure to only change this property if it has not been modified by the user
       if (dark.browser.tab_line === PaletteColors.AccentPrimary) {
-        this.currentState.theme.templates.dark.browser.tab_line = PaletteColors.BackgroundLight;
+        this.currentState.theme.templates.dark.browser.tab_line =
+          PaletteColors.BackgroundLight;
         shouldRefresh = true;
       }
 
       if (light.browser.tab_line === PaletteColors.AccentPrimary) {
-        this.currentState.theme.templates.light.browser.tab_line = PaletteColors.BackgroundLight;
+        this.currentState.theme.templates.light.browser.tab_line =
+          PaletteColors.BackgroundLight;
         shouldRefresh = true;
       }
     }
 
-    if (!this.currentState.options.hasOwnProperty('websiteCssVariables')) {
+    if (!this.currentState.options.hasOwnProperty("websiteCssVariables")) {
       this.currentState.options.websiteCssVariables = true;
     }
 
     // Add new Theme API properties for existing users
     const { dark, light } = this.currentState.theme.templates;
-    if (!dark.browser.hasOwnProperty('frame_inactive')) {
-      this.currentState.theme.templates.dark.browser.frame_inactive = DEFAULT_THEME_DARK.browser.frame_inactive;
-      this.currentState.theme.templates.dark.browser.toolbar_text = DEFAULT_THEME_DARK.browser.toolbar_text;
-      this.currentState.theme.templates.dark.browser.ntp_card_background = DEFAULT_THEME_DARK.browser.ntp_card_background;
+    if (!dark.browser.hasOwnProperty("frame_inactive")) {
+      this.currentState.theme.templates.dark.browser.frame_inactive =
+        DEFAULT_THEME_DARK.browser.frame_inactive;
+      this.currentState.theme.templates.dark.browser.toolbar_text =
+        DEFAULT_THEME_DARK.browser.toolbar_text;
+      this.currentState.theme.templates.dark.browser.ntp_card_background =
+        DEFAULT_THEME_DARK.browser.ntp_card_background;
       shouldRefresh = true;
     }
-    if (!light.browser.hasOwnProperty('frame_inactive')) {
-      this.currentState.theme.templates.light.browser.frame_inactive = DEFAULT_THEME_LIGHT.browser.frame_inactive;
-      this.currentState.theme.templates.light.browser.toolbar_text = DEFAULT_THEME_LIGHT.browser.toolbar_text;
-      this.currentState.theme.templates.light.browser.ntp_card_background = DEFAULT_THEME_LIGHT.browser.ntp_card_background;
+    if (!light.browser.hasOwnProperty("frame_inactive")) {
+      this.currentState.theme.templates.light.browser.frame_inactive =
+        DEFAULT_THEME_LIGHT.browser.frame_inactive;
+      this.currentState.theme.templates.light.browser.toolbar_text =
+        DEFAULT_THEME_LIGHT.browser.toolbar_text;
+      this.currentState.theme.templates.light.browser.ntp_card_background =
+        DEFAULT_THEME_LIGHT.browser.ntp_card_background;
       shouldRefresh = true;
     }
 

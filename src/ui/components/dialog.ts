@@ -1,9 +1,4 @@
-import {
-  setOpen,
-  setClosed,
-  setSelected,
-  setDeselected,
-} from '@utils/dom';
+import { setOpen, setClosed, setSelected, setDeselected } from "@utils/dom";
 
 /**
  * Base class for dialogs.
@@ -50,7 +45,10 @@ export default abstract class Dialog {
    * @param nextTarget - the element that initiated the callback
    */
   /* eslint-disable */
-  protected onOpen(currentTarget: (HTMLElement | null), nextTarget: HTMLElement) {}
+  protected onOpen(
+    currentTarget: HTMLElement | null,
+    nextTarget: HTMLElement,
+  ) {}
   protected onClose(currentTarget: HTMLElement) {}
   /* eslint-enable */
 

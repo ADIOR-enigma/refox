@@ -1,4 +1,4 @@
-import { CSSTargets } from '@definitions';
+import { CSSTargets } from "@definitions";
 
 export const RESPONSE_TIMEOUT_MS = 3000;
 export const MIN_REQUIRED_DAEMON_VERSION = 2.7;
@@ -8,98 +8,98 @@ export const PYWAL_PALETTE_LENGTH = 20;
 export const NOTIFICATION_TIMEOUT = 5000;
 export const MAX_SIMULTANEOUS_NOTIFICATIONS = 3;
 
-export const ENABLED_BODY_CLASS = 'applied';
-export const EXTENSION_THEME_SELCTOR = 'body,body.light,body.dark';
-export const INJECT_URL_PATTERN = ['*://*.duckduckgo.com/*'];
-export const WEBSITE_INJECT_URL_PATTERN = ['http://*/*', 'https://*/*'];
-export const DARKREADER_CONNECTION_ID = 'addon@darkreader.org';
+export const ENABLED_BODY_CLASS = "applied";
+export const EXTENSION_THEME_SELCTOR = "body,body.light,body.dark";
+export const INJECT_URL_PATTERN = ["*://*.duckduckgo.com/*"];
+export const WEBSITE_INJECT_URL_PATTERN = ["http://*/*", "https://*/*"];
+export const DARKREADER_CONNECTION_ID = "addon@darkreader.org";
 
 // TODO: Move constants into an enum for better type validation
 export const EXTENSION_PAGES = {
-  UPDATE: 'ui/update.html',
-  SETTINGS: 'ui/settings.html',
-  NATIVE_ERROR: 'ui/native-error.html',
+  UPDATE: "ui/update.html",
+  SETTINGS: "ui/settings.html",
+  NATIVE_ERROR: "ui/native-error.html",
 };
 
 export const EXTERNAL_MESSAGES = {
-  COLORSCHEME: 'colors',
-  DISABLED: 'disabled',
+  COLORSCHEME: "colors",
+  DISABLED: "disabled",
 };
 
 export const EXTENSION_MESSAGES = {
-  INITIAL_DATA_GET: 'initial:data:get',
-  INITIAL_DATA_SET: 'initial:data:set',
-  THEME_FETCH: 'theme:fetch',
-  THEME_DISABLE: 'theme:disable',
-  THEME_MODE_SET: 'theme:mode:set',
-  TEMPLATE_THEME_MODE_GET: 'template:theme:mode:get',
-  TEMPLATE_THEME_MODE_SET: 'template:theme:mode:set',
-  PALETTE_COLOR_SET: 'palette:color:set',
-  TEMPLATE_SET: 'template:set',
-  PALETTE_TEMPLATE_SET: 'palette:template:set',
-  THEME_TEMPLATE_SET: 'theme:template:set',
-  PYWAL_COLORS_SET: 'pywal:colors:set',
-  CUSTOM_COLORS_SET: 'custom:colors:set',
-  OPTION_SET: 'option:set',
-  FONT_SIZE_SET: 'font:size:set',
-  AUTO_TIME_START: 'auto:time:start',
-  AUTO_TIME_END: 'auto:time:end',
-  NOTIFCATION: 'notification',
-  UPDATE_PAGE_MUTE: 'update:page:mute',
-  NATIVE_ERROR_PAGE_MUTE: 'native:error:page:mute',
-  CSS_ENABLE_SUCCESS: 'css:enable:success',
-  CSS_ENABLE_FAILED: 'css:enable:failed',
-  CSS_DISABLE_SUCCESS: 'css:disable:success',
-  CSS_DISABLE_FAILED: 'css:disable:failed',
-  DEBUGGING_INFO_SET: 'debugging:info:set',
-  DEBUGGING_INFO_GET: 'debugging:info:get',
-  DEBUGGING_OUTPUT: 'debugging:output',
-  DDG_THEME_GET: 'ddg:theme:get',
-  DDG_THEME_SET: 'ddg:theme:set',
-  DDG_THEME_RESET: 'ddg:theme:reset',
-  CSS_ENABLE_CONFIRMATION: 'css:enable:confirmation',
-  EXTENSION_THEME_GET: 'extension:theme:get',
-  EXTENSION_THEME_SET: 'extension:theme:set',
-  WEBSITE_THEME_GET: 'website:theme:get',
-  WEBSITE_THEME_SET: 'website:theme:set',
-  WEBSITE_THEME_RESET: 'website:theme:reset',
+  INITIAL_DATA_GET: "initial:data:get",
+  INITIAL_DATA_SET: "initial:data:set",
+  THEME_FETCH: "theme:fetch",
+  THEME_DISABLE: "theme:disable",
+  THEME_MODE_SET: "theme:mode:set",
+  TEMPLATE_THEME_MODE_GET: "template:theme:mode:get",
+  TEMPLATE_THEME_MODE_SET: "template:theme:mode:set",
+  PALETTE_COLOR_SET: "palette:color:set",
+  TEMPLATE_SET: "template:set",
+  PALETTE_TEMPLATE_SET: "palette:template:set",
+  THEME_TEMPLATE_SET: "theme:template:set",
+  PYWAL_COLORS_SET: "pywal:colors:set",
+  CUSTOM_COLORS_SET: "custom:colors:set",
+  OPTION_SET: "option:set",
+  FONT_SIZE_SET: "font:size:set",
+  AUTO_TIME_START: "auto:time:start",
+  AUTO_TIME_END: "auto:time:end",
+  NOTIFCATION: "notification",
+  UPDATE_PAGE_MUTE: "update:page:mute",
+  NATIVE_ERROR_PAGE_MUTE: "native:error:page:mute",
+  CSS_ENABLE_SUCCESS: "css:enable:success",
+  CSS_ENABLE_FAILED: "css:enable:failed",
+  CSS_DISABLE_SUCCESS: "css:disable:success",
+  CSS_DISABLE_FAILED: "css:disable:failed",
+  DEBUGGING_INFO_SET: "debugging:info:set",
+  DEBUGGING_INFO_GET: "debugging:info:get",
+  DEBUGGING_OUTPUT: "debugging:output",
+  DDG_THEME_GET: "ddg:theme:get",
+  DDG_THEME_SET: "ddg:theme:set",
+  DDG_THEME_RESET: "ddg:theme:reset",
+  CSS_ENABLE_CONFIRMATION: "css:enable:confirmation",
+  EXTENSION_THEME_GET: "extension:theme:get",
+  EXTENSION_THEME_SET: "extension:theme:set",
+  WEBSITE_THEME_GET: "website:theme:get",
+  WEBSITE_THEME_SET: "website:theme:set",
+  WEBSITE_THEME_RESET: "website:theme:reset",
 };
 
 export const EXTENSION_COMMANDS = {
-  FETCH_THEME: 'fetch_pywal_colors',
-  DISABLE_THEME: 'disable_theme',
-  ENABLE_DARK_MODE: 'enable_dark_mode',
-  ENABLE_LIGHT_MODE: 'enable_light_mode',
-  ENABLE_AUTO_MODE: 'enable_auto_mode',
+  FETCH_THEME: "fetch_pywal_colors",
+  DISABLE_THEME: "disable_theme",
+  ENABLE_DARK_MODE: "enable_dark_mode",
+  ENABLE_LIGHT_MODE: "enable_light_mode",
+  ENABLE_AUTO_MODE: "enable_auto_mode",
 };
 
 export const EXTENSION_OPTIONS = {
-  AUTO_TIME_START: 'autoTimeStart',
-  AUTO_TIME_END: 'autoTimeEnd',
-  FONT_SIZE: 'fontSize',
+  AUTO_TIME_START: "autoTimeStart",
+  AUTO_TIME_END: "autoTimeEnd",
+  FONT_SIZE: "fontSize",
   USER_CHROME: CSSTargets.UserChrome,
   USER_CONTENT: CSSTargets.UserContent,
-  DUCKDUCKGO: 'duckduckgo',
-  WEBSITE_CSS_VARIABLES: 'websiteCssVariables',
-  DARKREADER: 'darkreader',
-  FETCH_ON_STARTUP: 'fetchOnStartup',
-  UPDATE_MUTED: 'updateMuted',
-  NATIVE_ERROR_MUTED: 'nativeErrorMuted',
+  DUCKDUCKGO: "duckduckgo",
+  WEBSITE_CSS_VARIABLES: "websiteCssVariables",
+  DARKREADER: "darkreader",
+  FETCH_ON_STARTUP: "fetchOnStartup",
+  UPDATE_MUTED: "updateMuted",
+  NATIVE_ERROR_MUTED: "nativeErrorMuted",
 };
 
 export const NATIVE_MESSAGES = {
-  VERSION: 'debug:version',
-  OUTPUT: 'debug:output',
-  PYWAL_COLORS: 'action:colors',
-  INVALID_ACTION: 'action:invalid',
-  CSS_ENABLE: 'css:enable',
-  CSS_DISABLE: 'css:disable',
-  CSS_FONT_SIZE: 'css:font:size',
-  THEME_MODE: 'theme:mode',
+  VERSION: "debug:version",
+  OUTPUT: "debug:output",
+  PYWAL_COLORS: "action:colors",
+  INVALID_ACTION: "action:invalid",
+  CSS_ENABLE: "css:enable",
+  CSS_DISABLE: "css:disable",
+  CSS_FONT_SIZE: "css:font:size",
+  THEME_MODE: "theme:mode",
 };
 
 export const DARKREADER_MESSAGES = {
-  THEME: 'setTheme',
-  CHANGE_SETTINGS: 'changeSettings',
-  RESET: 'resetSettings',
+  THEME: "setTheme",
+  CHANGE_SETTINGS: "changeSettings",
+  RESET: "resetSettings",
 };

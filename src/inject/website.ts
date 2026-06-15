@@ -1,18 +1,17 @@
-import {
-  IExtensionMessage,
-  IExtensionTheme,
-} from '@definitions';
+import { IExtensionMessage, IExtensionTheme } from "@definitions";
 
-import { EXTENSION_MESSAGES } from '@config/general';
+import { EXTENSION_MESSAGES } from "@config/general";
 
-const STYLE_ID = 'pywalfox-theme-variables';
-const pywalfoxWindow = window as Window & { pywalfoxWebsiteThemeLoaded?: boolean };
+const STYLE_ID = "pywalfox-theme-variables";
+const pywalfoxWindow = window as Window & {
+  pywalfoxWebsiteThemeLoaded?: boolean;
+};
 
 function getStyleElement() {
   let element = document.getElementById(STYLE_ID) as HTMLStyleElement;
 
   if (!element) {
-    element = document.createElement('style');
+    element = document.createElement("style");
     element.id = STYLE_ID;
     document.documentElement.appendChild(element);
   }
@@ -60,5 +59,7 @@ browser.runtime.onMessage.addListener(onMessage);
 
 if (!pywalfoxWindow.pywalfoxWebsiteThemeLoaded) {
   pywalfoxWindow.pywalfoxWebsiteThemeLoaded = true;
-  browser.runtime.sendMessage({ action: EXTENSION_MESSAGES.WEBSITE_THEME_GET }).catch(() => {});
+  browser.runtime
+    .sendMessage({ action: EXTENSION_MESSAGES.WEBSITE_THEME_GET })
+    .catch(() => {});
 }

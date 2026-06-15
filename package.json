@@ -106,6 +106,8 @@
       "webextensions": true
     },
     "rules": {
+      "@typescript-eslint/indent": "off",
+      "@typescript-eslint/quotes": "off",
       "no-console": "off",
       "no-param-reassign": "off",
       "no-prototype-builtins": "off",

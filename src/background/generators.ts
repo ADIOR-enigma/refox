@@ -14,13 +14,16 @@ import {
   IColorschemeTemplate,
   IDuckDuckGoThemeTemplate,
   IDuckDuckGoThemeTemplateItem,
-} from '@definitions';
+} from "@definitions";
 
-import { EXTENSION_THEME_SELCTOR } from '@config/general';
-import { EXTENDED_PYWAL_COLORS } from '@config/default-themes';
-import { THEME_TEMPLATE_DATA, PALETTE_TEMPLATE_DATA } from '@config/template-data';
+import { EXTENSION_THEME_SELCTOR } from "@config/general";
+import { EXTENDED_PYWAL_COLORS } from "@config/default-themes";
+import {
+  THEME_TEMPLATE_DATA,
+  PALETTE_TEMPLATE_DATA,
+} from "@config/template-data";
 
-import { changeLuminance } from '@utils/colors';
+import { changeLuminance } from "@utils/colors";
 
 function isCustomColor(color: IExtendedPywalColor): color is ICustomPywalColor {
   return (color as ICustomPywalColor).colorString !== undefined;
@@ -37,7 +40,11 @@ export function generatePywalPalette(pywalColors: IPywalColors) {
       colors.splice(targetIndex, 0, colorString);
     } else {
       const { colorIndex, modifier, min, max } = color;
-      colors.splice(targetIndex, 0, changeLuminance(colors[colorIndex], modifier, min, max));
+      colors.splice(
+        targetIndex,
+        0,
+        changeLuminance(colors[colorIndex], modifier, min, max),
+      );
     }
   });
 
@@ -66,9 +73,9 @@ export function generateColorscheme(
 // Creates a unique hash based on the colors in the palette,
 export function generatePaletteHash(palette: IPalette) {
   const colors = Object.keys(palette);
-  let hash: string = '';
+  let hash: string = "";
 
-  colors.sort((a: string, b: string) => ((a > b) ? 1 : -1));
+  colors.sort((a: string, b: string) => (a > b ? 1 : -1));
 
   colors.forEach((key: string) => {
     hash += stripHashSymbol(palette[<PaletteColors>key]);
@@ -91,18 +98,28 @@ export function generatePalette(
   return Object.assign(defaultPalette, customColors);
 }
 
-export function generateBrowserTheme(palette: IPalette, template: IThemeTemplate) {
-  return createObjectFromTemplateData<IBrowserTheme>(THEME_TEMPLATE_DATA, palette, template);
+export function generateBrowserTheme(
+  palette: IPalette,
+  template: IThemeTemplate,
+) {
+  return createObjectFromTemplateData<IBrowserTheme>(
+    THEME_TEMPLATE_DATA,
+    palette,
+    template,
+  );
 }
 
-export function generateDuckduckgoTheme(palette: IPalette, template: IDuckDuckGoThemeTemplate) {
+export function generateDuckduckgoTheme(
+  palette: IPalette,
+  template: IDuckDuckGoThemeTemplate,
+) {
   const theme = <IDuckDuckGoTheme>{};
 
   Object.keys(template).forEach((key) => {
     const item: IDuckDuckGoThemeTemplateItem = template[key];
     let color: string = palette[item.colorKey];
 
-    if (item.hasOwnProperty('modifier')) {
+    if (item.hasOwnProperty("modifier")) {
       color = changeLuminance(color, item.modifier);
     }
 
@@ -112,11 +129,13 @@ export function generateDuckduckgoTheme(palette: IPalette, template: IDuckDuckGo
   return theme;
 }
 
-function generateThemeVariables(palette: IPalette, prefix = '') {
-  let variables: string = '';
+function generateThemeVariables(palette: IPalette, prefix = "") {
+  let variables: string = "";
 
   PALETTE_TEMPLATE_DATA.forEach(({ target, cssVariable }) => {
-    const variableName = prefix ? `${prefix}-${cssVariable.substring(2)}` : cssVariable;
+    const variableName = prefix
+      ? `${prefix}-${cssVariable.substring(2)}`
+      : cssVariable;
     variables += `${variableName}:${palette[target]};`;
   });
 
@@ -128,10 +147,13 @@ export function generateExtensionTheme(palette: IPalette) {
 }
 
 export function generateWebsiteTheme(palette: IPalette) {
-  return `:root{${generateThemeVariables(palette, '--pywalfox')}}`;
+  return `:root{${generateThemeVariables(palette, "--pywalfox")}}`;
 }
 
-export function generateDarkreaderScheme({ background, text }: IPalette, mode: ITemplateThemeMode) {
+export function generateDarkreaderScheme(
+  { background, text }: IPalette,
+  mode: ITemplateThemeMode,
+) {
   if (mode === ThemeModes.Dark) {
     return {
       darkSchemeTextColor: text,
@@ -152,13 +174,16 @@ export function generateDarkreaderScheme({ background, text }: IPalette, mode: I
  */
 function createObjectFromTemplateData<T>(
   data: ITemplateItem[],
-  values: (IPywalColors | IPalette),
-  template: (IPaletteTemplate | IThemeTemplate),
+  values: IPywalColors | IPalette,
+  template: IPaletteTemplate | IThemeTemplate,
 ) {
-  return data.reduce((obj: T, item: ITemplateItem) => {
-    obj[<keyof T>item.target] = values[template[item.target]]; // eslint-disable-line
-    return obj;
-  }, <T>{});
+  return data.reduce(
+    (obj: T, item: ITemplateItem) => {
+      obj[<keyof T>item.target] = values[template[item.target]]; // eslint-disable-line
+      return obj;
+    },
+    <T>{},
+  );
 }
 
 function stripHashSymbol(color: string) {

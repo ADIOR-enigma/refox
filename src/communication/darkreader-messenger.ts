@@ -5,9 +5,9 @@ import {
   IDarkreaderErrorCallback,
   ITemplateThemeMode,
   ThemeModes,
-} from '@definitions';
+} from "@definitions";
 
-import { DARKREADER_CONNECTION_ID, DARKREADER_MESSAGES } from '@config/general';
+import { DARKREADER_CONNECTION_ID, DARKREADER_MESSAGES } from "@config/general";
 
 export default class DarkreaderMessenger {
   public isConnected: boolean;

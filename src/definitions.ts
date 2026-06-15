@@ -28,41 +28,41 @@ export type IExtendedPywalColors = IExtendedPywalColor[];
 export type IPaletteHash = string;
 
 export enum PaletteColors {
-  Background = 'background',
-  BackgroundLight = 'backgroundLight',
-  BackgroundExtra = 'backgroundExtra',
-  AccentPrimary = 'accentPrimary',
-  AccentSecondary = 'accentSecondary',
-  Text = 'text',
-  TextFocus = 'textFocus',
+  Background = "background",
+  BackgroundLight = "backgroundLight",
+  BackgroundExtra = "backgroundExtra",
+  AccentPrimary = "accentPrimary",
+  AccentSecondary = "accentSecondary",
+  Text = "text",
+  TextFocus = "textFocus",
 }
 
 export enum CSSTargets {
-  UserChrome = 'userChrome',
-  UserContent = 'userContent',
+  UserChrome = "userChrome",
+  UserContent = "userContent",
 }
 
 export enum ThemeModes {
-  Dark = 'dark',
-  Light = 'light',
-  Auto = 'auto',
+  Dark = "dark",
+  Light = "light",
+  Auto = "auto",
 }
 
 export enum DuckDuckGoSettingKeys {
-  Background = 'k7',
-  HeaderBackground = 'kj',
-  ResultTitle = 'k9',
-  ResultDescription = 'k8',
-  ResultLink = 'kx',
-  ResultLinkVisited = 'kaa',
-  Hover = 'k21',
-  ThemeId = 'kae',
+  Background = "k7",
+  HeaderBackground = "kj",
+  ResultTitle = "k9",
+  ResultDescription = "k8",
+  ResultLink = "kx",
+  ResultLinkVisited = "kaa",
+  Hover = "k21",
+  ThemeId = "kae",
 }
 
 export enum DuckDuckGoThemeKeys {
-  Dark = 'd',
-  Light = 'l',
-  Pywalfox = 'pywalfox',
+  Dark = "d",
+  Light = "l",
+  Pywalfox = "pywalfox",
 }
 
 export enum NativeAppErrors {
@@ -72,7 +72,10 @@ export enum NativeAppErrors {
   None,
 }
 
-export type DuckDuckGoColorKeys = Exclude<DuckDuckGoSettingKeys, DuckDuckGoSettingKeys.ThemeId>;
+export type DuckDuckGoColorKeys = Exclude<
+  DuckDuckGoSettingKeys,
+  DuckDuckGoSettingKeys.ThemeId
+>;
 
 export type ITemplateThemeMode = Exclude<ThemeModes, ThemeModes.Auto>;
 
@@ -140,7 +143,10 @@ export type IPaletteTemplate = Record<PaletteColors, number>;
 
 export type IDuckDuckGoTheme = Record<DuckDuckGoColorKeys, string>;
 
-export type IDuckDuckGoThemeTemplate = Record<DuckDuckGoColorKeys, IDuckDuckGoThemeTemplateItem>;
+export type IDuckDuckGoThemeTemplate = Record<
+  DuckDuckGoColorKeys,
+  IDuckDuckGoThemeTemplateItem
+>;
 
 export interface IDuckDuckGoThemeTemplateItem {
   colorKey: string;
@@ -167,7 +173,10 @@ export type ColorschemeTypes =
 
 export type ICustomColors = Record<ITemplateThemeMode, Partial<IPalette>>;
 
-export type IColorschemeTemplates = Record<ITemplateThemeMode, IColorschemeTemplate>;
+export type IColorschemeTemplates = Record<
+  ITemplateThemeMode,
+  IColorschemeTemplate
+>;
 
 export interface IExtensionOptions {
   [CSSTargets.UserChrome]: boolean;
@@ -244,18 +253,18 @@ export interface INativeAppRequest {
 }
 
 export interface INativeAppMessageCallbacks {
-  connected: () => void,
-  updateNeeded: () => void,
-  disconnected: (nativeError: INativeAppError) => void,
-  version: (version: string) => void,
-  output: (message: string, error?: boolean) => void,
-  pywalColorsFetchSuccess: (pywalData: IPywalData) => void,
-  pywalColorsFetchFailed: (error: string) => void,
-  cssToggleSuccess: (target: string) => void,
-  cssToggleFailed: (target: string, error: string) => void,
-  cssFontSizeSetSuccess: (size: number) => void,
-  cssFontSizeSetFailed: (error: string) => void,
-  themeModeSet: (mode: ThemeModes) => void,
+  connected: () => void;
+  updateNeeded: () => void;
+  disconnected: (nativeError: INativeAppError) => void;
+  version: (version: string) => void;
+  output: (message: string, error?: boolean) => void;
+  pywalColorsFetchSuccess: (pywalData: IPywalData) => void;
+  pywalColorsFetchFailed: (error: string) => void;
+  cssToggleSuccess: (target: string) => void;
+  cssToggleFailed: (target: string, error: string) => void;
+  cssFontSizeSetSuccess: (size: number) => void;
+  cssFontSizeSetFailed: (error: string) => void;
+  themeModeSet: (mode: ThemeModes) => void;
 }
 
 export interface INodeLookup {
@@ -272,7 +281,7 @@ export interface IInitialData {
   debuggingInfo: IDebuggingInfoData;
   options: IOptionSetData[];
   fontSize: number;
-  autoTimeInterval: ITimeIntervalEndpoints
+  autoTimeInterval: ITimeIntervalEndpoints;
 }
 
 export interface IDebuggingInfoData {
@@ -306,16 +315,16 @@ export interface ITimeIntervalEndpoint {
 }
 
 export interface ITimeIntervalEndpoints {
-  start: ITimeIntervalEndpoint,
-  end: ITimeIntervalEndpoint,
+  start: ITimeIntervalEndpoint;
+  end: ITimeIntervalEndpoint;
 }
 
 export type IAutoModeTriggerCallback = (isDay: boolean) => void;
 
 export interface IExtensionState {
-  version: string,
+  version: string;
   connected: boolean;
-  nativeError: INativeAppError,
+  nativeError: INativeAppError;
   theme: {
     mode: ThemeModes;
     isDay: boolean;
@@ -341,11 +350,11 @@ declare global {
     wrappedJSObject: {
       DDG: {
         settings: {
-          get: (key: DuckDuckGoSettingKeys) => unknown,
-          set: (key: DuckDuckGoSettingKeys, value: unknown) => void,
-          setTheme: (key: DuckDuckGoThemeKeys) => void,
-        }
-      },
+          get: (key: DuckDuckGoSettingKeys) => unknown;
+          set: (key: DuckDuckGoSettingKeys, value: unknown) => void;
+          setTheme: (key: DuckDuckGoThemeKeys) => void;
+        };
+      };
     };
   }
 }

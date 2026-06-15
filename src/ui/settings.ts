@@ -12,7 +12,7 @@ import {
   INotificationData,
   IDebuggingInfoData,
   PaletteColors,
-} from '@definitions';
+} from "@definitions";
 
 import {
   EXTENSION_OPTIONS,
@@ -21,48 +21,82 @@ import {
   ENABLED_BODY_CLASS,
   NOTIFICATION_TIMEOUT,
   MAX_SIMULTANEOUS_NOTIFICATIONS,
-} from '@config/general';
+} from "@config/general";
 
 import {
   THEME_TEMPLATE_DATA,
   PALETTE_TEMPLATE_DATA,
-} from '@config/template-data';
+} from "@config/template-data";
 
-import * as Utils from '@utils/dom';
-import Messenger from '@communication/messenger';
-import { requestExtensionTheme } from '@communication/content-scripts/ui';
-import { applyExtensionTheme } from '@ui/page';
+import * as Utils from "@utils/dom";
+import Messenger from "@communication/messenger";
+import { requestExtensionTheme } from "@communication/content-scripts/ui";
+import { applyExtensionTheme } from "@ui/page";
 
-import Dialog from './components/dialog';
-import Colorpicker from './components/colorpicker';
-import Themepicker from './components/themepicker';
+import Dialog from "./components/dialog";
+import Colorpicker from "./components/colorpicker";
+import Themepicker from "./components/themepicker";
 
-const optionButtons = <NodeListOf<HTMLElement>>document.querySelectorAll('button[data-option]');
-const helpToggleButtons = <NodeListOf<HTMLElement>>document.querySelectorAll('button[data-help]');
-const settingCardHeaders = <NodeListOf<HTMLElement>>document.querySelectorAll('.setting-card-header');
+const optionButtons = <NodeListOf<HTMLElement>>(
+  document.querySelectorAll("button[data-option]")
+);
+const helpToggleButtons = <NodeListOf<HTMLElement>>(
+  document.querySelectorAll("button[data-help]")
+);
+const settingCardHeaders = <NodeListOf<HTMLElement>>(
+  document.querySelectorAll(".setting-card-header")
+);
 
-const overlay = <HTMLDivElement>document.getElementById('overlay');
-const fetchButton = <HTMLButtonElement>document.getElementById('fetch');
-const versionLabel = <HTMLSpanElement>document.getElementById('version');
-const disableButton = <HTMLButtonElement>document.getElementById('disable');
-const themeButton = <HTMLButtonElement>document.getElementById('theme-select');
-const fontSizeSaveInput = <HTMLInputElement>document.getElementById('font-size-input');
-const autoTimeStartInput = <HTMLInputElement>document.getElementById('auto-time-start-input');
-const autoTimeEndInput = <HTMLInputElement>document.getElementById('auto-time-end-input');
-const debuggingOutput = <HTMLTextAreaElement>document.getElementById('debugging-output');
-const debuggingVersion = <HTMLParagraphElement>document.getElementById('debugging-version');
-const debuggingConnected = <HTMLParagraphElement>document.getElementById('debugging-connected');
+const overlay = <HTMLDivElement>document.getElementById("overlay");
+const fetchButton = <HTMLButtonElement>document.getElementById("fetch");
+const versionLabel = <HTMLSpanElement>document.getElementById("version");
+const disableButton = <HTMLButtonElement>document.getElementById("disable");
+const themeButton = <HTMLButtonElement>document.getElementById("theme-select");
+const fontSizeSaveInput = <HTMLInputElement>(
+  document.getElementById("font-size-input")
+);
+const autoTimeStartInput = <HTMLInputElement>(
+  document.getElementById("auto-time-start-input")
+);
+const autoTimeEndInput = <HTMLInputElement>(
+  document.getElementById("auto-time-end-input")
+);
+const debuggingOutput = <HTMLTextAreaElement>(
+  document.getElementById("debugging-output")
+);
+const debuggingVersion = <HTMLParagraphElement>(
+  document.getElementById("debugging-version")
+);
+const debuggingConnected = <HTMLParagraphElement>(
+  document.getElementById("debugging-connected")
+);
 
-const paletteContent = <HTMLDivElement>document.getElementById('palette-content');
-const paletteTemplateContent = <HTMLDivElement>document.getElementById('palette-template-content');
-const paletteTemplateResetButton = <HTMLButtonElement>document.getElementById('palette-template-reset');
-const paletteTemplateCurrentButton = <HTMLButtonElement>document.getElementById('palette-template-current');
+const paletteContent = <HTMLDivElement>(
+  document.getElementById("palette-content")
+);
+const paletteTemplateContent = <HTMLDivElement>(
+  document.getElementById("palette-template-content")
+);
+const paletteTemplateResetButton = <HTMLButtonElement>(
+  document.getElementById("palette-template-reset")
+);
+const paletteTemplateCurrentButton = <HTMLButtonElement>(
+  document.getElementById("palette-template-current")
+);
 
-const themeTemplateContent = <HTMLDivElement>document.getElementById('theme-template-content');
-const themeTemplateResetButton = <HTMLButtonElement>document.getElementById('theme-template-reset');
+const themeTemplateContent = <HTMLDivElement>(
+  document.getElementById("theme-template-content")
+);
+const themeTemplateResetButton = <HTMLButtonElement>(
+  document.getElementById("theme-template-reset")
+);
 
-const notificationContainer = <HTMLDivElement>document.getElementById('notification-container');
-const notificationTemplate = <HTMLTemplateElement>document.getElementById('notification-template');
+const notificationContainer = <HTMLDivElement>(
+  document.getElementById("notification-container")
+);
+const notificationTemplate = <HTMLTemplateElement>(
+  document.getElementById("notification-template")
+);
 
 const colorpicker = new Colorpicker();
 const themepicker = new Themepicker();
@@ -109,8 +143,8 @@ function toggleIsAppliedBodyClass() {
 }
 
 function setDebuggingInfo({ version, connected }: IDebuggingInfoData) {
-  debuggingConnected.innerText = connected ? 'Connected' : 'Disconnected';
-  debuggingVersion.innerText = `native messaging host v${version === '0' ? 'not set' : version}`;
+  debuggingConnected.innerText = connected ? "Connected" : "Disconnected";
+  debuggingVersion.innerText = `native messaging host v${version === "0" ? "not set" : version}`;
 }
 
 function writeOutput(message: string) {
@@ -126,31 +160,31 @@ function onColorClicked(e: Event) {
 
 function setOptionEnabled(target: HTMLElement, enabled: boolean) {
   if (!target) {
-    console.error('Failed to update option state, target is undefined/null');
+    console.error("Failed to update option state, target is undefined/null");
     return;
   }
 
-  if (Utils.isSet('loading', target)) {
+  if (Utils.isSet("loading", target)) {
     Utils.setLoaded(target);
   }
 
   if (enabled) {
     Utils.setSelected(target);
     Utils.setSelected(target.parentElement);
-    target.innerText = 'Yes';
+    target.innerText = "Yes";
   } else {
     Utils.setDeselected(target);
     Utils.setDeselected(target.parentElement);
-    target.innerText = 'No';
+    target.innerText = "No";
   }
 }
 
 function onOptionClicked(e: Event) {
   const target = <HTMLElement>e.target;
-  const option = target.getAttribute('data-option');
-  const newState = !Utils.isSet('selected', target);
+  const option = target.getAttribute("data-option");
+  const newState = !Utils.isSet("selected", target);
 
-  if (Utils.isSet('async', target)) {
+  if (Utils.isSet("async", target)) {
     Utils.setLoading(target);
   }
 
@@ -168,12 +202,15 @@ function onDisableClicked() {
 
 function onFontSizeSave() {
   if (fontSizeSaveInput.checkValidity()) {
-    const option = fontSizeSaveInput.getAttribute('data-option');
-    Messenger.UI.requestFontSizeSet(option, parseInt(fontSizeSaveInput.value, 10));
+    const option = fontSizeSaveInput.getAttribute("data-option");
+    Messenger.UI.requestFontSizeSet(
+      option,
+      parseInt(fontSizeSaveInput.value, 10),
+    );
   } else {
     createNotification({
-      title: 'Custom font size',
-      message: 'Invalid value, should be between 10-20 pixels',
+      title: "Custom font size",
+      message: "Invalid value, should be between 10-20 pixels",
       error: true,
     });
   }
@@ -187,12 +224,16 @@ function validateAutoTimeInterval() {
     return true;
   }
 
-  createNotification({ title: 'Auto mode', message: 'Start time is greater than end time', error: true });
+  createNotification({
+    title: "Auto mode",
+    message: "Start time is greater than end time",
+    error: true,
+  });
   return false;
 }
 
 function createTimeIntervalObject(value: string) {
-  const [hour, minute] = value.split(':');
+  const [hour, minute] = value.split(":");
 
   if (hour === undefined || minute === undefined) {
     console.error(`Could not create time interval object for ${value}`);
@@ -219,7 +260,7 @@ function onTimeIntervalSave(input: HTMLInputElement, action: string) {
 }
 
 function onHelpToggle(target: HTMLElement) {
-  const helpElementId: string = target.getAttribute('data-help');
+  const helpElementId: string = target.getAttribute("data-help");
   const helpElement = document.getElementById(helpElementId);
 
   if (!helpElement) {
@@ -232,11 +273,13 @@ function onHelpToggle(target: HTMLElement) {
 
 function onPaletteTemplateInputChanged(e: Event) {
   const target = <HTMLInputElement>e.target;
-  const targetId = target.getAttribute('data-target');
+  const targetId = target.getAttribute("data-target");
   const { value } = target;
 
   if (!template.palette.hasOwnProperty(targetId)) {
-    console.error(`Invalid/missing 'data-target' attribute on palette template input: ${targetId}`);
+    console.error(
+      `Invalid/missing 'data-target' attribute on palette template input: ${targetId}`,
+    );
     return;
   }
 
@@ -249,16 +292,20 @@ function onPaletteTemplateInputChanged(e: Event) {
 }
 
 function onThemeTemplateInputChanged(target: HTMLSelectElement) {
-  const targetId = target.getAttribute('data-target');
+  const targetId = target.getAttribute("data-target");
   const { value } = <HTMLOptionElement>target[target.selectedIndex];
 
   if (!template.browser.hasOwnProperty(targetId)) {
-    console.error(`Invalid 'data-target' attribute on theme template input: ${targetId}`);
+    console.error(
+      `Invalid 'data-target' attribute on theme template input: ${targetId}`,
+    );
     return;
   }
 
   if (Object.keys(PaletteColors).includes(value)) {
-    console.error(`Invalid palette color id was selected: ${value}. No such value in the PaletteColors enum`);
+    console.error(
+      `Invalid palette color id was selected: ${value}. No such value in the PaletteColors enum`,
+    );
     return;
   }
 
@@ -268,8 +315,10 @@ function onThemeTemplateInputChanged(target: HTMLSelectElement) {
 }
 
 function savePaletteTemplate() {
-  if (template === null || !template.hasOwnProperty('palette')) {
-    console.error(`Template is null or the palette template is not set: ${template}`);
+  if (template === null || !template.hasOwnProperty("palette")) {
+    console.error(
+      `Template is null or the palette template is not set: ${template}`,
+    );
     return;
   }
 
@@ -282,12 +331,16 @@ function onPaletteTemplateUseCurrent() {
     const inputElement = <HTMLInputElement>paletteTemplateInputLookup[targetId];
 
     if (index === null) {
-      console.log(`Palette color '${targetId}' is set to a custom color and can not be used`);
+      console.log(
+        `Palette color '${targetId}' is set to a custom color and can not be used`,
+      );
       return;
     }
 
     if (inputElement === null) {
-      console.error(`Could not find palette template id with target: ${targetId}`);
+      console.error(
+        `Could not find palette template id with target: ${targetId}`,
+      );
       return;
     }
 
@@ -300,8 +353,10 @@ function onPaletteTemplateUseCurrent() {
 }
 
 function saveThemeTemplate() {
-  if (template === null || !template.hasOwnProperty('browser')) {
-    console.error(`Template is null or the browser template is not set: ${template}`);
+  if (template === null || !template.hasOwnProperty("browser")) {
+    console.error(
+      `Template is null or the browser template is not set: ${template}`,
+    );
     return;
   }
 
@@ -332,7 +387,7 @@ function updatePaletteTemplateColorPreview(
   const previewElement = <HTMLElement>element.previousElementSibling;
 
   if (!previewElement) {
-    console.error('Could not find preview element as sibling to:', element);
+    console.error("Could not find preview element as sibling to:", element);
     return;
   }
 
@@ -378,29 +433,37 @@ function updateThemeTemplateInputs(updatedTemplate: IThemeTemplate) {
 }
 
 function createNotification(data: INotificationData) {
-  if (notificationContainer.childElementCount >= MAX_SIMULTANEOUS_NOTIFICATIONS) {
+  if (
+    notificationContainer.childElementCount >= MAX_SIMULTANEOUS_NOTIFICATIONS
+  ) {
     notificationContainer.removeChild(notificationContainer.firstElementChild);
   }
 
   const { title, message, error } = data;
   const clone = <HTMLElement>notificationTemplate.content.cloneNode(true);
-  const containerElement = <HTMLElement>clone.querySelector('.notification');
-  const titleElement = <HTMLParagraphElement>clone.querySelector('.notification-title');
-  const contentElement = <HTMLParagraphElement>clone.querySelector('.notification-content');
-  const iconElement = <HTMLElement>clone.querySelector('i');
-  const closeElement = <HTMLButtonElement>clone.querySelector('button');
+  const containerElement = <HTMLElement>clone.querySelector(".notification");
+  const titleElement = <HTMLParagraphElement>(
+    clone.querySelector(".notification-title")
+  );
+  const contentElement = <HTMLParagraphElement>(
+    clone.querySelector(".notification-content")
+  );
+  const iconElement = <HTMLElement>clone.querySelector("i");
+  const closeElement = <HTMLButtonElement>clone.querySelector("button");
 
   titleElement.innerText = `${title}:`;
   contentElement.innerText = message;
-  iconElement.setAttribute('icon', error ? 'error' : 'bell');
-  error && containerElement.classList.add('error');
+  iconElement.setAttribute("icon", error ? "error" : "bell");
+  error && containerElement.classList.add("error");
 
-  closeElement.addEventListener('click', () => notificationContainer.removeChild(containerElement));
+  closeElement.addEventListener("click", () =>
+    notificationContainer.removeChild(containerElement),
+  );
 
   notificationContainer.appendChild(clone);
 
-  containerElement.classList.add('fadeout');
-  setTimeout(() => containerElement.classList.remove('fadeout'), 50);
+  containerElement.classList.add("fadeout");
+  setTimeout(() => containerElement.classList.remove("fadeout"), 50);
   setTimeout(() => {
     if (notificationContainer.contains(containerElement)) {
       /**
@@ -413,29 +476,37 @@ function createNotification(data: INotificationData) {
 }
 
 function createThemeTemplateContent() {
-  const themeTemplate = <HTMLTemplateElement>document.getElementById('theme-template');
-  const selectElement = <HTMLSelectElement>document.createElement('select');
+  const themeTemplate = <HTMLTemplateElement>(
+    document.getElementById("theme-template")
+  );
+  const selectElement = <HTMLSelectElement>document.createElement("select");
 
-  selectElement.classList.add('clickable');
+  selectElement.classList.add("clickable");
 
   Object.values(PaletteColors).forEach((color) => {
-    const optionElement = <HTMLOptionElement>document.createElement('option');
+    const optionElement = <HTMLOptionElement>document.createElement("option");
     optionElement.innerText = color;
     selectElement.appendChild(optionElement);
   });
 
   THEME_TEMPLATE_DATA.forEach((item: ITemplateItem) => {
     const clone = <HTMLElement>themeTemplate.content.cloneNode(true);
-    const titleElement = <HTMLParagraphElement>clone.querySelector('.setting-title');
-    const contentElement = <HTMLParagraphElement>clone.querySelector('.setting-description');
-    const container = <HTMLElement>clone.querySelector('.setting');
+    const titleElement = <HTMLParagraphElement>(
+      clone.querySelector(".setting-title")
+    );
+    const contentElement = <HTMLParagraphElement>(
+      clone.querySelector(".setting-description")
+    );
+    const container = <HTMLElement>clone.querySelector(".setting");
     const selectElementClone = <HTMLSelectElement>selectElement.cloneNode(true);
 
     titleElement.innerText = item.title;
     contentElement.innerText = item.description;
-    selectElementClone.setAttribute('data-target', item.target);
+    selectElementClone.setAttribute("data-target", item.target);
 
-    selectElementClone.addEventListener('change', () => onThemeTemplateInputChanged(selectElementClone));
+    selectElementClone.addEventListener("change", () =>
+      onThemeTemplateInputChanged(selectElementClone),
+    );
     themeTemplateInputLookup[item.target] = selectElementClone;
 
     container.appendChild(selectElementClone);
@@ -450,16 +521,20 @@ function createPaletteItem(
   item: ITemplateItem,
 ) {
   const clone = <HTMLElement>base.content.cloneNode(true);
-  const titleElement = <HTMLParagraphElement>clone.querySelector('.setting-title');
-  const contentElement = <HTMLParagraphElement>clone.querySelector('.setting-description');
-  const buttonElement = <HTMLButtonElement>clone.querySelector('button');
+  const titleElement = <HTMLParagraphElement>(
+    clone.querySelector(".setting-title")
+  );
+  const contentElement = <HTMLParagraphElement>(
+    clone.querySelector(".setting-description")
+  );
+  const buttonElement = <HTMLButtonElement>clone.querySelector("button");
 
   titleElement.innerText = item.title;
   contentElement.innerText = item.description;
-  buttonElement.setAttribute('data-target', item.target);
+  buttonElement.setAttribute("data-target", item.target);
   buttonElement.style.backgroundColor = `var(${item.cssVariable})`;
 
-  buttonElement.addEventListener('click', onColorClicked);
+  buttonElement.addEventListener("click", onColorClicked);
 
   parent.appendChild(clone);
 }
@@ -470,34 +545,46 @@ function createPaletteTemplateItem(
   item: ITemplateItem,
 ) {
   const clone = <HTMLElement>base.content.cloneNode(true);
-  const titleElement = <HTMLParagraphElement>clone.querySelector('.setting-title');
-  const contentElement = <HTMLParagraphElement>clone.querySelector('.setting-description');
-  const inputElement = <HTMLInputElement>clone.querySelector('input');
+  const titleElement = <HTMLParagraphElement>(
+    clone.querySelector(".setting-title")
+  );
+  const contentElement = <HTMLParagraphElement>(
+    clone.querySelector(".setting-description")
+  );
+  const inputElement = <HTMLInputElement>clone.querySelector("input");
   const maxValue = (PYWAL_PALETTE_LENGTH - 1).toString();
 
   titleElement.innerText = item.title;
   contentElement.innerText = item.description;
-  inputElement.setAttribute('data-target', item.target);
+  inputElement.setAttribute("data-target", item.target);
   inputElement.max = maxValue;
 
-  inputElement.addEventListener('change', onPaletteTemplateInputChanged);
+  inputElement.addEventListener("change", onPaletteTemplateInputChanged);
   paletteTemplateInputLookup[item.target] = inputElement;
 
   parent.appendChild(clone);
 }
 
 function createPaletteContent() {
-  const paletteTemplate = <HTMLTemplateElement>document.getElementById('palette-template');
-  const paletteEditTemplate = <HTMLTemplateElement>document.getElementById('palette-edit-template');
+  const paletteTemplate = <HTMLTemplateElement>(
+    document.getElementById("palette-template")
+  );
+  const paletteEditTemplate = <HTMLTemplateElement>(
+    document.getElementById("palette-edit-template")
+  );
 
   if (!paletteTemplate || !paletteEditTemplate) {
-    console.error('Missing required template in HTML-file for the palette');
+    console.error("Missing required template in HTML-file for the palette");
     return;
   }
 
   PALETTE_TEMPLATE_DATA.forEach((item: ITemplateItem) => {
     createPaletteItem(paletteContent, paletteTemplate, item);
-    createPaletteTemplateItem(paletteTemplateContent, paletteEditTemplate, item);
+    createPaletteTemplateItem(
+      paletteTemplateContent,
+      paletteEditTemplate,
+      item,
+    );
   });
 }
 
@@ -512,7 +599,11 @@ function setInitialData(data: IInitialData) {
     updateOptionState(optionData);
   });
 
-  colorpicker.setData(data.pywalColors, data.customColors, data.template.palette);
+  colorpicker.setData(
+    data.pywalColors,
+    data.customColors,
+    data.template.palette,
+  );
   colorpicker.updateSelected();
 
   updatePaletteTemplateInputs(data.template.palette, data.pywalColors);
@@ -586,67 +677,97 @@ function handleExtensionMessage({ action, data }: IExtensionMessage) {
 }
 
 function handleCssEnableConfirmation(target: string) {
-  const targetName = target === EXTENSION_OPTIONS.USER_CHROME ? 'userChrome.css' : 'userContent.css';
+  const targetName =
+    target === EXTENSION_OPTIONS.USER_CHROME
+      ? "userChrome.css"
+      : "userContent.css";
   // eslint-disable-next-line no-alert
   const confirmed = window.confirm(
-    `IMPORTANT: Before enabling "${targetName}", you must:\n\n`
-    + '1. Go to about:config in Firefox\n'
-    + '2. Set "toolkit.legacyUserProfileCustomizations.stylesheets" to true\n'
-    + '3. Restart Firefox\n\n'
-    + `WARNING: Enabling this will copy the Pywalfox ${targetName} file to your Firefox profile.\n\n`
-    + `If you already have a custom ${targetName} file, it will be OVERWRITTEN and your changes will be lost.\n\n`
-    + 'Do you want to continue?',
+    `IMPORTANT: Before enabling "${targetName}", you must:\n\n` +
+      "1. Go to about:config in Firefox\n" +
+      '2. Set "toolkit.legacyUserProfileCustomizations.stylesheets" to true\n' +
+      "3. Restart Firefox\n\n" +
+      `WARNING: Enabling this will copy the Pywalfox ${targetName} file to your Firefox profile.\n\n` +
+      `If you already have a custom ${targetName} file, it will be OVERWRITTEN and your changes will be lost.\n\n` +
+      "Do you want to continue?",
   );
 
   if (confirmed) {
-    browser.runtime.sendMessage({
-      action: EXTENSION_MESSAGES.OPTION_SET,
-      data: { option: target, enabled: true, skipConfirmation: true },
-    }).catch(() => {});
+    browser.runtime
+      .sendMessage({
+        action: EXTENSION_MESSAGES.OPTION_SET,
+        data: { option: target, enabled: true, skipConfirmation: true },
+      })
+      .catch(() => {});
   } else {
     const button = optionButtonsLookup[target];
     if (button) {
-      button.classList.remove('enabled');
+      button.classList.remove("enabled");
     }
   }
 }
 
 function setupListeners() {
-  overlay.addEventListener('click', closeDialog);
-  disableButton.addEventListener('click', onDisableClicked);
-  fetchButton.addEventListener('click', Messenger.UI.requestFetch);
-  themeButton.addEventListener('click', () => openDialog(themepicker, themeButton));
-  fontSizeSaveInput.addEventListener('change', Utils.debounce(onFontSizeSave, 500));
+  overlay.addEventListener("click", closeDialog);
+  disableButton.addEventListener("click", onDisableClicked);
+  fetchButton.addEventListener("click", Messenger.UI.requestFetch);
+  themeButton.addEventListener("click", () =>
+    openDialog(themepicker, themeButton),
+  );
+  fontSizeSaveInput.addEventListener(
+    "change",
+    Utils.debounce(onFontSizeSave, 500),
+  );
 
-  autoTimeStartInput.addEventListener('change', Utils.debounce(() => {
-    onTimeIntervalSave(autoTimeStartInput, EXTENSION_OPTIONS.AUTO_TIME_START);
-  }, 500));
+  autoTimeStartInput.addEventListener(
+    "change",
+    Utils.debounce(() => {
+      onTimeIntervalSave(autoTimeStartInput, EXTENSION_OPTIONS.AUTO_TIME_START);
+    }, 500),
+  );
 
-  autoTimeEndInput.addEventListener('change', Utils.debounce(() => {
-    onTimeIntervalSave(autoTimeEndInput, EXTENSION_OPTIONS.AUTO_TIME_END);
-  }, 500));
+  autoTimeEndInput.addEventListener(
+    "change",
+    Utils.debounce(() => {
+      onTimeIntervalSave(autoTimeEndInput, EXTENSION_OPTIONS.AUTO_TIME_END);
+    }, 500),
+  );
 
-  themeTemplateResetButton.addEventListener('click', Messenger.UI.requestThemeTemplateReset);
+  themeTemplateResetButton.addEventListener(
+    "click",
+    Messenger.UI.requestThemeTemplateReset,
+  );
 
-  paletteTemplateCurrentButton.addEventListener('click', onPaletteTemplateUseCurrent);
-  paletteTemplateResetButton.addEventListener('click', Messenger.UI.requestPaletteTemplateReset);
+  paletteTemplateCurrentButton.addEventListener(
+    "click",
+    onPaletteTemplateUseCurrent,
+  );
+  paletteTemplateResetButton.addEventListener(
+    "click",
+    Messenger.UI.requestPaletteTemplateReset,
+  );
 
   helpToggleButtons.forEach((button: HTMLElement) => {
-    button.addEventListener('click', () => onHelpToggle(button));
+    button.addEventListener("click", () => onHelpToggle(button));
   });
 
   settingCardHeaders.forEach((header: HTMLElement) => {
-    header.addEventListener('click', () => Utils.toggleOpen(header.parentElement));
+    header.addEventListener("click", () =>
+      Utils.toggleOpen(header.parentElement),
+    );
   });
 
   optionButtons.forEach((button: HTMLElement) => {
-    const option = button.getAttribute('data-option');
-    button.addEventListener('click', onOptionClicked);
+    const option = button.getAttribute("data-option");
+    button.addEventListener("click", onOptionClicked);
 
     if (option) {
       optionButtonsLookup[option] = button;
     } else {
-      console.warn('Found option button with no "data-option" attribute: ', button);
+      console.warn(
+        'Found option button with no "data-option" attribute: ',
+        button,
+      );
     }
   });
 

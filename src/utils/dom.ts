@@ -4,63 +4,70 @@ export function setVersionLabel(element: HTMLElement) {
 
 export function isSet(attr: string, element: HTMLElement) {
   const value = element.getAttribute(attr);
-  return value === '';
+  return value === "";
 }
 
 export function isOpen(element: HTMLElement) {
-  return isSet('open', element);
+  return isSet("open", element);
 }
 
 export function toggleAttribute(element: HTMLElement, attr: string) {
   const newState = !isSet(attr, element);
   if (newState) {
-    element.setAttribute(attr, '');
+    element.setAttribute(attr, "");
   } else {
     element.removeAttribute(attr);
   }
 }
 
-export function setAttribute(element: HTMLElement, attr: string, enabled: boolean) {
+export function setAttribute(
+  element: HTMLElement,
+  attr: string,
+  enabled: boolean,
+) {
   if (enabled) {
-    element.setAttribute(attr, '');
+    element.setAttribute(attr, "");
   } else {
     element.removeAttribute(attr);
   }
 }
 
 export function setOpen(element: HTMLElement) {
-  setAttribute(element, 'open', true);
+  setAttribute(element, "open", true);
 }
 
 export function setClosed(element: HTMLElement) {
-  setAttribute(element, 'open', false);
+  setAttribute(element, "open", false);
 }
 
 export function setSelected(element: HTMLElement) {
-  setAttribute(element, 'selected', true);
+  setAttribute(element, "selected", true);
 }
 
 export function setDeselected(element: HTMLElement) {
-  setAttribute(element, 'selected', false);
+  setAttribute(element, "selected", false);
 }
 
 export function setLoading(element: HTMLElement) {
-  setAttribute(element, 'loading', true);
+  setAttribute(element, "loading", true);
 }
 
 export function setLoaded(element: HTMLElement) {
-  setAttribute(element, 'loading', false);
+  setAttribute(element, "loading", false);
 }
 
 export function toggleSelected(element: HTMLElement) {
-  toggleAttribute(element, 'selected');
+  toggleAttribute(element, "selected");
 }
 
 export function toggleOpen(element: HTMLElement) {
-  toggleAttribute(element, 'open');
+  toggleAttribute(element, "open");
 }
 
-export function debounce<F extends (...params: any[]) => void>(fn: F, delay: number) {
+export function debounce<F extends (...params: any[]) => void>(
+  fn: F,
+  delay: number,
+) {
   /* eslint-disable */
   let timeoutID: number = null;
   return function (this: any, ...args: any[]) {

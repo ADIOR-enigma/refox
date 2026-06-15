@@ -1,29 +1,31 @@
-import { IPalette } from '@definitions';
+import { IPalette } from "@definitions";
 
 const ICON_SIZES = [16, 32, 48];
-const DEFAULT_ICON_PATH = 'icons/logo.svg';
+const DEFAULT_ICON_PATH = "icons/logo.svg";
 const SVG_COLOR_MAP = {
-  '#ed7979': 'background',
-  '#edb979': 'backgroundLight',
-  '#eded79': 'backgroundExtra',
-  '#72e986': 'accentPrimary',
-  '#7d8eef': 'accentSecondary',
-  '#b179ed': 'text',
-  '#000000': 'background',
-  '#201912': 'background',
-  '#e6dcd3': 'textFocus',
-  '#fdfcfb': 'textFocus',
-  '#ffffff': 'accentPrimary',
-  '#cc6816': 'accentPrimary',
-  '#b35c14': 'accentPrimary',
-  '#924a10': 'accentSecondary',
+  "#ed7979": "background",
+  "#edb979": "backgroundLight",
+  "#eded79": "backgroundExtra",
+  "#72e986": "accentPrimary",
+  "#7d8eef": "accentSecondary",
+  "#b179ed": "text",
+  "#000000": "background",
+  "#201912": "background",
+  "#e6dcd3": "textFocus",
+  "#fdfcfb": "textFocus",
+  "#ffffff": "accentPrimary",
+  "#cc6816": "accentPrimary",
+  "#b35c14": "accentPrimary",
+  "#924a10": "accentSecondary",
 };
 
 let logoSvgPromise: Promise<string> = null;
 
 function getLogoSvg() {
   if (logoSvgPromise === null) {
-    logoSvgPromise = fetch(browser.runtime.getURL(DEFAULT_ICON_PATH)).then((response) => response.text());
+    logoSvgPromise = fetch(browser.runtime.getURL(DEFAULT_ICON_PATH)).then(
+      (response) => response.text(),
+    );
   }
 
   return logoSvgPromise;
@@ -31,14 +33,14 @@ function getLogoSvg() {
 
 function createThemedLogoSvg(svg: string, palette: IPalette) {
   const svgWithContextColors = svg
-    .replace(/context-fill-opacity/g, '1')
-    .replace(/context-stroke-opacity/g, '1')
+    .replace(/context-fill-opacity/g, "1")
+    .replace(/context-stroke-opacity/g, "1")
     .replace(/context-fill/g, palette.accentPrimary)
     .replace(/context-stroke/g, palette.accentPrimary);
 
   return Object.keys(SVG_COLOR_MAP).reduce((themedSvg, color) => {
     const paletteKey = SVG_COLOR_MAP[color];
-    return themedSvg.replace(new RegExp(color, 'gi'), palette[paletteKey]);
+    return themedSvg.replace(new RegExp(color, "gi"), palette[paletteKey]);
   }, svgWithContextColors);
 }
 
@@ -58,15 +60,17 @@ function svgToDataUrl(svg: string) {
 
 export async function createThemedIconImageData(palette: IPalette) {
   const svg = await getLogoSvg();
-  const image = await loadImage(svgToDataUrl(createThemedLogoSvg(svg, palette)));
+  const image = await loadImage(
+    svgToDataUrl(createThemedLogoSvg(svg, palette)),
+  );
   const imageData = {};
 
   ICON_SIZES.forEach((size) => {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.width = size;
     canvas.height = size;
 
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
     if (context === null) {
       return;
@@ -81,7 +85,12 @@ export async function createThemedIconImageData(palette: IPalette) {
 }
 
 export async function setThemedBrowserActionIcon(palette: IPalette) {
-  if (!palette || typeof browser === 'undefined' || !browser.browserAction?.setIcon || typeof document === 'undefined') {
+  if (
+    !palette ||
+    typeof browser === "undefined" ||
+    !browser.browserAction?.setIcon ||
+    typeof document === "undefined"
+  ) {
     return;
   }
 
@@ -95,7 +104,7 @@ export async function setThemedBrowserActionIcon(palette: IPalette) {
 }
 
 export function resetBrowserActionIcon() {
-  if (typeof browser === 'undefined' || !browser.browserAction?.setIcon) {
+  if (typeof browser === "undefined" || !browser.browserAction?.setIcon) {
     return Promise.resolve();
   }
 

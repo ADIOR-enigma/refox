@@ -13,9 +13,9 @@ import {
   IDebuggingInfoData,
   IOptionSetData,
   INotificationData,
-} from '@definitions';
+} from "@definitions";
 
-import { EXTENSION_MESSAGES, EXTENSION_OPTIONS } from '@config/general';
+import { EXTENSION_MESSAGES, EXTENSION_OPTIONS } from "@config/general";
 
 function sendMessage(data: any) {
   // Mute errors from sending messages to non-existing listeners
@@ -40,26 +40,45 @@ export function sendDebuggingInfo(info: IDebuggingInfoData) {
   sendMessage({ action: EXTENSION_MESSAGES.DEBUGGING_INFO_SET, data: info });
 }
 
-export function sendNotification(title: string, message: string, error = false) {
+export function sendNotification(
+  title: string,
+  message: string,
+  error = false,
+) {
   const notificationData: INotificationData = { title, message, error };
-  sendMessage({ action: EXTENSION_MESSAGES.NOTIFCATION, data: notificationData });
+  sendMessage({
+    action: EXTENSION_MESSAGES.NOTIFCATION,
+    data: notificationData,
+  });
 }
 
 export function sendPywalColors(pywalColors: IPywalColors) {
-  sendMessage({ action: EXTENSION_MESSAGES.PYWAL_COLORS_SET, data: pywalColors });
+  sendMessage({
+    action: EXTENSION_MESSAGES.PYWAL_COLORS_SET,
+    data: pywalColors,
+  });
 }
 
 export function sendTemplate(template: IColorschemeTemplate) {
   sendMessage({ action: EXTENSION_MESSAGES.TEMPLATE_SET, data: template });
 }
 
-export function sendThemeMode(mode: ThemeModes, templateMode: ITemplateThemeMode) {
+export function sendThemeMode(
+  mode: ThemeModes,
+  templateMode: ITemplateThemeMode,
+) {
   const themeModeData: IThemeModeData = { mode, templateMode };
-  sendMessage({ action: EXTENSION_MESSAGES.THEME_MODE_SET, data: themeModeData });
+  sendMessage({
+    action: EXTENSION_MESSAGES.THEME_MODE_SET,
+    data: themeModeData,
+  });
 }
 
 export function sendTemplateThemeMode(mode: ThemeModes) {
-  sendMessage({ action: EXTENSION_MESSAGES.TEMPLATE_THEME_MODE_SET, data: mode });
+  sendMessage({
+    action: EXTENSION_MESSAGES.TEMPLATE_THEME_MODE_SET,
+    data: mode,
+  });
 }
 
 export function sendOption(option: string, enabled: boolean, value?: any) {
@@ -80,15 +99,24 @@ export function sendAutoTimeEnd(end: ITimeIntervalEndpoint) {
 }
 
 export function sendPaletteTemplate(template: IPaletteTemplate) {
-  sendMessage({ action: EXTENSION_MESSAGES.PALETTE_TEMPLATE_SET, data: template });
+  sendMessage({
+    action: EXTENSION_MESSAGES.PALETTE_TEMPLATE_SET,
+    data: template,
+  });
 }
 
 export function sendThemeTemplate(template: IThemeTemplate) {
-  sendMessage({ action: EXTENSION_MESSAGES.THEME_TEMPLATE_SET, data: template });
+  sendMessage({
+    action: EXTENSION_MESSAGES.THEME_TEMPLATE_SET,
+    data: template,
+  });
 }
 
 export function sendCustomColors(customColors: Partial<IPalette>) {
-  sendMessage({ action: EXTENSION_MESSAGES.CUSTOM_COLORS_SET, data: customColors });
+  sendMessage({
+    action: EXTENSION_MESSAGES.CUSTOM_COLORS_SET,
+    data: customColors,
+  });
 }
 
 export function requestInitialData() {
@@ -117,24 +145,37 @@ export function requestTemplateThemeMode() {
 
 export function requestPaletteColorSet(id: string, color: string) {
   const paletteColorData: Partial<IPalette> = { [id]: color };
-  sendMessage({ action: EXTENSION_MESSAGES.PALETTE_COLOR_SET, data: paletteColorData });
+  sendMessage({
+    action: EXTENSION_MESSAGES.PALETTE_COLOR_SET,
+    data: paletteColorData,
+  });
 }
 
 export function requestFontSizeSet(option: string, size: number) {
   requestOptionSet(option, true, size);
 }
 
-export function requestAutoTimeSet(option: string, time: ITimeIntervalEndpoint) {
+export function requestAutoTimeSet(
+  option: string,
+  time: ITimeIntervalEndpoint,
+) {
   requestOptionSet(option, true, time);
 }
 
-export function requestOptionSet(option: string, enabled: boolean, value?: any) {
+export function requestOptionSet(
+  option: string,
+  enabled: boolean,
+  value?: any,
+) {
   const optionData: IOptionSetData = { option, enabled, value };
   sendMessage({ action: EXTENSION_MESSAGES.OPTION_SET, data: optionData });
 }
 
 export function requestThemeTemplateSet(template: IThemeTemplate) {
-  sendMessage({ action: EXTENSION_MESSAGES.THEME_TEMPLATE_SET, data: template });
+  sendMessage({
+    action: EXTENSION_MESSAGES.THEME_TEMPLATE_SET,
+    data: template,
+  });
 }
 
 export function requestThemeTemplateReset() {
@@ -142,7 +183,10 @@ export function requestThemeTemplateReset() {
 }
 
 export function requestPaletteTemplateSet(template: IPaletteTemplate) {
-  sendMessage({ action: EXTENSION_MESSAGES.PALETTE_TEMPLATE_SET, data: template });
+  sendMessage({
+    action: EXTENSION_MESSAGES.PALETTE_TEMPLATE_SET,
+    data: template,
+  });
 }
 
 export function requestPaletteTemplateReset() {
@@ -158,7 +202,10 @@ export function requestNativeErrorPageMute() {
 }
 
 export function sendCssEnableConfirmation(target: string) {
-  sendMessage({ action: EXTENSION_MESSAGES.CSS_ENABLE_CONFIRMATION, data: target });
+  sendMessage({
+    action: EXTENSION_MESSAGES.CSS_ENABLE_CONFIRMATION,
+    data: target,
+  });
 }
 
 export function requestExtensionTheme() {
