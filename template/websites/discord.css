@@ -64,6 +64,10 @@
             --pywalfox-accent-secondary,
             hsl(var(--blurple-14-hsl)/1)
         ) !important;
+        --blurple-10: var(
+            --pywalfox-background-extra,
+            hsl(var(--blurple-10-hsl)/1)
+        ) !important;
 
         /* Text Colors */
         --neutral-5: var(

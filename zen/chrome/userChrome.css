@@ -1,0 +1,19 @@
+:root {
+	--zen-primary-color: var(--zen-accent-primary) !important;
+}
+
+#navigator-toolbox {
+	background: var(--zen-background) !important;
+}
+
+#zen-appcontent-wrapper {
+	background: var(--zen-background) !important;
+}
+
+#tabbrowser-tabs {
+  & .tabbrowser-tab {
+    &[selected] .tab-background {
+      background: var(--zen-colors-primary) !important;
+    }
+  }
+}
