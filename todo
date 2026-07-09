@@ -1,7 +1,5 @@
-1. ensure color load on firefox boot
 2. remove extra settings
-3. logos to accent color
+3. main logo to accent color
 4. header icon
 5. update path in setup.py (whole delete no parse)
-6. AUR
 7. keybind
