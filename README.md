@@ -1,12 +1,11 @@
 > [!Note]
 > The Website templates are in WIP.
-
-<h1 align="center">
-  <a name="logo"><img src="images/refox_animated_logo.gif" alt="Pywalfox icon" width="150"></a>
-  <br>
-  Re:fox
-</h1>
-<h4 align="center">🎨 Dynamic theming of Firefox 🦊 using your Native color scheme generator, [A fork of Pywalfox]</h4>
+<div align="center">
+  <img src="images/refox_animated_logo.gif" alt="Pywalfox icon" width="150">
+  
+  # Re:fox
+  ###### 🎨 Dynamic theming of Firefox-based browser using your Native color scheme generator, [A fork of Pywalfox]
+</div>
 
 ## What's new?
 
@@ -14,11 +13,11 @@ Pywalfox does a great job theming the Firefox UI ~ toolbar, tabs, the works. But
 
 https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
 
-## ⏺ Installation
+## ⏺ Installation [tested on arch only]
 
 1. Get the latest add-on from [Releases Page](https://github.com/ADIOR-enigma/refox/releases/tag/v3.0.6) and pin it to toolbar for a surprise.
    > - It does autoupdate 😅
-1. Install the [native messaging application](https://github.com/Frewacom/pywalfox-native) ([PyPI](https://pypi.org/project/pywalfox/)) using your preferred method, with e.g. `pip` or `pipx`:
+1. <del>Install the [native messaging application](https://github.com/Frewacom/pywalfox-native) ([PyPI](https://pypi.org/project/pywalfox/)) using your preferred method, with e.g. `pip` or `pipx`:
    ```sh
    pipx install pywalfox
    ```
@@ -28,13 +27,14 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
    > - **Ubuntu:** `apt install pipx`
    > - **macOS:** `brew install pipx`
    > - **Windows:** `winget install Python.Python.3.14`, then `pip install pywalfox` instead
-1. Run `pywalfox install` in your terminal.
+   </del>
+1. <del>Run `pywalfox install` in your terminal.
    - Firefox forks (e.g. LibreWolf) require [extra arguments](#firefox-forks). Flatpaks require [extra steps](#flatpaks).
-1. Run `sudo python setup.py` to make this extension compatible with pywalfox-native.
-   > - It is currently tested on Arch/CachyOS only, u guys can post PRs/Issues if it works on ur system.
-1. Restart Firefox.
-1. Generate a theme with [Matugen](https://github.com/InioX/matugen) or equivalent. You may refer to there guide.
-1. Click the Refox icon in the Firefox UI and then "Fetch Native colors".
+   </del>
+1. Run `sudo install.sh` to automate the install in arch [works on Firefox, Librewolf, Floorp, Mercury, Zen].
+   > - Post PRs/Issues to enrich the ecosystem.
+1. Generate a theme with [Matugen](https://github.com/InioX/matugen) or equivalent. You may refer to there guide where the output must be `$HOME/.cache/wal/colors.json`.
+1. Changing your wallpaper should theme the firefox or you can click the Refox icon in the Firefox UI and then "Fetch Native colors".
 <!--(or use the [AUR package](https://aur.archlinux.org/packages/python-pywalfox/))-->
 
 This should apply a theme with your Native colors!
