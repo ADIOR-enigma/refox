@@ -41,7 +41,7 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
 This should apply a theme with your Native colors!
 
 > [!NOTE]
-> If you have problems: please review the Troubleshooting section below before opening a Github issue.
+> If you have problems: please review the Troubleshooting section below before opening a Github issue/PR.
 
 ## ⏺ Usage
 
@@ -254,6 +254,8 @@ If you can not run `pywalfox` from the command line (without specifying an absol
 
 > [!IMPORTANT]
 > The errors in the browser console are not limited to just Refox!
+> 
+> POST PRs To THE >dev< BRANCH
 
 ## 🚧 Development setup
 
