@@ -1,6 +1,6 @@
 {
   "name": "refox",
-  "version": "3.0.3",
+  "version": "3.0.6",
   "description": "Extension for dynamic theming of your browser using your native colors ",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "build:source": "bestzip artifacts/source.zip extension src tsconfig.json package.json yarn.lock rollup.config.mjs LICENSE README.md"
   },
   "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/firefox-webext-browser": "^143.0.0",
     "@types/jest": "^30.0.0",
@@ -52,7 +52,7 @@
     "ts-jest": "^29.4.6",
     "tslib": "^2.0.0",
     "typescript": "^5.9.3",
-    "web-ext": "^9.2.0"
+    "web-ext": "^10.5.0"
   },
   "webExt": {
     "verbose": false,
