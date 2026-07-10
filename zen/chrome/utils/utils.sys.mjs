@@ -945,12 +945,15 @@ export function loadURI(win,desc){
     ){
     return false
   }
-  const isJsURI = desc.url.slice(0,11) === "javascript:";
+  const normalizedURL = desc.url.trim().toLowerCase();
+  const isExecutableURI = normalizedURL.startsWith("javascript:")
+    || normalizedURL.startsWith("data:")
+    || normalizedURL.startsWith("vbscript:");
   try{
     win.openTrustedLinkIn(
       desc.url,
       desc.where,
-      { "allowPopups":isJsURI,
+      { "allowPopups":isExecutableURI,
         "inBackground":false,
         "allowInheritPrincipal":false,
         "private":!!desc.private,
