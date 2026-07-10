@@ -255,7 +255,7 @@ If you can not run `pywalfox` from the command line (without specifying an absol
 > [!IMPORTANT]
 > The errors in the browser console are not limited to just Refox!
 > 
-> POST PRs To THE >dev< BRANCH
+> POST PRs TO THE >dev< BRANCH
 
 ## 🚧 Development setup
 
