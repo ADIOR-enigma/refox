@@ -1,13 +1,9 @@
-import {
-  ThemeModes,
-  INodeLookup,
-  ITemplateThemeMode,
-} from '@definitions';
+import { ThemeModes, INodeLookup, ITemplateThemeMode } from "@definitions";
 
-import { setSelected, setDeselected } from '@utils/dom';
-import { requestThemeModeSet } from '@communication/content-scripts/ui';
+import { setSelected, setDeselected } from "@utils/dom";
+import { requestThemeModeSet } from "@communication/content-scripts/ui";
 
-import Dialog from './dialog';
+import Dialog from "./dialog";
 
 export default class Themepicker extends Dialog {
   private themeSelectButton: HTMLElement;
@@ -16,10 +12,10 @@ export default class Themepicker extends Dialog {
   private currentClassName: ThemeModes;
 
   constructor() {
-    super('themepicker');
+    super("themepicker");
 
-    this.themeSelectButton = document.getElementById('theme-select');
-    this.modeButtons = document.querySelectorAll('button[data-theme]');
+    this.themeSelectButton = document.getElementById("theme-select");
+    this.modeButtons = document.querySelectorAll("button[data-theme]");
     this.modeLookup = {};
     this.currentClassName = null;
     this.setupListeners();
@@ -27,9 +23,9 @@ export default class Themepicker extends Dialog {
 
   private setupListeners() {
     this.modeButtons.forEach((button: HTMLElement) => {
-      const buttonMode: string = button.getAttribute('data-theme');
+      const buttonMode: string = button.getAttribute("data-theme");
       this.modeLookup[buttonMode] = button; // For setting the selected button when changing modes
-      button.addEventListener('click', () => this.onSetMode(button));
+      button.addEventListener("click", () => this.onSetMode(button));
     });
   }
 
@@ -42,16 +38,19 @@ export default class Themepicker extends Dialog {
       switch (mode) {
         // TODO: Remove call to 'innerHTML'
         case ThemeModes.Dark:
-          this.themeSelectButton.innerHTML = '<i icon="moon" class="icon-md"></i>Dark mode';
+          this.themeSelectButton.innerHTML =
+            '<i icon="moon" class="icon-md"></i>Dark mode';
           break;
         case ThemeModes.Light:
-          this.themeSelectButton.innerHTML = '<i icon="sun" class="icon-md"></i>Light mode';
+          this.themeSelectButton.innerHTML =
+            '<i icon="sun" class="icon-md"></i>Light mode';
           break;
         case ThemeModes.Auto:
-          this.themeSelectButton.innerHTML = '<i icon="auto" class="icon-md"></i>Auto mode';
+          this.themeSelectButton.innerHTML =
+            '<i icon="auto" class="icon-md"></i>Auto mode';
           break;
         default:
-          console.error('Invalid theme type');
+          console.error("Invalid theme type");
       }
     }
 
@@ -60,11 +59,11 @@ export default class Themepicker extends Dialog {
   }
 
   private applyAutoBodyClass() {
-    document.body.classList.add('auto');
+    document.body.classList.add("auto");
   }
 
   private removeAutoBodyClass() {
-    document.body.classList.remove('auto');
+    document.body.classList.remove("auto");
   }
 
   public setTemplateBodyClass(mode: ITemplateThemeMode) {
@@ -78,7 +77,7 @@ export default class Themepicker extends Dialog {
   }
 
   private onSetMode(target: HTMLElement) {
-    const mode = <ThemeModes>target.getAttribute('data-theme');
+    const mode = <ThemeModes>target.getAttribute("data-theme");
     requestThemeModeSet(mode);
     this.selectMode(target, mode);
   }
@@ -89,7 +88,9 @@ export default class Themepicker extends Dialog {
     if (targetButton) {
       this.selectMode(targetButton, mode);
     } else {
-      console.error(`Could not find target button associated with the mode: ${mode}`);
+      console.error(
+        `Could not find target button associated with the mode: ${mode}`,
+      );
     }
 
     if (mode === ThemeModes.Auto) {

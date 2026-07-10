@@ -5,21 +5,21 @@ import {
   DuckDuckGoThemeKeys,
   DuckDuckGoSettingKeys,
   IDuckDuckGoThemeSetData,
-} from '@definitions';
+} from "@definitions";
 
-import { EXTENSION_MESSAGES } from '@config/general';
-import { requestTheme } from '@communication/content-scripts/duckduckgo';
+import { EXTENSION_MESSAGES } from "@config/general";
+import { requestTheme } from "@communication/content-scripts/duckduckgo";
 
 function getTheme() {
   return window.wrappedJSObject.DDG.settings.get(DuckDuckGoSettingKeys.ThemeId);
 }
 
 function getHash() {
-  return window.localStorage.getItem('hash');
+  return window.localStorage.getItem("hash");
 }
 
 function setHash(hash: string) {
-  window.localStorage.setItem('hash', hash);
+  window.localStorage.setItem("hash", hash);
 }
 
 function onResetTheme() {
@@ -29,7 +29,7 @@ function onResetTheme() {
 
   // TODO: We could send the reset theme from the background script based on the current theme mode
   window.wrappedJSObject.DDG.settings.setTheme(DuckDuckGoThemeKeys.Dark);
-  setHash('');
+  setHash("");
 }
 
 function applyTheme(hash: string, theme: IDuckDuckGoTheme) {
@@ -71,4 +71,4 @@ function onMessage({ action, data }: IExtensionMessage) {
 browser.runtime.onMessage.addListener(onMessage);
 requestTheme();
 
-console.log('Refox content script loaded');
+console.log("Refox content script loaded");

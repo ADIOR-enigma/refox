@@ -1,0 +1,85 @@
+/* Popup */
+menupopup {
+    --panel-background: var(--lwt-accent-color) !important;
+    --panel-border-color: var(
+        --toolbar-field-focus-background-color
+    ) !important;
+}
+
+/* Items */
+menu,
+menuitem {
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+
+    background-color: transparent !important;
+    color: var(--lwt-text-color) !important;
+
+    transition:
+        background-color 120ms ease,
+        color 120ms ease;
+}
+
+/* Hover */
+menu[_moz-menuactive]:not([disabled]),
+menuitem[_moz-menuactive]:not([disabled]) {
+    background-color: var(--toolbarbutton-hover-background) !important;
+    color: var(--toolbarbutton-icon-fill) !important;
+}
+
+/* Menubar */
+menubar > menu[open] {
+    border-bottom: 2px solid var(--tab-loading-fill) !important;
+}
+
+/* Separator */
+menuseparator::before {
+    border-top: 1px solid var(--toolbar-field-focus-background-color) !important;
+}
+
+/* Disabled */
+menuitem[disabled] {
+    color: var(--toolbar-field-background-color) !important;
+}
+
+/* Checkbox */
+menuitem[type="checkbox"] > .menu-icon,
+menuitem[type="radio"] > .menu-icon {
+    appearance: none !important;
+    -moz-default-appearance: none !important;
+
+    border: 2px solid var(--toolbar-field-focus-background-color) !important;
+    border-radius: 50%;
+
+    transition: all 120ms ease;
+}
+
+/* Checkbox shape */
+menuitem[type="checkbox"] > .menu-icon {
+    border-radius: 4px;
+}
+
+/* Checked */
+menuitem[type="checkbox"][checked] > .menu-icon,
+menuitem[type="radio"][checked] > .menu-icon {
+    background-color: var(--toolbarbutton-icon-fill) !important;
+    border-color: var(--toolbarbutton-icon-fill) !important;
+}
+
+/* Hover effect on toggle */
+menuitem[_moz-menuactive] > .menu-icon {
+    border-color: var(--toolbarbutton-icon-fill) !important;
+}
+
+/* Hover + checked */
+menuitem[_moz-menuactive][checked] > .menu-icon {
+    filter: brightness(1.1);
+}
+
+/* Hide bottom sidebar buttons
+#vertical-tabs-newtab-button,
+#sidebar-tools-and-extensions-splitter,
+#tabs-newtab-button,
+.buttons-wrapper {
+    display: none !important;
+} */

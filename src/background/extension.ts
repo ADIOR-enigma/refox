@@ -12,7 +12,7 @@ import {
   INativeAppError,
   ThemeModes,
   CSSTargets,
-} from '@definitions';
+} from "@definitions";
 
 import {
   EXTENSION_PAGES,
@@ -21,22 +21,22 @@ import {
   EXTENSION_MESSAGES,
   DEFAULT_CSS_FONT_SIZE,
   MIN_REQUIRED_DAEMON_VERSION,
-} from '@config/general';
+} from "@config/general";
 
 import {
   DEFAULT_THEME_DARK,
   DEFAULT_THEME_LIGHT,
-} from '@config/default-themes';
+} from "@config/default-themes";
 
-import Messenger from '@communication/messenger';
-import NativeMessenger from '@communication/native-messenger';
-import DarkreaderMessenger from '@communication/darkreader-messenger';
+import Messenger from "@communication/messenger";
+import NativeMessenger from "@communication/native-messenger";
+import DarkreaderMessenger from "@communication/darkreader-messenger";
 
-import State from './state';
-import AutoMode from './auto-mode';
-import Generators from './generators';
-import { resetBrowserActionIcon, setThemedBrowserActionIcon } from './icon';
-import ExtensionPage from './extension-page';
+import State from "./state";
+import AutoMode from "./auto-mode";
+import Generators from "./generators";
+import { resetBrowserActionIcon, setThemedBrowserActionIcon } from "./icon";
+import ExtensionPage from "./extension-page";
 
 export default class Extension {
   private state: State;
@@ -57,7 +57,9 @@ export default class Extension {
     this.stateLoadPromise = null;
     this.websiteThemeTabIds = new Set();
     this.websiteContentScript = null;
-    this.darkreaderMessenger = new DarkreaderMessenger(this.onDarkreaderError.bind(this));
+    this.darkreaderMessenger = new DarkreaderMessenger(
+      this.onDarkreaderError.bind(this),
+    );
     this.autoMode = new AutoMode(this.onThemeChangeTrigger.bind(this));
     this.nativeMessenger = new NativeMessenger({
       connected: this.nativeAppConnected.bind(this),
@@ -85,11 +87,13 @@ export default class Extension {
     const themeMode = this.state.getThemeMode();
 
     if (!themeMode) {
-      console.error('Failed to get default template: theme mode is not set');
+      console.error("Failed to get default template: theme mode is not set");
       return null;
     }
 
-    return themeMode === ThemeModes.Dark ? DEFAULT_THEME_DARK : DEFAULT_THEME_LIGHT;
+    return themeMode === ThemeModes.Dark
+      ? DEFAULT_THEME_DARK
+      : DEFAULT_THEME_LIGHT;
   }
 
   private startAutoThemeMode() {
@@ -99,7 +103,10 @@ export default class Extension {
 
   private setOption(optionData: IOptionSetData) {
     if (!optionData) {
-      Messenger.UI.sendDebuggingOutput('Tried to set option, but no data was provided', true);
+      Messenger.UI.sendDebuggingOutput(
+        "Tried to set option, but no data was provided",
+        true,
+      );
       return;
     }
 
@@ -134,7 +141,10 @@ export default class Extension {
         this.setUpdateMuted(optionData);
         break;
       default:
-        Messenger.UI.sendDebuggingOutput(`Received unhandled option: ${optionData.option}`, true);
+        Messenger.UI.sendDebuggingOutput(
+          `Received unhandled option: ${optionData.option}`,
+          true,
+        );
     }
   }
 
@@ -162,7 +172,10 @@ export default class Extension {
   }
 
   /* Handles incoming messages from the UI and other content scripts. */
-  private async onMessage({ action, data }: IExtensionMessage, sender?: browser.runtime.MessageSender) {
+  private async onMessage(
+    { action, data }: IExtensionMessage,
+    sender?: browser.runtime.MessageSender,
+  ) {
     switch (action) {
       case EXTENSION_MESSAGES.INITIAL_DATA_GET:
         // If the settings page is open on firefox startup, the initial data will be
@@ -220,9 +233,15 @@ export default class Extension {
           await this.stateLoadPromise;
         }
 
-        if (this.state.getWebsiteCssVariablesEnabled() && sender?.tab?.id !== undefined) {
+        if (
+          this.state.getWebsiteCssVariablesEnabled() &&
+          sender?.tab?.id !== undefined
+        ) {
           this.websiteThemeTabIds.add(sender.tab.id);
-          Messenger.Website.setThemeForTab(sender.tab.id, this.getWebsiteTheme());
+          Messenger.Website.setThemeForTab(
+            sender.tab.id,
+            this.getWebsiteTheme(),
+          );
         }
         break;
       default:
@@ -231,10 +250,15 @@ export default class Extension {
   }
 
   private updateBrowserActionIcon(palette: IPalette) {
-    const iconPromise = palette ? setThemedBrowserActionIcon(palette) : resetBrowserActionIcon();
+    const iconPromise = palette
+      ? setThemedBrowserActionIcon(palette)
+      : resetBrowserActionIcon();
 
     iconPromise.catch((error) => {
-      Messenger.UI.sendDebuggingOutput(`Could not update browser action icon: ${error}`, true);
+      Messenger.UI.sendDebuggingOutput(
+        `Could not update browser action icon: ${error}`,
+        true,
+      );
     });
   }
 
@@ -286,10 +310,14 @@ export default class Extension {
     }
 
     try {
-      this.websiteContentScript = await Messenger.Website.registerContentScript();
+      this.websiteContentScript =
+        await Messenger.Website.registerContentScript();
       return true;
     } catch (error) {
-      Messenger.UI.sendDebuggingOutput(`Could not register website CSS variables content script: ${error}`, true);
+      Messenger.UI.sendDebuggingOutput(
+        `Could not register website CSS variables content script: ${error}`,
+        true,
+      );
       return false;
     }
   }
@@ -320,17 +348,25 @@ export default class Extension {
     // in the same awaited call — guaranteeing the listener is registered before
     // WEBSITE_THEME_SET arrives. Firing setTheme after a bulk injectScripts()
     // call races against script execution and the message is silently dropped.
-    await Promise.all(tabs.map(async (tab) => {
-      if (tab.id === undefined) return;
-      const injected = await Messenger.Website.injectScriptAndSetTheme(tab.id, websiteTheme);
-      if (injected) {
-        this.websiteThemeTabIds.add(tab.id);
-      }
-    }));
+    await Promise.all(
+      tabs.map(async (tab) => {
+        if (tab.id === undefined) return;
+        const injected = await Messenger.Website.injectScriptAndSetTheme(
+          tab.id,
+          websiteTheme,
+        );
+        if (injected) {
+          this.websiteThemeTabIds.add(tab.id);
+        }
+      }),
+    );
   }
 
-  private onTabUpdated(tabId: number, changeInfo: browser.tabs._OnUpdatedChangeInfo) {
-    if (this.state.currentState && changeInfo.status === 'loading') {
+  private onTabUpdated(
+    tabId: number,
+    changeInfo: browser.tabs._OnUpdatedChangeInfo,
+  ) {
+    if (this.state.currentState && changeInfo.status === "loading") {
       this.websiteThemeTabIds.delete(tabId);
     }
   }
@@ -343,7 +379,11 @@ export default class Extension {
     const isConnected = this.state.getConnected();
 
     if (!isConnected) {
-      Messenger.UI.sendNotification('Fetch failed', 'You are not connected to the RE:fox daemon', true);
+      Messenger.UI.sendNotification(
+        "Fetch failed",
+        "You are not connected to the RE:fox daemon",
+        true,
+      );
       return;
     }
 
@@ -373,13 +413,21 @@ export default class Extension {
     this.state.setCustomColors(null);
     this.state.setApplied(false);
 
-    Messenger.UI.sendDebuggingOutput('Theme was disabled');
+    Messenger.UI.sendDebuggingOutput("Theme was disabled");
   }
 
-  private setThemes(pywalColors: IPywalColors, customColors?: Partial<IPalette>) {
+  private setThemes(
+    pywalColors: IPywalColors,
+    customColors?: Partial<IPalette>,
+  ) {
     const mode = this.state.getTemplateThemeMode();
     const template = this.state.getTemplate();
-    const colorscheme = Generators.colorscheme(mode, pywalColors, customColors, template);
+    const colorscheme = Generators.colorscheme(
+      mode,
+      pywalColors,
+      customColors,
+      template,
+    );
 
     this.updateWebsiteTheme(colorscheme.website);
     this.setBrowserTheme(colorscheme.browser, mode);
@@ -432,8 +480,11 @@ export default class Extension {
     }
   }
 
-  private setBrowserTheme(browserTheme: IBrowserTheme, mode?: ThemeModes.Dark | ThemeModes.Light) {
-    const modeString = (mode === ThemeModes.Dark) ? 'dark' : 'light';
+  private setBrowserTheme(
+    browserTheme: IBrowserTheme,
+    mode?: ThemeModes.Dark | ThemeModes.Light,
+  ) {
+    const modeString = mode === ThemeModes.Dark ? "dark" : "light";
 
     browser.theme.update({
       colors: browserTheme,
@@ -459,7 +510,10 @@ export default class Extension {
     this.state.setDDGThemeEnabled(enabled);
   }
 
-  private async setWebsiteCssVariablesEnabled({ option, enabled }: IOptionSetData) {
+  private async setWebsiteCssVariablesEnabled({
+    option,
+    enabled,
+  }: IOptionSetData) {
     const isEnabled = this.state.getWebsiteCssVariablesEnabled();
 
     if (enabled && !isEnabled) {
@@ -468,8 +522,8 @@ export default class Extension {
       if (!registered) {
         Messenger.UI.sendOption(option, false);
         Messenger.UI.sendNotification(
-          'Website CSS variables',
-          'Could not register website CSS variables content script',
+          "Website CSS variables",
+          "Could not register website CSS variables content script",
           true,
         );
         return;
@@ -549,7 +603,11 @@ export default class Extension {
     }
   }
 
-  private setCustomCSSEnabled({ option, enabled, skipConfirmation }: IOptionSetData) {
+  private setCustomCSSEnabled({
+    option,
+    enabled,
+    skipConfirmation,
+  }: IOptionSetData) {
     if (Object.values(CSSTargets).includes(<CSSTargets>option)) {
       if (enabled && !skipConfirmation && !this.state.getCssEnabled(option)) {
         Messenger.UI.sendCssEnableConfirmation(option);
@@ -557,23 +615,36 @@ export default class Extension {
       }
       this.nativeMessenger.requestCssEnabled(option, enabled);
     } else {
-      const action = enabled ? 'enable' : 'disable';
-      Messenger.UI.sendNotification('Custom CSS', `Could not ${action} CSS target "${option}". Invalid target`, true);
+      const action = enabled ? "enable" : "disable";
+      Messenger.UI.sendNotification(
+        "Custom CSS",
+        `Could not ${action} CSS target "${option}". Invalid target`,
+        true,
+      );
       Messenger.UI.sendOption(option, !enabled);
     }
   }
 
   private setCssFontSize(value: number) {
-    if (typeof value === 'number' && value !== undefined && value >= 10 && value <= 20) {
+    if (
+      typeof value === "number" &&
+      value !== undefined &&
+      value >= 10 &&
+      value <= 20
+    ) {
       // Currently, only userChrome uses the custom font size feature
       this.nativeMessenger.requestFontSizeSet(CSSTargets.UserChrome, value);
     } else {
-      Messenger.UI.sendNotification('Font size error', 'Invalid size or not set', true);
+      Messenger.UI.sendNotification(
+        "Font size error",
+        "Invalid size or not set",
+        true,
+      );
     }
   }
 
   private setSavedColorscheme(colorscheme: IColorscheme) {
-    console.log('Applying saved colorscheme');
+    console.log("Applying saved colorscheme");
     this.updateWebsiteTheme(this.getWebsiteTheme());
     this.setBrowserTheme(colorscheme.browser);
     this.updateBrowserActionIcon(colorscheme.palette);
@@ -586,7 +657,9 @@ export default class Extension {
     await this.state.setIsDay(isDay);
     this.updateThemeForCurrentMode();
     Messenger.UI.sendTemplateThemeMode(this.state.getTemplateThemeMode());
-    Messenger.UI.sendDebuggingOutput(`Theme update triggered by automatic theme mode. Is day: ${isDay}`);
+    Messenger.UI.sendDebuggingOutput(
+      `Theme update triggered by automatic theme mode. Is day: ${isDay}`,
+    );
   }
 
   private updateThemeForCurrentMode() {
@@ -705,7 +778,10 @@ export default class Extension {
       Messenger.UI.sendAutoTimeEnd(value);
     }
 
-    Messenger.UI.sendNotification('Auto mode', 'Light theme interval was updated successfully');
+    Messenger.UI.sendNotification(
+      "Auto mode",
+      "Light theme interval was updated successfully",
+    );
   }
 
   private createCustomColorPalette(data: Partial<IPalette>) {
@@ -728,7 +804,9 @@ export default class Extension {
 
   private updateNeeded() {
     if (this.state.getUpdateMuted()) {
-      console.log('Update is required, but user has muted update notifications');
+      console.log(
+        "Update is required, but user has muted update notifications",
+      );
       return;
     }
 
@@ -765,7 +843,9 @@ export default class Extension {
 
   private async onPywalColorsFetchSuccess({ colors }: IPywalData) {
     const pywalPalette = Generators.pywalPalette(colors);
-    Messenger.UI.sendDebuggingOutput('Native colors were fetched from daemon and applied successfully');
+    Messenger.UI.sendDebuggingOutput(
+      "Native colors were fetched from daemon and applied successfully",
+    );
     Messenger.UI.sendPywalColors(pywalPalette);
 
     // We must make sure to reset all custom colors for both theme modes or
@@ -781,7 +861,7 @@ export default class Extension {
   }
 
   private onPywalColorsFetchFailed(error: string) {
-    Messenger.UI.sendNotification('Pywal colors', error, true);
+    Messenger.UI.sendNotification("Pywal colors", error, true);
   }
 
   private cssToggleSuccess(target: CSSTargets) {
@@ -805,25 +885,28 @@ export default class Extension {
     this.state.setCssEnabled(target, newState);
 
     Messenger.UI.sendOption(target, newState);
-    Messenger.UI.sendNotification('Restart needed', notificationMessage);
+    Messenger.UI.sendNotification("Restart needed", notificationMessage);
   }
 
   private cssToggleFailed(target: string, error: string) {
     const currentState = this.state.getCssEnabled(target);
 
     Messenger.UI.sendOption(target, currentState);
-    Messenger.UI.sendNotification('Custom CSS', error);
+    Messenger.UI.sendNotification("Custom CSS", error);
   }
 
   private cssFontSizeSetSuccess(size: number) {
     this.state.setCssFontSize(size);
 
-    Messenger.UI.sendNotification('Restart needed', 'Updated base font size successfully');
+    Messenger.UI.sendNotification(
+      "Restart needed",
+      "Updated base font size successfully",
+    );
     Messenger.UI.sendFontSize(size);
   }
 
   private cssFontSizeSetFailed(error: string) {
-    Messenger.UI.sendNotification('Font size', error, false);
+    Messenger.UI.sendNotification("Font size", error, false);
   }
 
   private themeModeSet(mode: ThemeModes) {
@@ -835,14 +918,17 @@ export default class Extension {
     this.updatePage = new ExtensionPage(EXTENSION_PAGES.UPDATE);
     this.nativeErrorPage = new ExtensionPage(EXTENSION_PAGES.NATIVE_ERROR);
 
-    this.stateLoadPromise = this.state.load(this.updateThemeForCurrentMode.bind(this));
+    this.stateLoadPromise = this.state.load(
+      this.updateThemeForCurrentMode.bind(this),
+    );
     await this.stateLoadPromise;
     this.stateLoadPromise = null;
 
     const isApplied = this.state.getApplied();
     const shouldFetch = this.state.getFetchOnStartupEnabled();
     const isDarkreaderEnabled = this.state.getDarkreaderEnabled();
-    const isWebsiteCssVariablesEnabled = this.state.getWebsiteCssVariablesEnabled();
+    const isWebsiteCssVariablesEnabled =
+      this.state.getWebsiteCssVariablesEnabled();
 
     this.nativeMessenger.connect();
 
@@ -871,7 +957,10 @@ export default class Extension {
           }
         })
         .catch((error) => {
-          Messenger.UI.sendDebuggingOutput(`Could not initialize website CSS variables: ${error}`, true);
+          Messenger.UI.sendDebuggingOutput(
+            `Could not initialize website CSS variables: ${error}`,
+            true,
+          );
         });
     }
   }

@@ -1,15 +1,24 @@
-import { setVersionLabel } from '@utils/dom';
-import { EXTENSION_MESSAGES } from '@config/general';
-import { IExtensionMessage, IExtensionMessageCallback, ThemeModes } from '@definitions';
-import { requestTemplateThemeMode, requestExtensionTheme } from '@communication/content-scripts/ui';
+import { setVersionLabel } from "@utils/dom";
+import { EXTENSION_MESSAGES } from "@config/general";
+import {
+  IExtensionMessage,
+  IExtensionMessageCallback,
+  ThemeModes,
+} from "@definitions";
+import {
+  requestTemplateThemeMode,
+  requestExtensionTheme,
+} from "@communication/content-scripts/ui";
 
 let currentThemeMode: ThemeModes = null;
 let messageCallback: IExtensionMessageCallback = null;
 
-const EXTENSION_THEME_STYLE_ID = 'pywalfox-extension-theme';
+const EXTENSION_THEME_STYLE_ID = "pywalfox-extension-theme";
 
 export function applyExtensionTheme(css: string | null) {
-  let styleElement = document.getElementById(EXTENSION_THEME_STYLE_ID) as HTMLStyleElement | null;
+  let styleElement = document.getElementById(
+    EXTENSION_THEME_STYLE_ID,
+  ) as HTMLStyleElement | null;
 
   if (css === null) {
     if (styleElement) {
@@ -19,7 +28,7 @@ export function applyExtensionTheme(css: string | null) {
   }
 
   if (!styleElement) {
-    styleElement = document.createElement('style');
+    styleElement = document.createElement("style");
     styleElement.id = EXTENSION_THEME_STYLE_ID;
     document.head.appendChild(styleElement);
   }

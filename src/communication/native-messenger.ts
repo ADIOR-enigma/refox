@@ -5,9 +5,9 @@ import {
   INativeAppMessage,
   INativeAppRequest,
   INativeAppMessageCallbacks,
-} from '@definitions';
+} from "@definitions";
 
-import { RESPONSE_TIMEOUT_MS, NATIVE_MESSAGES } from '@config/general';
+import { RESPONSE_TIMEOUT_MS, NATIVE_MESSAGES } from "@config/general";
 
 /**
  * Implements the communcation with the native messaging host.
@@ -39,11 +39,13 @@ export default class NativeApp {
   }
 
   private getData(message: INativeAppMessage) {
-    if (message.hasOwnProperty('data')) {
+    if (message.hasOwnProperty("data")) {
       return message.data;
     }
 
-    this.logError('Recieved invalid message from native app. The \'data\' field is undefined.');
+    this.logError(
+      "Recieved invalid message from native app. The 'data' field is undefined.",
+    );
     return null;
   }
 
@@ -70,7 +72,9 @@ export default class NativeApp {
         this.onThemeModeResponse(message);
         break;
       case NATIVE_MESSAGES.INVALID_ACTION:
-        this.logError(`Native app recieved unhandled message action: ${message.action}`);
+        this.logError(
+          `Native app recieved unhandled message action: ${message.action}`,
+        );
         break;
       default:
         this.logError(`Received unhandled message action: ${message.action}`);
@@ -98,11 +102,11 @@ export default class NativeApp {
     const pywalData = this.getData(message);
 
     if (!pywalData) {
-      this.logError('Color data was read successfully but contained null');
+      this.logError("Color data was read successfully but contained null");
       return;
     }
 
-    if (pywalData.hasOwnProperty('wallpaper')) {
+    if (pywalData.hasOwnProperty("wallpaper")) {
       this.callbacks.pywalColorsFetchSuccess(pywalData);
     } else {
       /* Native app version >= 2.7 returns a completely different response type compared
@@ -110,7 +114,10 @@ export default class NativeApp {
        * The backwards compatibility fix is simple, so I figured it is fine to leave it in here
        * if the user does not want to update for some reason.
        */
-      this.callbacks.pywalColorsFetchSuccess({ colors: pywalData, wallpaper: null });
+      this.callbacks.pywalColorsFetchSuccess({
+        colors: pywalData,
+        wallpaper: null,
+      });
     }
   }
 
@@ -119,7 +126,9 @@ export default class NativeApp {
 
     if (message.success) {
       if (!target) {
-        this.logError('Custom CSS was applied successfully, but the target was not specified');
+        this.logError(
+          "Custom CSS was applied successfully, but the target was not specified",
+        );
         return;
       }
 
@@ -134,7 +143,9 @@ export default class NativeApp {
       const updatedFontSize = this.getData(message);
 
       if (!updatedFontSize) {
-        this.logError('Font size was updated successfully, but the new size was not specified');
+        this.logError(
+          "Font size was updated successfully, but the new size was not specified",
+        );
         return;
       }
 
@@ -148,7 +159,9 @@ export default class NativeApp {
     const mode: string = this.getData(message);
 
     if (!mode) {
-      this.logError('Received theme mode command, but the new mode was not specified');
+      this.logError(
+        "Received theme mode command, but the new mode was not specified",
+      );
       return;
     }
 
@@ -159,7 +172,9 @@ export default class NativeApp {
     } else if (mode === ThemeModes.Auto) {
       this.callbacks.themeModeSet(ThemeModes.Auto);
     } else {
-      this.logError(`Received theme mode command, but the mode "${mode}" was invalid`);
+      this.logError(
+        `Received theme mode command, but the mode "${mode}" was invalid`,
+      );
     }
   }
 
@@ -181,10 +196,10 @@ export default class NativeApp {
 
     if (error) {
       switch (error.message) {
-        case 'Error: No such native application refox':
+        case "Error: No such native application refox":
           nativeError.type = NativeAppErrors.ManifestNotInstalled;
           break;
-        case 'Error: An unexpected error occurred':
+        case "Error: An unexpected error occurred":
           // BUG: For some reason, the "File at path <path> does not exist, or is not executable"
           // error does not get set, so we will just assume that is the cause for this for now.
           nativeError.type = NativeAppErrors.UnexpectedError;
@@ -210,7 +225,7 @@ export default class NativeApp {
   private sendMessage(message: INativeAppRequest) {
     if (!this.isConnected) {
       // If we are not connected, it means that an error occured. No point to try and reconnect
-      this.logError('Failed to send data to native app. You are not connected');
+      this.logError("Failed to send data to native app. You are not connected");
       return;
     }
 
@@ -218,7 +233,7 @@ export default class NativeApp {
   }
 
   public connect() {
-    this.port = browser.runtime.connectNative('pywalfox');
+    this.port = browser.runtime.connectNative("pywalfox");
     const { error } = this.port;
 
     if (!error) {
@@ -247,7 +262,9 @@ export default class NativeApp {
   }
 
   public requestCssEnabled(target: string, enabled: boolean) {
-    const action = enabled ? NATIVE_MESSAGES.CSS_ENABLE : NATIVE_MESSAGES.CSS_DISABLE;
+    const action = enabled
+      ? NATIVE_MESSAGES.CSS_ENABLE
+      : NATIVE_MESSAGES.CSS_DISABLE;
     this.sendMessage({ action, target });
   }
 

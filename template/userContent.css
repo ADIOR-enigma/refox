@@ -1,0 +1,24 @@
+@import url("websites/github.css");
+@import url("websites/reddit.css");
+@import url("websites/twitter.css");
+@import url("websites/bitwarden.css");
+@import url("websites/chatgpt.css");
+@import url("websites/chess.css");
+@import url("websites/discord.css");
+@import url("websites/gemini.css");
+@import url("websites/gmail.css");
+@import url("websites/google.css");
+@import url("websites/grok.css");
+@import url("websites/instagram.css");
+@import url("websites/youtube.css");
+@import url("websites/whatsapp.css");
+@import url("websites/telegram.css");
+@import url("websites/archlinux.css");
+@import url("websites/claude.css");
+@import url("websites/monkeytype.css");
+@import url("websites/pdfviewer.firefox.css");
+
+/* Hides Edit button
+.personalizeButtonWrapper {
+    display: none !important;
+} */
