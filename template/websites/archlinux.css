@@ -34,15 +34,15 @@
         ):not(svg):not(svg *):not(img):not(i):not(.icon):not(
             [class*="icon"]
         ):not(.comments-header h3 span.text) {
-        background: var(--pywalfox-background, #f6f9fc) !important;
-        color: var(--pywalfox-text, #222) !important;
+        background: var(--refox-background, #f6f9fc) !important;
+        color: var(--refox-text, #222) !important;
     }
 
     code {
-        background: var(--pywalfox-background-extra, #ffd) !important;
+        background: var(--refox-background-extra, #ffd) !important;
     }
 
     #brdmenu a {
-        background: var(--pywalfox-background, #fff) !important;
+        background: var(--refox-background, #fff) !important;
     }
 }

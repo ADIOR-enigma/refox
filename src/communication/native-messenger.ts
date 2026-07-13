@@ -60,14 +60,6 @@ export default class NativeApp {
         break;
       case NATIVE_MESSAGES.PYWAL_COLORS:
         this.onPywalColorsResponse(message);
-        break;
-      case NATIVE_MESSAGES.CSS_ENABLE: /* fallthrough */
-      case NATIVE_MESSAGES.CSS_DISABLE:
-        this.onCssToggleResponse(message);
-        break;
-      case NATIVE_MESSAGES.CSS_FONT_SIZE:
-        this.onCssFontSizeResponse(message);
-        break;
       case NATIVE_MESSAGES.THEME_MODE:
         this.onThemeModeResponse(message);
         break;
@@ -118,40 +110,6 @@ export default class NativeApp {
         colors: pywalData,
         wallpaper: null,
       });
-    }
-  }
-
-  private onCssToggleResponse(message: INativeAppMessage) {
-    const target = this.getData(message);
-
-    if (message.success) {
-      if (!target) {
-        this.logError(
-          "Custom CSS was applied successfully, but the target was not specified",
-        );
-        return;
-      }
-
-      this.callbacks.cssToggleSuccess(target);
-    } else {
-      this.callbacks.cssToggleFailed(target, message.error);
-    }
-  }
-
-  private onCssFontSizeResponse(message: INativeAppMessage) {
-    if (message.success) {
-      const updatedFontSize = this.getData(message);
-
-      if (!updatedFontSize) {
-        this.logError(
-          "Font size was updated successfully, but the new size was not specified",
-        );
-        return;
-      }
-
-      this.callbacks.cssFontSizeSetSuccess(parseInt(updatedFontSize, 10));
-    } else {
-      this.callbacks.cssFontSizeSetFailed(message.error);
     }
   }
 
@@ -259,16 +217,5 @@ export default class NativeApp {
 
   public requestPywalColors() {
     this.sendMessage({ action: NATIVE_MESSAGES.PYWAL_COLORS });
-  }
-
-  public requestCssEnabled(target: string, enabled: boolean) {
-    const action = enabled
-      ? NATIVE_MESSAGES.CSS_ENABLE
-      : NATIVE_MESSAGES.CSS_DISABLE;
-    this.sendMessage({ action, target });
-  }
-
-  public requestFontSizeSet(target: string, size: number) {
-    this.sendMessage({ action: NATIVE_MESSAGES.CSS_FONT_SIZE, target, size });
   }
 }

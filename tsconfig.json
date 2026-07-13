@@ -12,7 +12,7 @@
     "baseUrl": ".",
     "paths": {
       "@ui/*": ["src/ui/*"],
-      "@pywalfox/*": ["src/*"],
+      "@refox/*": ["src/*"],
       "@utils/*": ["src/utils/*"],
       "@config/*": ["src/config/*"],
       "@definitions": ["src/definitions"],

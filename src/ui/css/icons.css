@@ -4,7 +4,8 @@ i {
     height: var(--icon-size);
 }
 
-body.light i {
+body.light i,
+body.light #logo::before {
     filter: invert(100%);
 }
 

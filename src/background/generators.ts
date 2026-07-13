@@ -1,5 +1,4 @@
 import {
-  ThemeModes,
   PaletteColors,
   IPalette,
   IPywalColors,
@@ -9,11 +8,8 @@ import {
   ITemplateItem,
   IThemeTemplate,
   IPaletteTemplate,
-  IDuckDuckGoTheme,
   ITemplateThemeMode,
   IColorschemeTemplate,
-  IDuckDuckGoThemeTemplate,
-  IDuckDuckGoThemeTemplateItem,
 } from "@definitions";
 
 import { EXTENSION_THEME_SELCTOR } from "@config/general";
@@ -65,8 +61,6 @@ export function generateColorscheme(
     browser: generateBrowserTheme(palette, template.browser),
     extension: generateExtensionTheme(palette),
     website: generateWebsiteTheme(palette),
-    duckduckgo: generateDuckduckgoTheme(palette, template.duckduckgo),
-    darkreader: generateDarkreaderScheme(palette, mode),
   };
 }
 
@@ -109,26 +103,6 @@ export function generateBrowserTheme(
   );
 }
 
-export function generateDuckduckgoTheme(
-  palette: IPalette,
-  template: IDuckDuckGoThemeTemplate,
-) {
-  const theme = <IDuckDuckGoTheme>{};
-
-  Object.keys(template).forEach((key) => {
-    const item: IDuckDuckGoThemeTemplateItem = template[key];
-    let color: string = palette[item.colorKey];
-
-    if (item.hasOwnProperty("modifier")) {
-      color = changeLuminance(color, item.modifier);
-    }
-
-    theme[key] = stripHashSymbol(color);
-  });
-
-  return theme;
-}
-
 function generateThemeVariables(palette: IPalette, prefix = "") {
   let variables: string = "";
 
@@ -147,24 +121,7 @@ export function generateExtensionTheme(palette: IPalette) {
 }
 
 export function generateWebsiteTheme(palette: IPalette) {
-  return `:root{${generateThemeVariables(palette, "--pywalfox")}}`;
-}
-
-export function generateDarkreaderScheme(
-  { background, text }: IPalette,
-  mode: ITemplateThemeMode,
-) {
-  if (mode === ThemeModes.Dark) {
-    return {
-      darkSchemeTextColor: text,
-      darkSchemeBackgroundColor: background,
-    };
-  }
-
-  return {
-    lightSchemeTextColor: text,
-    lightSchemeBackgroundColor: background,
-  };
+  return `:root{${generateThemeVariables(palette, "--refox")}}`;
 }
 
 /**
@@ -198,6 +155,4 @@ export default {
   extension: generateExtensionTheme,
   website: generateWebsiteTheme,
   pywalPalette: generatePywalPalette,
-  duckduckgo: generateDuckduckgoTheme,
-  darkreader: generateDarkreaderScheme,
 };

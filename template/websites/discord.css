@@ -3,80 +3,77 @@
     :root {
         /* Background Colors */
         --neutral-94: var(
-            --pywalfox-background,
+            --refox-background,
             hsl(var(--neutral-94-hsl)/1)
         ) !important;
         --neutral-92: var(
-            --pywalfox-background,
+            --refox-background,
             hsl(var(--neutral-94-hsl)/1)
         ) !important;
         --neutral-86: var(
-            --pywalfox-background,
+            --refox-background,
             hsl(var(--neutral-86-hsl)/1)
         ) !important;
         --neutral-82: var(
-            --pywalfox-background-light,
+            --refox-background-light,
             hsl(var(--neutral-82-hsl)/1)
         ) !important;
         --neutral-80: var(
-            --pywalfox-background-light,
+            --refox-background-light,
             hsl(var(--neutral-80-hsl)/1)
         ) !important;
         --neutral-79: var(
-            --pywalfox-background,
+            --refox-background,
             hsl(var(--neutral-79-hsl)/1)
         ) !important;
         --neutral-76: var(
-            --pywalfox-background-light,
+            --refox-background-light,
             hsl(var(--neutral-76-hsl)/1)
         ) !important;
         --neutral-73: var(
-            --pywalfox-background-light,
+            --refox-background-light,
             hsl(var(--neutral-73-hsl)/1)
         ) !important;
         --neutral-45: var(
-            --pywalfox-accent-primary,
+            --refox-accent-primary,
             hsl(var(--neutral-45-hsl)/1)
         ) !important;
 
         /* Accent Colors */
         --blurple-60: var(
-            --pywalfox-background-light,
+            --refox-background-light,
             hsl(var(--blurple-60-hsl)/1)
         ) !important;
         --blurple-59: var(
-            --pywalfox-text,
+            --refox-text,
             hsl(var(--blurple-59-hsl)/1)
         ) !important;
         --blurple-50: var(
-            --pywalfox-background-extra,
+            --refox-background-extra,
             hsl(var(--blurple-50-hsl)/1)
         ) !important;
         --blurple-36: var(
-            --pywalfox-accent-primary,
+            --refox-accent-primary,
             hsl(var(--blurple-36-hsl)/1)
         ) !important;
         --blurple-19: var(
-            --pywalfox-accent-secondary,
+            --refox-accent-secondary,
             hsl(var(--blurple-19-hsl)/1)
         ) !important;
         --blurple-14: var(
-            --pywalfox-accent-secondary,
+            --refox-accent-secondary,
             hsl(var(--blurple-14-hsl)/1)
         ) !important;
         --blurple-10: var(
-            --pywalfox-background-extra,
+            --refox-background-extra,
             hsl(var(--blurple-10-hsl)/1)
         ) !important;
 
         /* Text Colors */
-        --neutral-5: var(
-            --pywalfox-text,
-            hsl(var(--neutral-5-hsl)/1)
-        ) !important;
+        --neutral-5: var(--refox-text, hsl(var(--neutral-5-hsl)/1)) !important;
 
         --reaction-background-reacted-default: var(
-            --pywalfox-background-extra,
+            --refox-background-extra,
             color-mix(
                 in oklab,
                 hsl(var(--opacity-blurple-24-hsl)/0.23921568627450981) 100%,
@@ -90,7 +87,7 @@
             )
         ) !important;
         --mention-background: var(
-            --pywalfox-background-light,
+            --refox-background-light,
             color-mix(
                 in oklab,
                 hsl(var(--opacity-blurple-24-hsl)/0.23921568627450981) 100%,
@@ -104,11 +101,11 @@
             )
         ) !important;
         --brand-10a: var(
-            --pywalfox-background-extra,
+            --refox-background-extra,
             hsla(var(--brand-500-hsl)/0.1)
         ) !important;
         --message-highlight-background-default: var(
-            --pywalfox-background-light,
+            --refox-background-light,
             color-mix(
                 in oklab,
                 hsl(var(--opacity-blurple-16-hsl)/0.1607843137254902) 100%,

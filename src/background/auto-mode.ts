@@ -2,7 +2,7 @@ import { ITimeIntervalEndpoint, IAutoModeTriggerCallback } from "@definitions";
 
 import { sendDebuggingOutput } from "@communication/content-scripts/ui";
 
-export const AUTO_MODE_ALARM_ID = "pywalfox-auto-mode-alarm";
+export const AUTO_MODE_ALARM_ID = "refox-auto-mode-alarm";
 
 export default class AutoMode {
   private startTime: ITimeIntervalEndpoint;

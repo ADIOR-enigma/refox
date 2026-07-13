@@ -86,10 +86,6 @@ export function sendOption(option: string, enabled: boolean, value?: any) {
   sendMessage({ action: EXTENSION_MESSAGES.OPTION_SET, data: optionData });
 }
 
-export function sendFontSize(size: number) {
-  sendOption(EXTENSION_OPTIONS.FONT_SIZE, true, size);
-}
-
 export function sendAutoTimeStart(start: ITimeIntervalEndpoint) {
   sendOption(EXTENSION_OPTIONS.AUTO_TIME_START, true, start);
 }
@@ -151,10 +147,6 @@ export function requestPaletteColorSet(id: string, color: string) {
   });
 }
 
-export function requestFontSizeSet(option: string, size: number) {
-  requestOptionSet(option, true, size);
-}
-
 export function requestAutoTimeSet(
   option: string,
   time: ITimeIntervalEndpoint,
@@ -199,13 +191,6 @@ export function requestUpdatePageMute() {
 
 export function requestNativeErrorPageMute() {
   sendMessage({ action: EXTENSION_MESSAGES.NATIVE_ERROR_PAGE_MUTE });
-}
-
-export function sendCssEnableConfirmation(target: string) {
-  sendMessage({
-    action: EXTENSION_MESSAGES.CSS_ENABLE_CONFIRMATION,
-    data: target,
-  });
 }
 
 export function requestExtensionTheme() {
