@@ -1,8 +1,5 @@
-import { CSSTargets } from "@definitions";
-
 export const RESPONSE_TIMEOUT_MS = 3000;
 export const MIN_REQUIRED_DAEMON_VERSION = 2.7;
-export const DEFAULT_CSS_FONT_SIZE = 13;
 export const PYWAL_PALETTE_LENGTH = 20;
 
 export const NOTIFICATION_TIMEOUT = 5000;
@@ -10,9 +7,7 @@ export const MAX_SIMULTANEOUS_NOTIFICATIONS = 3;
 
 export const ENABLED_BODY_CLASS = "applied";
 export const EXTENSION_THEME_SELCTOR = "body,body.light,body.dark";
-export const INJECT_URL_PATTERN = ["*://*.duckduckgo.com/*"];
 export const WEBSITE_INJECT_URL_PATTERN = ["http://*/*", "https://*/*"];
-export const DARKREADER_CONNECTION_ID = "addon@darkreader.org";
 
 // TODO: Move constants into an enum for better type validation
 export const EXTENSION_PAGES = {
@@ -54,10 +49,6 @@ export const EXTENSION_MESSAGES = {
   DEBUGGING_INFO_SET: "debugging:info:set",
   DEBUGGING_INFO_GET: "debugging:info:get",
   DEBUGGING_OUTPUT: "debugging:output",
-  DDG_THEME_GET: "ddg:theme:get",
-  DDG_THEME_SET: "ddg:theme:set",
-  DDG_THEME_RESET: "ddg:theme:reset",
-  CSS_ENABLE_CONFIRMATION: "css:enable:confirmation",
   EXTENSION_THEME_GET: "extension:theme:get",
   EXTENSION_THEME_SET: "extension:theme:set",
   WEBSITE_THEME_GET: "website:theme:get",
@@ -66,7 +57,7 @@ export const EXTENSION_MESSAGES = {
 };
 
 export const EXTENSION_COMMANDS = {
-  FETCH_THEME: "fetch_pywal_colors",
+  FETCH_THEME: "fetch_native_colors",
   DISABLE_THEME: "disable_theme",
   ENABLE_DARK_MODE: "enable_dark_mode",
   ENABLE_LIGHT_MODE: "enable_light_mode",
@@ -76,12 +67,7 @@ export const EXTENSION_COMMANDS = {
 export const EXTENSION_OPTIONS = {
   AUTO_TIME_START: "autoTimeStart",
   AUTO_TIME_END: "autoTimeEnd",
-  FONT_SIZE: "fontSize",
-  USER_CHROME: CSSTargets.UserChrome,
-  USER_CONTENT: CSSTargets.UserContent,
-  DUCKDUCKGO: "duckduckgo",
   WEBSITE_CSS_VARIABLES: "websiteCssVariables",
-  DARKREADER: "darkreader",
   FETCH_ON_STARTUP: "fetchOnStartup",
   UPDATE_MUTED: "updateMuted",
   NATIVE_ERROR_MUTED: "nativeErrorMuted",
@@ -92,14 +78,5 @@ export const NATIVE_MESSAGES = {
   OUTPUT: "debug:output",
   PYWAL_COLORS: "action:colors",
   INVALID_ACTION: "action:invalid",
-  CSS_ENABLE: "css:enable",
-  CSS_DISABLE: "css:disable",
-  CSS_FONT_SIZE: "css:font:size",
   THEME_MODE: "theme:mode",
-};
-
-export const DARKREADER_MESSAGES = {
-  THEME: "setTheme",
-  CHANGE_SETTINGS: "changeSettings",
-  RESET: "resetSettings",
 };

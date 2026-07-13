@@ -13,7 +13,7 @@ import {
 let currentThemeMode: ThemeModes = null;
 let messageCallback: IExtensionMessageCallback = null;
 
-const EXTENSION_THEME_STYLE_ID = "pywalfox-extension-theme";
+const EXTENSION_THEME_STYLE_ID = "refox-extension-theme";
 
 export function applyExtensionTheme(css: string | null) {
   let styleElement = document.getElementById(

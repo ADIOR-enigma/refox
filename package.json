@@ -1,6 +1,6 @@
 {
   "name": "refox",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "Extension for dynamic theming of your browser using your native colors ",
   "repository": {
     "type": "git",
@@ -14,14 +14,12 @@
   "scripts": {
     "watch": "rollup -cw",
     "browser": "web-ext run",
-    "browser:keep": "web-ext run --keep-profile-changes --firefox-profile=/home/johan/Repos/pywalfox/.firefox-profile",
     "web-ext-lint": "web-ext lint",
     "eslint": "eslint ./src/**/*.ts",
     "eslint-watch": "esw -w --cache --color --ext .ts",
     "eslint-fix": "eslint --fix ./src/**/*.ts",
     "tests": "jest --verbose",
     "debug": "run-p watch browser",
-    "debug:keep": "run-p watch browser:keep",
     "build": "run-s 'build:*' tests eslint",
     "build:compile": "rollup -c",
     "build:dist": "web-ext build",
@@ -77,7 +75,7 @@
       "^@ui/(.*)$": [
         "<rootDir>/src/ui/$1"
       ],
-      "^@pywalfox/(.*)$": [
+      "^@refox/(.*)$": [
         "<rootDir>/src/$1"
       ],
       "^@utils/(.*)$": [

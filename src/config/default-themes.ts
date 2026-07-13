@@ -1,10 +1,8 @@
 import {
   PaletteColors,
-  DuckDuckGoSettingKeys,
   IThemeTemplate,
   IPaletteTemplate,
   IColorschemeTemplate,
-  IDuckDuckGoThemeTemplate,
   IExtendedPywalColors,
 } from "@definitions";
 
@@ -110,56 +108,12 @@ export const DEFAULT_BROWSER_TEMPLATE_LIGHT: IThemeTemplate = {
   ...BASE_BROWSER_TEMPLATE,
 };
 
-const BASE_DDG_THEME = (mainBackground: PaletteColors) => ({
-  [DuckDuckGoSettingKeys.Background]: {
-    colorKey: mainBackground,
-  },
-  [DuckDuckGoSettingKeys.HeaderBackground]: {
-    colorKey: mainBackground,
-  },
-  [DuckDuckGoSettingKeys.ResultTitle]: {
-    colorKey: PaletteColors.TextFocus,
-  },
-  [DuckDuckGoSettingKeys.ResultDescription]: {
-    colorKey: PaletteColors.Text,
-  },
-  [DuckDuckGoSettingKeys.Hover]: {
-    colorKey: PaletteColors.BackgroundLight,
-  },
-});
-
-export const DEFAULT_DDG_TEMPLATE_DARK: IDuckDuckGoThemeTemplate = {
-  [DuckDuckGoSettingKeys.ResultLink]: {
-    colorKey: PaletteColors.AccentSecondary,
-    modifier: 0.2,
-  },
-  [DuckDuckGoSettingKeys.ResultLinkVisited]: {
-    colorKey: PaletteColors.AccentPrimary,
-    modifier: 0.2,
-  },
-  ...BASE_DDG_THEME(PaletteColors.Background),
-};
-
-export const DEFAULT_DDG_TEMPLATE_LIGHT: IDuckDuckGoThemeTemplate = {
-  [DuckDuckGoSettingKeys.ResultLink]: {
-    colorKey: PaletteColors.AccentSecondary,
-    modifier: -0.3,
-  },
-  [DuckDuckGoSettingKeys.ResultLinkVisited]: {
-    colorKey: PaletteColors.AccentPrimary,
-    modifier: -0.3,
-  },
-  ...BASE_DDG_THEME(PaletteColors.BackgroundLight),
-};
-
 export const DEFAULT_THEME_DARK: IColorschemeTemplate = {
   palette: DEFAULT_PALETTE_TEMPLATE_DARK,
   browser: DEFAULT_BROWSER_TEMPLATE_DARK,
-  duckduckgo: DEFAULT_DDG_TEMPLATE_DARK,
 };
 
 export const DEFAULT_THEME_LIGHT: IColorschemeTemplate = {
   palette: DEFAULT_PALETTE_TEMPLATE_LIGHT,
   browser: DEFAULT_BROWSER_TEMPLATE_LIGHT,
-  duckduckgo: DEFAULT_DDG_TEMPLATE_LIGHT,
 };

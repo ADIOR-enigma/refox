@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Re:Fox",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "Dynamic theming of the browser using your native color scheme generator",
   "browser_specific_settings": {
     "gecko": {
@@ -25,17 +25,13 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.duckduckgo.com/*"],
-      "js": ["dist/duckduckgo.js"]
-    },
-    {
       "matches": ["<all_urls>"],
       "js": ["dist/website.js"],
       "run_at": "document_start"
     }
   ],
   "commands": {
-    "fetch_pywal_colors": {
+    "fetch_native_colors": {
       "description": "Fetches your colors and updates your browser theme",
       "suggested_key": {
         "default": "Ctrl+Alt+F",

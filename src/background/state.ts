@@ -8,20 +8,17 @@ import {
   IThemeTemplate,
   IPaletteTemplate,
   IColorschemeTemplate,
-  IDuckDuckGoThemeTemplate,
   ITimeIntervalEndpoint,
   IExtensionState,
   IOptionSetData,
   INativeAppError,
   ITemplateThemeMode,
-  CSSTargets,
   ThemeModes,
   TemplateTypes,
   ColorschemeTypes,
   PaletteColors,
 } from "@definitions";
 
-import { DEFAULT_CSS_FONT_SIZE } from "@config/general";
 import {
   DEFAULT_THEME_DARK,
   DEFAULT_THEME_LIGHT,
@@ -52,12 +49,7 @@ export default class State {
         },
       },
       options: {
-        userChrome: false,
-        userContent: false,
-        fontSize: DEFAULT_CSS_FONT_SIZE,
-        duckduckgo: false,
         websiteCssVariables: false,
-        darkreader: false,
         fetchOnStartup: true,
         autoTimeStart: { hour: 10, minute: 0, stringFormat: "10:00" },
         autoTimeEnd: { hour: 19, minute: 0, stringFormat: "19:00" },
@@ -136,7 +128,6 @@ export default class State {
       templateThemeMode: this.getTemplateThemeMode() as ITemplateThemeMode,
       debuggingInfo: this.getDebuggingInfo(),
       options: this.getOptionsData(),
-      fontSize: this.getCssFontSize(),
       autoTimeInterval: this.getAutoTimeInterval(),
     };
   }
@@ -226,34 +217,13 @@ export default class State {
     return this.getProperty(this.getColorscheme(), "extension");
   }
 
-  public getDDGTheme() {
-    return this.getProperty(this.getColorscheme(), "duckduckgo");
-  }
-
-  public getDDGThemeEnabled() {
-    return this.currentState.options.duckduckgo;
-  }
-
   public getWebsiteCssVariablesEnabled() {
     return this.currentState.options.websiteCssVariables;
-  }
-
-  public getDarkreaderEnabled() {
-    return this.currentState.options.darkreader;
   }
 
   public getFetchOnStartupEnabled() {
     return this.currentState.options.fetchOnStartup;
   }
-
-  public getCssEnabled(target: string) {
-    return this.getProperty(this.currentState.options, target);
-  }
-
-  public getCssFontSize() {
-    return this.currentState.options.fontSize;
-  }
-
   public getAutoTimeInterval() {
     return {
       start: this.currentState.options.autoTimeStart,
@@ -297,10 +267,6 @@ export default class State {
     return this.setIndividualTemplate("browser", template);
   }
 
-  public setDDGThemeTemplate(template: IDuckDuckGoThemeTemplate) {
-    return this.setIndividualTemplate("duckduckgo", template);
-  }
-
   public setPaletteHash(hash: IPaletteHash) {
     return this.setColorschemeProperty("hash", hash);
   }
@@ -317,28 +283,12 @@ export default class State {
     return this.setOption("nativeErrorMuted", enabled);
   }
 
-  public setDDGThemeEnabled(enabled: boolean) {
-    return this.setOption("duckduckgo", enabled);
-  }
-
   public setWebsiteCssVariablesEnabled(enabled: boolean) {
     return this.setOption("websiteCssVariables", enabled);
   }
 
-  public setDarkreaderEnabled(enabled: boolean) {
-    return this.setOption("darkreader", enabled);
-  }
-
   public setFetchOnStartupEnabled(enabled: boolean) {
     return this.setOption("fetchOnStartup", enabled);
-  }
-
-  public setCssEnabled(target: CSSTargets, enabled: boolean) {
-    return this.setOption(target, enabled);
-  }
-
-  public setCssFontSize(size: number) {
-    return this.setOption("fontSize", size);
   }
 
   public setApplied(isApplied: boolean) {
@@ -427,14 +377,6 @@ export default class State {
     let shouldRefresh = false;
     const browserInfo = await browser.runtime.getBrowserInfo();
     this.currentState = await browser.storage.local.get(this.initialState);
-
-    // Temporary state migration until a real migration system is implemented
-    if (this.getTemplate().duckduckgo.hasOwnProperty("modifier")) {
-      this.currentState.theme.templates.dark.duckduckgo =
-        DEFAULT_THEME_DARK.duckduckgo;
-      this.currentState.theme.templates.light.duckduckgo =
-        DEFAULT_THEME_LIGHT.duckduckgo;
-    }
 
     // Fix for v89 tab border
     if (browserInfo?.version && browserInfo.version.split(".")[0] === "89") {

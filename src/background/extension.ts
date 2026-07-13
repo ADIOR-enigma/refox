@@ -11,7 +11,6 @@ import {
   IExtensionMessage,
   INativeAppError,
   ThemeModes,
-  CSSTargets,
 } from "@definitions";
 
 import {
@@ -19,7 +18,6 @@ import {
   EXTENSION_OPTIONS,
   EXTENSION_COMMANDS,
   EXTENSION_MESSAGES,
-  DEFAULT_CSS_FONT_SIZE,
   MIN_REQUIRED_DAEMON_VERSION,
 } from "@config/general";
 
@@ -30,7 +28,6 @@ import {
 
 import Messenger from "@communication/messenger";
 import NativeMessenger from "@communication/native-messenger";
-import DarkreaderMessenger from "@communication/darkreader-messenger";
 
 import State from "./state";
 import AutoMode from "./auto-mode";
@@ -48,7 +45,6 @@ export default class Extension {
   private nativeErrorPage: ExtensionPage;
 
   private nativeMessenger: NativeMessenger;
-  private darkreaderMessenger: DarkreaderMessenger;
   private websiteThemeTabIds: Set<number>;
   private websiteContentScript: browser.contentScripts.RegisteredContentScript;
 
@@ -57,9 +53,6 @@ export default class Extension {
     this.stateLoadPromise = null;
     this.websiteThemeTabIds = new Set();
     this.websiteContentScript = null;
-    this.darkreaderMessenger = new DarkreaderMessenger(
-      this.onDarkreaderError.bind(this),
-    );
     this.autoMode = new AutoMode(this.onThemeChangeTrigger.bind(this));
     this.nativeMessenger = new NativeMessenger({
       connected: this.nativeAppConnected.bind(this),
@@ -69,10 +62,6 @@ export default class Extension {
       output: Messenger.UI.sendDebuggingOutput.bind(this),
       pywalColorsFetchSuccess: this.onPywalColorsFetchSuccess.bind(this),
       pywalColorsFetchFailed: this.onPywalColorsFetchFailed.bind(this),
-      cssToggleSuccess: this.cssToggleSuccess.bind(this),
-      cssToggleFailed: this.cssToggleFailed.bind(this),
-      cssFontSizeSetSuccess: this.cssFontSizeSetSuccess.bind(this),
-      cssFontSizeSetFailed: this.cssFontSizeSetFailed.bind(this),
       themeModeSet: this.themeModeSet.bind(this),
     });
 
@@ -111,25 +100,12 @@ export default class Extension {
     }
 
     switch (optionData.option) {
-      case EXTENSION_OPTIONS.FONT_SIZE:
-        this.setCssFontSize(optionData.value);
-        break;
-      case EXTENSION_OPTIONS.DUCKDUCKGO:
-        this.setDDGEnabled(optionData);
-        break;
       case EXTENSION_OPTIONS.WEBSITE_CSS_VARIABLES:
         this.setWebsiteCssVariablesEnabled(optionData);
-        break;
-      case EXTENSION_OPTIONS.USER_CHROME: /* Fallthrough */
-      case EXTENSION_OPTIONS.USER_CONTENT:
-        this.setCustomCSSEnabled(optionData);
         break;
       case EXTENSION_OPTIONS.AUTO_TIME_START: /* Fallthrough */
       case EXTENSION_OPTIONS.AUTO_TIME_END:
         this.setAutoTimeInterval(optionData);
-        break;
-      case EXTENSION_OPTIONS.DARKREADER:
-        this.setDarkreaderEnabled(optionData);
         break;
       case EXTENSION_OPTIONS.FETCH_ON_STARTUP:
         this.setFetchOnStartupEnabled(optionData);
@@ -189,9 +165,6 @@ export default class Extension {
         break;
       case EXTENSION_MESSAGES.DEBUGGING_INFO_GET:
         Messenger.UI.sendDebuggingInfo(this.state.getDebuggingInfo());
-        break;
-      case EXTENSION_MESSAGES.DDG_THEME_GET:
-        this.setDDGTheme();
         break;
       case EXTENSION_MESSAGES.PALETTE_TEMPLATE_SET:
         this.setPaletteTemplate(data);
@@ -401,14 +374,6 @@ export default class Extension {
       this.autoMode.stop();
     }
 
-    if (this.state.getDDGThemeEnabled()) {
-      Messenger.DDG.resetTheme();
-    }
-
-    if (this.state.getDarkreaderEnabled()) {
-      this.darkreaderMessenger.requestThemeReset();
-    }
-
     this.state.setColors(null, null);
     this.state.setCustomColors(null);
     this.state.setApplied(false);
@@ -434,14 +399,6 @@ export default class Extension {
     this.updateBrowserActionIcon(colorscheme.palette);
     this.updateExtensionPagesTheme(colorscheme.extension);
     this.updateWebsiteTheme(colorscheme.website);
-
-    if (this.state.getDDGThemeEnabled()) {
-      Messenger.DDG.setTheme(colorscheme.hash, colorscheme.duckduckgo);
-    }
-
-    if (this.state.getDarkreaderEnabled()) {
-      this.darkreaderMessenger.requestThemeSet(colorscheme.darkreader);
-    }
 
     this.state.setColors(pywalColors, colorscheme);
     this.state.setCustomColors(customColors || null);
@@ -472,14 +429,6 @@ export default class Extension {
     Messenger.UI.sendCustomColors(filteredCustomColors);
   }
 
-  private applyDuckDuckGoTheme() {
-    const colorscheme = this.state.getColorscheme();
-
-    if (colorscheme) {
-      Messenger.DDG.setTheme(colorscheme.hash, colorscheme.duckduckgo);
-    }
-  }
-
   private setBrowserTheme(
     browserTheme: IBrowserTheme,
     mode?: ThemeModes.Dark | ThemeModes.Light,
@@ -495,19 +444,6 @@ export default class Extension {
         content_color_scheme: modeString,
       },
     });
-  }
-
-  private setDDGEnabled({ option, enabled }: IOptionSetData) {
-    const isDDGEnabled = this.state.getDDGThemeEnabled();
-
-    if (enabled && !isDDGEnabled) {
-      this.applyDuckDuckGoTheme();
-    } else if (!enabled && isDDGEnabled) {
-      Messenger.DDG.resetTheme();
-    }
-
-    Messenger.UI.sendOption(option, enabled);
-    this.state.setDDGThemeEnabled(enabled);
   }
 
   private async setWebsiteCssVariablesEnabled({
@@ -546,38 +482,6 @@ export default class Extension {
     Messenger.UI.sendOption(option, enabled);
   }
 
-  private getDarkreaderScheme() {
-    let darkreaderScheme = this.state.getColorscheme().darkreader;
-
-    if (!darkreaderScheme) {
-      // When updating from an addon version that does not support darkreader,
-      // the darkreader scheme will not be generated yet.
-      darkreaderScheme = this.updateThemeForCurrentMode().darkreader;
-    }
-
-    return darkreaderScheme;
-  }
-
-  private setDarkreaderEnabled({ option, enabled }: IOptionSetData) {
-    const isApplied = this.state.getApplied();
-
-    this.state.setDarkreaderEnabled(enabled);
-    Messenger.UI.sendOption(option, enabled);
-
-    if (!isApplied) {
-      // The darkreader scheme will be applied when the user fetches pywal colors
-      return;
-    }
-
-    if (enabled) {
-      // TODO: We should probably disable the Duckduckgo integration when activating darkreader
-      const darkreaderScheme = this.getDarkreaderScheme();
-      this.darkreaderMessenger.requestThemeSet(darkreaderScheme);
-    } else {
-      this.darkreaderMessenger.requestThemeReset();
-    }
-  }
-
   private setFetchOnStartupEnabled({ option, enabled }) {
     this.state.setFetchOnStartupEnabled(enabled);
     Messenger.UI.sendOption(option, enabled);
@@ -591,56 +495,6 @@ export default class Extension {
   private setNativeErrorMuted({ option, enabled }) {
     this.state.setNativeErrorMuted(enabled);
     Messenger.UI.sendOption(option, enabled);
-  }
-
-  private setDDGTheme() {
-    const isDDGEnabled = this.state.getDDGThemeEnabled();
-
-    if (isDDGEnabled) {
-      this.applyDuckDuckGoTheme();
-    } else {
-      Messenger.DDG.resetTheme();
-    }
-  }
-
-  private setCustomCSSEnabled({
-    option,
-    enabled,
-    skipConfirmation,
-  }: IOptionSetData) {
-    if (Object.values(CSSTargets).includes(<CSSTargets>option)) {
-      if (enabled && !skipConfirmation && !this.state.getCssEnabled(option)) {
-        Messenger.UI.sendCssEnableConfirmation(option);
-        return;
-      }
-      this.nativeMessenger.requestCssEnabled(option, enabled);
-    } else {
-      const action = enabled ? "enable" : "disable";
-      Messenger.UI.sendNotification(
-        "Custom CSS",
-        `Could not ${action} CSS target "${option}". Invalid target`,
-        true,
-      );
-      Messenger.UI.sendOption(option, !enabled);
-    }
-  }
-
-  private setCssFontSize(value: number) {
-    if (
-      typeof value === "number" &&
-      value !== undefined &&
-      value >= 10 &&
-      value <= 20
-    ) {
-      // Currently, only userChrome uses the custom font size feature
-      this.nativeMessenger.requestFontSizeSet(CSSTargets.UserChrome, value);
-    } else {
-      Messenger.UI.sendNotification(
-        "Font size error",
-        "Invalid size or not set",
-        true,
-      );
-    }
   }
 
   private setSavedColorscheme(colorscheme: IColorscheme) {
@@ -698,7 +552,6 @@ export default class Extension {
     await this.state.setThemeMode(mode);
 
     const newTemplateMode = this.state.getTemplateThemeMode();
-    const isDarkreaderEnabled = this.state.getDarkreaderEnabled();
 
     // No need to update the theme if the currently applied theme mode
     // matches the one that will be set by auto-mode.
@@ -714,10 +567,6 @@ export default class Extension {
       Messenger.UI.sendTemplateThemeMode(newTemplateMode);
     } else {
       this.autoMode.stop();
-    }
-
-    if (isDarkreaderEnabled) {
-      this.darkreaderMessenger.requestThemeModeSet(newTemplateMode);
     }
 
     Messenger.UI.sendThemeMode(mode, newTemplateMode);
@@ -813,10 +662,6 @@ export default class Extension {
     this.updatePage.open();
   }
 
-  private onDarkreaderError(message: string) {
-    Messenger.UI.sendDebuggingOutput(message, true);
-  }
-
   private nativeAppConnected() {
     if (this.state.getApplied() && this.state.getFetchOnStartupEnabled()) {
       this.nativeMessenger.requestPywalColors();
@@ -864,51 +709,6 @@ export default class Extension {
     Messenger.UI.sendNotification("Pywal colors", error, true);
   }
 
-  private cssToggleSuccess(target: CSSTargets) {
-    const newState = !this.state.getCssEnabled(target);
-    let notificationMessage: string = `${target} was disabled successfully!`;
-
-    if (newState === true) {
-      notificationMessage = `${target} was enabled successfully!`;
-
-      // If the user has changed the default font size, we must update it after
-      // the CSS has been enabled.
-      if (target === CSSTargets.UserChrome) {
-        const fontSize = this.state.getCssFontSize();
-
-        if (fontSize !== DEFAULT_CSS_FONT_SIZE) {
-          this.setCssFontSize(fontSize);
-        }
-      }
-    }
-
-    this.state.setCssEnabled(target, newState);
-
-    Messenger.UI.sendOption(target, newState);
-    Messenger.UI.sendNotification("Restart needed", notificationMessage);
-  }
-
-  private cssToggleFailed(target: string, error: string) {
-    const currentState = this.state.getCssEnabled(target);
-
-    Messenger.UI.sendOption(target, currentState);
-    Messenger.UI.sendNotification("Custom CSS", error);
-  }
-
-  private cssFontSizeSetSuccess(size: number) {
-    this.state.setCssFontSize(size);
-
-    Messenger.UI.sendNotification(
-      "Restart needed",
-      "Updated base font size successfully",
-    );
-    Messenger.UI.sendFontSize(size);
-  }
-
-  private cssFontSizeSetFailed(error: string) {
-    Messenger.UI.sendNotification("Font size", error, false);
-  }
-
   private themeModeSet(mode: ThemeModes) {
     this.setThemeMode(mode);
   }
@@ -926,15 +726,10 @@ export default class Extension {
 
     const isApplied = this.state.getApplied();
     const shouldFetch = this.state.getFetchOnStartupEnabled();
-    const isDarkreaderEnabled = this.state.getDarkreaderEnabled();
     const isWebsiteCssVariablesEnabled =
       this.state.getWebsiteCssVariablesEnabled();
 
     this.nativeMessenger.connect();
-
-    if (isDarkreaderEnabled) {
-      this.darkreaderMessenger.connect();
-    }
 
     // Run this after creating the extension pages so that the themes can be
     // set if the pages were reopened on launch.

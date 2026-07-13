@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Refox - Settings</title>
+    <title>Re:fox - Settings</title>
+    <link rel="icon" href="../icons/ext-logo.svg">
     <link rel="stylesheet" href="../dist/styles.bundle.css">
   </head>
   <body>
@@ -76,47 +77,12 @@
               </div>
               <button class="btn btn-default btn-fixed-width" data-option="fetchOnStartup">No</button>
             </div>
-            <!-- <div class="setting row expand space-between v-center no-highlight"> -->
-            <!--   <div class="box column align-left"> -->
-            <!--     <p class="setting-title">Darkreader integration</p> -->
-            <!--     <p class="setting-description">Use your pywal colors on all websites supported by Darkreader</p> -->
-            <!--   </div> -->
-            <!--   <button class="btn btn-default btn-fixed-width" data-option="darkreader">No</button> -->
-            <!-- </div> -->
-            <div class="setting row expand space-between v-center no-highlight">
-              <div class="box column align-left">
-                <p class="setting-title">Use DuckDuckGo theme?</p>
-                <p class="setting-description">Applies matching theme to all DuckDuckGo-pages</p>
-              </div>
-              <button class="btn btn-default btn-fixed-width" data-option="duckduckgo">No</button>
-            </div>
             <div class="setting row expand space-between v-center no-highlight">
               <div class="box column align-left">
                 <p class="setting-title">Expose Refox CSS variables to websites?</p>
                 <p class="setting-description">Makes namespaced Refox CSS variables available on websites</p>
               </div>
               <button class="btn btn-default btn-fixed-width" data-option="websiteCssVariables" async>No</button>
-            </div>
-            <div class="setting row expand space-between v-center no-highlight" id="user-chrome-option">
-              <div class="box column align-left">
-                <p class="setting-title">Use included userChrome.css?</p>
-                <p class="setting-description">Bold text, styled dropdown and context menus</p>
-              </div>
-              <button class="btn btn-default btn-fixed-width" data-option="userChrome" async>No</button>
-            </div>
-            <div class="setting row expand space-between v-center indent no-highlight" id="font-size-option">
-              <div class="box column align-left">
-                <p class="setting-title">Font size</p>
-                <p class="setting-description">The base font size to be used in userChrome.css (in pixels)</p>
-              </div>
-              <input type="number" min="10" max="20" id="font-size-input" data-option="fontSize">
-            </div>
-            <div class="setting row expand space-between v-center no-highlight">
-              <div class="box column align-left">
-                <p class="setting-title">Use included userContent.css</p>
-                <p class="setting-description">Globally hides the page scrollbar</p>
-              </div>
-              <button class="btn btn-default btn-fixed-width" data-option="userContent" async>No</button>
             </div>
             <div class="setting row expand space-between v-center no-highlight" id="auto-time-interval-option">
               <div class="box column align-left">
@@ -223,7 +189,7 @@
               Your changes are <b>persistent</b> between fetches and the current theme mode.
               <br><br>
               Not all elements are customizable since we are limited by the properties provided by the Theme API.<br>
-              For further customization, use the included userContent and userChrome (or your own).
+              For further customization, override elements via your browser configuration.
               <br><br>
               Please note that the light and dark mode palette templates are <b>separate</b>.
               You are always modifying the template for the currently selected theme mode.

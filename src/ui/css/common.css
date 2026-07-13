@@ -72,6 +72,10 @@ header {
     -moz-context-properties: fill, fill-opacity;
 }
 
+body.light #logo::before {
+    filter: invert(100%);
+}
+
 #logo > span {
     position: relative;
     color: var(--accent-primary);

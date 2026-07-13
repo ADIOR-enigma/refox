@@ -2,9 +2,9 @@ import { IExtensionMessage, IExtensionTheme } from "@definitions";
 
 import { EXTENSION_MESSAGES } from "@config/general";
 
-const STYLE_ID = "pywalfox-theme-variables";
-const pywalfoxWindow = window as Window & {
-  pywalfoxWebsiteThemeLoaded?: boolean;
+const STYLE_ID = "refox-theme-variables";
+const refoxWindow = window as Window & {
+  refoxWebsiteThemeLoaded?: boolean;
 };
 
 function getStyleElement() {
@@ -51,14 +51,14 @@ function onMessage({ action, data }: IExtensionMessage) {
 // WEBSITE_THEME_SET without requiring a page reload.
 // The guard only prevents sending WEBSITE_THEME_GET twice on a fresh load
 // where the registered content-script and executeScript both fire.
-if (pywalfoxWindow.pywalfoxWebsiteThemeLoaded) {
+if (refoxWindow.refoxWebsiteThemeLoaded) {
   browser.runtime.onMessage.removeListener(onMessage);
 }
 
 browser.runtime.onMessage.addListener(onMessage);
 
-if (!pywalfoxWindow.pywalfoxWebsiteThemeLoaded) {
-  pywalfoxWindow.pywalfoxWebsiteThemeLoaded = true;
+if (!refoxWindow.refoxWebsiteThemeLoaded) {
+  refoxWindow.refoxWebsiteThemeLoaded = true;
   browser.runtime
     .sendMessage({ action: EXTENSION_MESSAGES.WEBSITE_THEME_GET })
     .catch(() => {});

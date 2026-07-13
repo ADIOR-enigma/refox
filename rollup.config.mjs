@@ -1,20 +1,20 @@
-import path from 'path';
-import clear from 'rollup-plugin-clear';
-import postcss from 'rollup-plugin-postcss';
-import analyze from 'rollup-plugin-analyzer';
-import terser from '@rollup/plugin-terser';
-import typescript from '@rollup/plugin-typescript';
-import { typescriptPaths } from 'rollup-plugin-typescript-paths';
+import path from "path";
+import clear from "rollup-plugin-clear";
+import postcss from "rollup-plugin-postcss";
+import analyze from "rollup-plugin-analyzer";
+import terser from "@rollup/plugin-terser";
+import typescript from "@rollup/plugin-typescript";
+import { typescriptPaths } from "rollup-plugin-typescript-paths";
 
-import cssimport from 'postcss-import';
-import urlresolve from 'postcss-url';
+import cssimport from "postcss-import";
+import urlresolve from "postcss-url";
 
 const production = !process.env.ROLLUP_WATCH;
 const defaultPlugins = [
   typescript({
     compilerOptions: {
-      outDir: 'extension/dist'
-    }
+      outDir: "extension/dist",
+    },
   }),
   typescriptPaths(),
   production && terser(),
@@ -23,62 +23,51 @@ const defaultPlugins = [
 
 export default [
   {
-    input: 'src/background/index.ts',
+    input: "src/background/index.ts",
     output: {
-      file: 'extension/dist/background.js',
-      format: 'es',
+      file: "extension/dist/background.js",
+      format: "es",
     },
     plugins: [
-      clear({ targets: ['extension/dist', 'artifacts'] }),
+      clear({ targets: ["extension/dist", "artifacts"] }),
       postcss({
-        extract: path.resolve('extension/dist/styles.bundle.css'),
-        extensions: [ '.css' ],
-        plugins: [
-          cssimport(),
-          urlresolve({ url: 'inline' }),
-        ],
+        extract: path.resolve("extension/dist/styles.bundle.css"),
+        extensions: [".css"],
+        plugins: [cssimport(), urlresolve({ url: "inline" })],
         minimize: production,
       }),
       ...defaultPlugins,
     ],
   },
   {
-    input: 'src/inject/duckduckgo.ts',
+    input: "src/inject/website.ts",
     output: {
-      file: 'extension/dist/duckduckgo.js',
-      format: 'iife',
+      file: "extension/dist/website.js",
+      format: "iife",
     },
     plugins: defaultPlugins,
   },
   {
-    input: 'src/inject/website.ts',
+    input: "src/ui/settings.ts",
     output: {
-      file: 'extension/dist/website.js',
-      format: 'iife',
+      file: "extension/dist/settings.bundle.js",
+      format: "iife",
     },
     plugins: defaultPlugins,
   },
   {
-    input: 'src/ui/settings.ts',
+    input: "src/ui/update.ts",
     output: {
-      file: 'extension/dist/settings.bundle.js',
-      format: 'iife',
+      file: "extension/dist/update.bundle.js",
+      format: "iife",
     },
     plugins: defaultPlugins,
   },
   {
-    input: 'src/ui/update.ts',
+    input: "src/ui/native-error.ts",
     output: {
-      file: 'extension/dist/update.bundle.js',
-      format: 'iife',
-    },
-    plugins: defaultPlugins,
-  },
-  {
-    input: 'src/ui/native-error.ts',
-    output: {
-      file: 'extension/dist/native-error.bundle.js',
-      format: 'iife',
+      file: "extension/dist/native-error.bundle.js",
+      format: "iife",
     },
     plugins: defaultPlugins,
   },

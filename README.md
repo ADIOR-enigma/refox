@@ -1,10 +1,13 @@
 > [!Note]
 > The Website templates are in WIP.
+
 <div align="center">
-  <img src="images/refox_animated_logo.gif" alt="Pywalfox icon" width="150">
-  
-  # Re:fox
-  ###### 🎨 Dynamic theming of Firefox-based browser using your Native color scheme generator, [A fork of Pywalfox]
+  <img src="images/refox_animated_logo.gif" alt="Refox icon" width="150">
+
+# Re:fox
+
+###### 🎨 Dynamic theming of Firefox-based browser using your Native color scheme generator, [A fork of Pywalfox]
+
 </div>
 
 ## What's new?
@@ -15,7 +18,7 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
 
 ## ⏺ Installation [tested on arch only]
 
-1. Get the latest add-on from [Releases Page](https://github.com/ADIOR-enigma/refox/releases/tag/v3.0.6) and pin it to toolbar for a surprise.
+1. Get the latest add-on from [Releases Page](https://github.com/ADIOR-enigma/refox/releases/latest) and pin it to toolbar for a surprise.
    > - It does autoupdate 😅
 
 <!--(1. Install the [native messaging application](https://github.com/Frewacom/pywalfox-native) ([PyPI](https://pypi.org/project/pywalfox/)) using your preferred method, with e.g. `pip` or `pipx`:
@@ -30,12 +33,13 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
    > - **Windows:** `winget install Python.Python.3.14`, then `pip install pywalfox` instead
 1. Run `pywalfox install` in your terminal.
    - Firefox forks (e.g. LibreWolf) require [extra arguments](#firefox-forks). Flatpaks require [extra steps](#flatpaks).)-->
-   
+
 2. Run `sudo install.sh` to automate the install in arch [works on Firefox, Librewolf, Floorp, Mercury, Zen].
    > - Post PRs/Issues to enrich the ecosystem.
 1. Navigate to <code>about:config</code> and set <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> to <code>true</code>.
 1. Generate a theme with [Matugen](https://github.com/InioX/matugen) or equivalent. You may refer to there guide where the output must be `$HOME/.cache/wal/colors.json`.
 1. Changing your wallpaper should theme the firefox or you can click the Refox icon in the Firefox UI and then "Fetch Native colors".
+
 <!--(or use the [AUR package](https://aur.archlinux.org/packages/python-pywalfox/))-->
 
 This should apply a theme with your Native colors!
@@ -128,7 +132,7 @@ Websites and the context menus are not available through the [Theme API](https:/
 
 ## ⏺ Uninstall
 
-To uninstall Pywalfox from your system, run
+To uninstall Refox from your system, run
 
 ```bash
 sudo uninstall.sh
@@ -232,20 +236,20 @@ The manifest is located at `<path-to-python-site-packages>/refox/assets/manifest
 
 After you have copied over the manifest to the correct path, make sure to also update the `path` property in the copied manifest. The `path` should point to `<path-to-python-site-packages>/pywalfox/bin/main.sh` (or `win.bat` if you are on Windows).
 
-If it still does not work, you can try to reinstall Firefox, see [#14](https://github.com/Frewacom/pywalfox/issues/14).
+If it still does not work, you can try to reinstall Firefox.
 
 </td></tr></table>
 </details>
 
 <details><summary>
-<b><code>stderr output from native app refox: <installation-path>/main.sh: line 3: pywalfox: command not found</code></b>
+<b><code>stderr output from native app pywalfox: <installation-path>/main.sh: line 3: pywalfox: command not found</code></b>
 </summary>
 
 <table><tr><td>
 
 Refox assumes that the `pywalfox` executable is in your `PATH`.
 
-If you can not run `pywalfox` from the command line (without specifying an absolute path), you must either add the path to the execuatable to your `PATH` variable, or move the executable to a path that already is in your `PATH`.
+If you can not run `pywalfox` from the command line (without specifying an absolute path), you must either add the path to the executable to your `PATH` variable, or move the executable to a path that already is in your `PATH`.
 
 </td></tr></table>
 </details>
@@ -254,7 +258,7 @@ If you can not run `pywalfox` from the command line (without specifying an absol
 
 > [!IMPORTANT]
 > The errors in the browser console are not limited to just Refox!
-> 
+>
 > POST PRs TO THE >dev< BRANCH
 
 ## 🚧 Development setup

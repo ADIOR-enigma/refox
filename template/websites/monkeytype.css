@@ -1,11 +1,11 @@
 @-moz-document domain("monkeytype.com") {
-    /* Compatible on Serika Dark + Pywalfox fallback-safe */
+    /* Compatible on Serika Dark + Refox fallback-safe */
     :root {
-        --bg-color: var(--pywalfox-background, #323437) !important;
-        --main-color: var(--pywalfox-accent-primary, #e2b714) !important;
-        --caret-color: var(--pywalfox-accent-primary, #e2b714) !important;
-        --sub-color: var(--pywalfox-text, #646669) !important;
-        --sub-alt-color: var(--pywalfox-background-extra, #2c2e31) !important;
-        --text-color: var(--pywalfox-accent-primary, #d1d0c5) !important;
+        --bg-color: var(--refox-background, #323437) !important;
+        --main-color: var(--refox-accent-primary, #e2b714) !important;
+        --caret-color: var(--refox-accent-primary, #e2b714) !important;
+        --sub-color: var(--refox-text, #646669) !important;
+        --sub-alt-color: var(--refox-background-extra, #2c2e31) !important;
+        --text-color: var(--refox-accent-primary, #d1d0c5) !important;
     }
 }
