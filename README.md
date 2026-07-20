@@ -1,6 +1,3 @@
-> [!Note]
-> The Website templates are in WIP.
-
 <div align="center">
   <img src="images/refox_animated_logo.gif" alt="Refox icon" width="150">
 
@@ -36,9 +33,14 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
 
 2. Run `sudo install.sh` to automate the install in arch [works on Firefox, Librewolf, Floorp, Mercury, Zen].
    > - Post PRs/Issues to enrich the ecosystem.
-1. Navigate to <code>about:config</code> and set <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> to <code>true</code>.
-1. Generate a theme with [Matugen](https://github.com/InioX/matugen) or equivalent. You may refer to there guide where the output must be `$HOME/.cache/wal/colors.json`.
-1. Changing your wallpaper should theme the firefox or you can click the Refox icon in the Firefox UI and then "Fetch Native colors".
+   > - **Note:** Zen Browser Matugen UI theming is currently **Work in Progress (WIP)**. See [Zen Browser Matugen Support [WIP]](#-zen-browser-matugen-support-wip) below.
+3. To add the templates (`userChrome.css`, `userContent.css`, and `websites/`) to your browser:
+   - Navigate to `about:support` in your browser, look for **Profile Directory**, and click **Open Directory**.
+   - Create a `chrome` folder inside your profile directory if it does not already exist.
+   - Copy the contents of the [`template/`](https://github.com/ADIOR-enigma/refox/tree/main/template) folder (`userChrome.css`, `userContent.css`, and the `websites/` folder) into `<profile-directory>/chrome`.
+4. Navigate to <code>about:config</code> and set <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> to <code>true</code>.
+5. Generate a theme with [Matugen](https://github.com/InioX/matugen) or equivalent. You may refer to there guide where the output must be `$HOME/.cache/wal/colors.json`.
+6. Changing your wallpaper should theme the firefox or you can click the Refox icon in the Firefox UI and then "Fetch Native colors".
 
 <!--(or use the [AUR package](https://aur.archlinux.org/packages/python-pywalfox/))-->
 
@@ -46,6 +48,18 @@ This should apply a theme with your Native colors!
 
 > [!NOTE]
 > If you have problems: please review the Troubleshooting section below before opening a Github issue/PR.
+
+### 🧘 Zen Browser Matugen Support [WIP]
+
+Dynamic UI theming for **Zen Browser** using Matugen (`$HOME/.cache/wal/colors.json`) is currently a **Work in Progress (WIP)**.
+Because Zen uses unique CSS custom properties (such as `--zen-accent-primary` and `--zen-background`), we provide experimental `userChromeJS` support inside the [`zen/`](https://github.com/ADIOR-enigma/refox/tree/main/zen) folder of this repository:
+
+1. Copy the contents of [`zen/program/`](https://github.com/ADIOR-enigma/refox/tree/main/zen/program) (`config.js` and `defaults/`) directly into your Zen browser application directory (where the `zen-bin` binary is installed).
+2. Copy the contents of [`zen/chrome/`](https://github.com/ADIOR-enigma/refox/tree/main/zen/chrome) (`JS/` and `utils/`) into your Zen profile's `chrome/` directory (`about:support` -> **Profile Directory** -> `chrome/`).
+3. The script [`refox_accent_watch.uc.js`](https://github.com/ADIOR-enigma/refox/blob/main/zen/chrome/JS/refox_accent_watch.uc.js) will monitor your Matugen `colors.json` and hot-reload your theme.
+
+> [!NOTE]
+> Since this feature is in active development (WIP), `refox_accent_watch.uc.js` currently uses a hardcoded path (`/home/adior/.cache/wal/colors.json`). Be sure to update `const PATH` in the script to match your user directory!
 
 ## ⏺ Usage
 
