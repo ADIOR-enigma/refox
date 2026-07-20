@@ -1,0 +1,31 @@
+@-moz-document domain("claude.ai") {
+    .cds-root {
+        --cds-gray-0: var(--refox-text-focus, #cccccc) !important;
+        --cds-gray-700: var(--refox-background-light, #1e1e1e) !important;
+        --cds-gray-900: var(--refox-background-extra, #2a2a2a) !important;
+    }
+    .bg-bg-000 {
+        background-color: var(--refox-background-light, #1e1e1e) !important;
+    }
+    .bg-bg-100 {
+        background-color: var(--refox-background, #121212) !important;
+    }
+    .hover\:bg-bg-100:hover {
+        background-color: var(--refox-background-extra, #2a2a2a) !important;
+    }
+    .bg-bg-300 {
+        background-color: var(--refox-background, #121212) !important;
+    }
+    ._ghost_10ocf_96 {
+        --button-hover-bg: var(--refox-background-light, #1e1e1e) !important;
+    }
+    .text-text-100 {
+        color: var(--refox-text, #ffffff) !important;
+    }
+    .data-\[popup-open\]\:bg-bg-400[data-popup-open] {
+        background-color: var(--refox-background-extra, #333333) !important;
+    }
+    .border-border-200 {
+        border-color: var(--refox-background-extra, #333333) !important;
+    }
+}

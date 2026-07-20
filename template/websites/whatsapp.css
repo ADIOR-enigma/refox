@@ -1,0 +1,10 @@
+@-moz-document domain("web.whatsapp.com") {
+    * {
+    /* home background */
+	--WDS-background-elevated-wash-inset: var(--refox-background, #1D1F1F) !important;
+	/* sidebar background */
+	--WDS-surface-emphasized: var(--refox-background, #1D1F1F) !important;
+	/* chat background */
+	--WDS-surface-default: var(--refox-background, #161717) !important;
+    }
+}

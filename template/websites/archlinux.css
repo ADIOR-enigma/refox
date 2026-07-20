@@ -1,48 +1,43 @@
 @-moz-document domain("archlinux.org") {
-    :not(#archnavbar *):not(a):not(code):not(input):not(#id_maintainer):not(
-            #id_flagged
-        ):not(#qjump *):not(#id_repo *):not(#id_arch *):not(#id_setlang):not(
-            #pkglist-search
-                > form:nth-child(2)
-                > fieldset:nth-child(2)
-                > div:nth-child(2)
-                > select:nth-child(2)
-        ):not(button):not(
-            #pkglist-search
-                > form:nth-child(2)
-                > fieldset:nth-child(2)
-                > div:nth-child(4)
-                > select:nth-child(2)
-        ):not(
-            #pkglist-search
-                > form:nth-child(2)
-                > fieldset:nth-child(2)
-                > div:nth-child(5)
-                > select:nth-child(2)
-        ):not(
-            #pkglist-search
-                > form:nth-child(2)
-                > fieldset:nth-child(2)
-                > div:nth-child(6)
-                > select:nth-child(2)
-        ):not(
-            #pkglist-search
-                > form:nth-child(2)
-                > fieldset:nth-child(2)
-                > div:nth-child(7)
-                > select:nth-child(2)
-        ):not(svg):not(svg *):not(img):not(i):not(.icon):not(
-            [class*="icon"]
-        ):not(.comments-header h3 span.text) {
+    /* top bar */
+    #archnavbar {
+        --archnavbar-background-color: var(
+            --refox-background-extra,
+            #333
+        ) !important;
+    }
+
+    /* body */
+    body {
         background: var(--refox-background, #f6f9fc) !important;
         color: var(--refox-text, #222) !important;
     }
 
+    /* home widget box */
+    div.box {
+        background: var(--refox-background-light, #ecf2f5) !important;
+        border: 1px solid var(--refox-background-extra, #bcd) !important;
+    }
+
+    /* date time home news below */
+    dl dt {
+        color: var(--refox-accent-secondary, #333) !important;
+    }
+
+    /* highlighted text */
     code {
         background: var(--refox-background-extra, #ffd) !important;
     }
 
-    #brdmenu a {
-        background: var(--refox-background, #fff) !important;
+    /* packages table */
+    .results th {
+        background: var(--refox-background-extra, #fff) !important;
+        border-bottom: 1px solid var(--refox-background, #999) !important;
+    }
+    .results tr:nth-child(2n + 1 of :not([hidden])) {
+        background: var(--refox-background-extra, #fff) !important;
+    }
+    .results tr:nth-child(2n of :not([hidden])) {
+        background: var(--refox-background-light, #e4eeff) !important;
     }
 }

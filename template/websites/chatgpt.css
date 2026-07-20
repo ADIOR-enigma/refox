@@ -1,0 +1,15 @@
+@-moz-document domain("chatgpt.com") {
+    :root {
+        --black: var(--refox-background, #000) !important;
+        --component-sidebar-bg: var(--refox-background, #000) !important;
+        --bg-primary: var(--refox-background-light, #212121) !important;
+        --bg-secondary: var(--refox-background-extra, #303030) !important;
+        --message-surface: var(--refox-background-extra, #323232d9) !important;
+    }
+
+    .dark\:bg-\[\#353535\]:where(.dark, .dark *):not(
+            :where(.dark .light, .dark .light *)
+        ) {
+        background-color: var(--refox-background-light, #353535) !important;
+    }
+}

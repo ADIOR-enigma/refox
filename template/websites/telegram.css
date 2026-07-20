@@ -1,0 +1,9 @@
+@-moz-document domain("web.telegram.org") {
+    /* For A version of Telegram Web */
+    * {
+	--color-background: var(--refox-background, rgb(12.941% 12.941% 12.941%)) !important;
+	--color-chat-active: var(--refox-background-extra, rgb(46.275% 41.569% 78.431%)) !important;
+	--theme-background-color: var(--refox-background, #000000) !important;
+	--color-chat-hover: var(--refox-background-light, rgb(17.255% 17.255% 17.255%)) !important;
+    }
+}
