@@ -1,0 +1,23 @@
+@-moz-document domain("youtube.com") {
+    * {
+	--t3e41d7b17b187f69: var(--refox-background, #0f0f0f) !important;
+	--ta889dfda9605a358: var(--refox-background, rgba(15,15,15,0.8)) !important;
+	--t08a7c6c176cbc5c2: var(--refox-background-light, #282828) !important;
+	--t7f4f2c6d54836ce0: var(--refox-background-light, rgba(255,255,255,0.1)) !important;
+	--t3e41d7b17b187f69: var(--refox-background, #0f0f0f) !important;
+    }
+
+    .ytSearchboxComponentInputBoxDark {
+  	border-color: var(--refox-background-light, hsl(0,0%,18.82%)) !important;
+  	background-color: var(--refox-background, hsl(0,0%,7%)) !important;
+    }
+
+    .ytSearchboxComponentInputBoxDark.ytSearchboxComponentInputBoxHasFocus {
+        border-color: var(--refox-accent-primary, #1c62b9) !important;
+    }
+
+    .ytSearchboxComponentSearchButtonDark {
+  	border: 1px solid var(--refox-background-light, hsl(0,0%,18.82%)) !important;
+  	background-color: var(--refox-background-light, hsla(0,0%,100%,.08)) !important;
+    }
+}

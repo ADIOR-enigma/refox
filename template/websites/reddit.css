@@ -1,0 +1,27 @@
+@-moz-document domain("reddit.com") {
+    * {
+        /* background */
+        --color-neutral-background: var(--refox-background, #0e1113) !important;
+        /* forum text */
+        --color-neutral-content: var(
+            --refox-accent-secondary,
+            #b7cad4
+        ) !important;
+        /* sidebar tab */
+        --color-neutral-background-selected: var(
+            --refox-background-extra,
+            #2a3236
+        ) !important;
+        --color-neutral-background-hover: var(
+            --refox-background-light,
+            #181c1f
+        ) !important;
+        /* history widget -clear,heading*/
+        --color-neutral-background-weak: var(
+            --refox-background-light,
+            #000000
+        ) !important;
+        --color-primary: var(--refox-accent-primary, #648efc) !important;
+        --color-secondary-weak: var(--refox-text, #748791) !important;
+    }
+}

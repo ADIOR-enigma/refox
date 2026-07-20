@@ -1,8 +1,9 @@
 /node_modules
 /extension/dist
 /artifacts
-/daemon/
+/daemon
 /dist
 .eslintcache
 .firefox-profile
 check_version_update.txt
+/scripts
