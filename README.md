@@ -337,7 +337,7 @@ yarn run build
 Refox builds upon the fantastic work of several projects and individuals in the open-source community:
 
 - **[Frewacom](https://github.com/Frewacom)** and all contributors of **[Pywalfox](https://github.com/Frewacom/pywalfox)** – for creating and maintaining the original project that Refox is forked from.
-- **[TECHNOFAB11](https://github.com/TECHNOFAB11)** – for their contributions and work on injecting CSS custom properties into websites ([Pywalfox PR #161](https://github.com/Frewacom/pywalfox/pull/161)).
+- **[TECHNOFAB11](https://github.com/TECHNOFAB11)** – for their idea on injecting CSS custom properties into websites ([Pywalfox PR #161](https://github.com/Frewacom/pywalfox/pull/161)).
 - **[Ubaidullah-Web-Dev (ubaid)](https://github.com/Ubaidullah-Web-Dev)** – for **[MatugenFox](https://github.com/Ubaidullah-Web-Dev/MatugenFox)** and inspiration on Matugen-driven browser theming.
 
 
