@@ -63,3 +63,11 @@ if (!refoxWindow.refoxWebsiteThemeLoaded) {
     .sendMessage({ action: EXTENSION_MESSAGES.WEBSITE_THEME_GET })
     .catch(() => {});
 }
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) {
+    browser.runtime
+      .sendMessage({ action: EXTENSION_MESSAGES.WEBSITE_THEME_GET })
+      .catch(() => {});
+  }
+});
