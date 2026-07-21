@@ -25,12 +25,17 @@ path = sys.argv[1]
 try:
     with open(path, 'r') as f:
         data = json.load(f)
-    if 'allowed_extensions' in data and 're-fox@adior.org' in data['allowed_extensions']:
-        data['allowed_extensions'].remove('re-fox@adior.org')
-        with open(path, 'w') as f:
-            json.dump(data, f, indent=2)
-            f.write('\n')
-        print(f'Removed re-fox@adior.org from {path}')
+    if 'allowed_extensions' in data:
+        modified = False
+        for tag in ['re-fox@adior.org', 'refox@adior.org']:
+            if tag in data['allowed_extensions']:
+                data['allowed_extensions'].remove(tag)
+                modified = True
+        if modified:
+            with open(path, 'w') as f:
+                json.dump(data, f, indent=2)
+                f.write('\n')
+            print(f'Removed Re:fox extensions from {path}')
 except Exception as e:
     print(f'Error updating {path}: {e}')
 " "$file"
