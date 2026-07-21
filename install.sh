@@ -67,8 +67,7 @@ update_manifest() {
   "type": "stdio",
   "allowed_extensions": [
     "pywalfox@frewacom.org",
-    "re-fox@adior.org",
-    "refox@adior.org"
+    "re-fox@adior.org"
   ]
 }
 EOF
