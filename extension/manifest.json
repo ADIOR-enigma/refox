@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Re:Fox",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Dynamic theming of the browser using your native color scheme generator",
   "browser_specific_settings": {
     "gecko": {
@@ -9,7 +9,9 @@
       "strict_min_version": "142.0",
       "update_url": "https://adior-enigma.github.io/refox/updates.json",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     }
   },
@@ -21,12 +23,18 @@
     "default_title": "Re:Fox"
   },
   "background": {
-    "scripts": ["dist/background.js"]
+    "scripts": [
+      "dist/background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["dist/website.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/website.js"
+      ],
       "run_at": "document_start"
     }
   ],
