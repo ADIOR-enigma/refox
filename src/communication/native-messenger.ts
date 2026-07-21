@@ -60,6 +60,7 @@ export default class NativeApp {
         break;
       case NATIVE_MESSAGES.PYWAL_COLORS:
         this.onPywalColorsResponse(message);
+        break;
       case NATIVE_MESSAGES.THEME_MODE:
         this.onThemeModeResponse(message);
         break;
