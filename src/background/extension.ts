@@ -69,6 +69,7 @@ export default class Extension {
     browser.runtime.onMessage.addListener(this.onMessage.bind(this));
     browser.tabs.onUpdated.addListener(this.onTabUpdated.bind(this));
     browser.tabs.onRemoved.addListener(this.onTabRemoved.bind(this));
+    browser.tabs.onActivated.addListener(this.onTabActivated.bind(this));
     browser.browserAction.onClicked.addListener(() => this.settingsPage.open());
   }
 
@@ -338,10 +339,31 @@ export default class Extension {
   private onTabUpdated(
     tabId: number,
     changeInfo: browser.tabs._OnUpdatedChangeInfo,
+    tab: browser.tabs.Tab,
   ) {
     if (this.state.currentState && changeInfo.status === "loading") {
       this.websiteThemeTabIds.delete(tabId);
+    } else if (
+      this.state.getWebsiteCssVariablesEnabled() &&
+      (changeInfo.status === "complete" || changeInfo.discarded === false) &&
+      !tab.discarded &&
+      !this.websiteThemeTabIds.has(tabId)
+    ) {
+      this.injectWebsiteTheme(tabId);
     }
+  }
+
+  private async onTabActivated({ tabId }: browser.tabs._OnActivatedActiveInfo) {
+    if (!this.state.getWebsiteCssVariablesEnabled()) {
+      return;
+    }
+
+    try {
+      const tab = await browser.tabs.get(tabId);
+      if (tab && !tab.discarded && !this.websiteThemeTabIds.has(tabId)) {
+        await this.injectWebsiteTheme(tabId);
+      }
+    } catch (_) {}
   }
 
   private onTabRemoved(tabId: number) {
