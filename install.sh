@@ -125,6 +125,7 @@ if [ -f "$CONFIG_FILE" ]; then
     read -r -p "Do you want to add another browser profile or modify configuration? [y/N]: " modify_conf
     if [[ ! "$modify_conf" =~ ^[Yy] ]]; then
         RUN_PROMPT=false
+        echo -e "${BLUE}[INFO] Proceeding to update Re:fox across configured profiles...${NC}"
     fi
 fi
 
@@ -325,17 +326,28 @@ EOF
 MANIFEST_SYSTEM="/lib/mozilla/native-messaging-hosts/pywalfox.json"
 update_manifest "$MANIFEST_SYSTEM"
 
+ACTION_VERB_ING="Installing"
+ACTION_VERB_ED="Installed"
+ACTION_PREP="into"
+ACTION_TITLE="setup and native messaging host installation"
+if [ "$RUN_PROMPT" = false ]; then
+    ACTION_VERB_ING="Updating"
+    ACTION_VERB_ED="Updated"
+    ACTION_PREP="in"
+    ACTION_TITLE="update"
+fi
+
 # --- Firefox / Gecko Profiles Setup ---
 for prof in "${GECKO_PROFILES[@]}"; do
     if [ -d "$prof" ]; then
         b_name=$(detect_browser_name "$prof")
-        echo -e "${BLUE}[INFO] Installing Re:fox templates into $b_name profile ($prof/chrome) ...${NC}"
+        echo -e "${BLUE}[INFO] ${ACTION_VERB_ING} Re:fox templates ${ACTION_PREP} $b_name profile ($prof/chrome) ...${NC}"
         mkdir -p "$prof/chrome"
         cp -r "$REPO_DIR/template/userChrome.css" "$REPO_DIR/template/userContent.css" "$REPO_DIR/template/websites" "$prof/chrome/"
         if [ "$ACTUAL_USER" != "root" ] && [ -n "$ACTUAL_USER" ]; then
             chown -R "$ACTUAL_USER" "$prof/chrome" 2>/dev/null || true
         fi
-        echo -e "${GREEN}[SUCCESS] Installed Re:fox templates into $b_name profile ($prof/chrome)${NC}"
+        echo -e "${GREEN}[SUCCESS] ${ACTION_VERB_ED} Re:fox templates ${ACTION_PREP} $b_name profile ($prof/chrome)${NC}"
     else
         echo -e "${YELLOW}[WARNING] Configured profile directory not found: $prof${NC}"
     fi
@@ -344,7 +356,7 @@ done
 # --- Zen Browser Setup ---
 if [ "$SETUP_ZEN" = "true" ]; then
     if [ -n "$ZEN_PROFILE_DIR" ] && [ -d "$ZEN_PROFILE_DIR" ]; then
-        echo -e "${BLUE}[INFO] Installing Zen Browser userChromeJS & templates into profile ($ZEN_PROFILE_DIR/chrome) ...${NC}"
+        echo -e "${BLUE}[INFO] ${ACTION_VERB_ING} Zen Browser userChromeJS & templates ${ACTION_PREP} profile ($ZEN_PROFILE_DIR/chrome) ...${NC}"
         mkdir -p "$ZEN_PROFILE_DIR/chrome"
         cp -r "$REPO_DIR/zen/chrome/JS" "$REPO_DIR/zen/chrome/utils" "$REPO_DIR/template/userContent.css" "$REPO_DIR/template/websites" "$ZEN_PROFILE_DIR/chrome/"
 
@@ -358,23 +370,23 @@ if [ "$SETUP_ZEN" = "true" ]; then
         if [ "$ACTUAL_USER" != "root" ] && [ -n "$ACTUAL_USER" ]; then
             chown -R "$ACTUAL_USER" "$ZEN_PROFILE_DIR/chrome" 2>/dev/null || true
         fi
-        echo -e "${GREEN}[SUCCESS] Installed Zen Browser chrome scripts into profile ($ZEN_PROFILE_DIR/chrome)${NC}"
+        echo -e "${GREEN}[SUCCESS] ${ACTION_VERB_ED} Zen Browser chrome scripts ${ACTION_PREP} profile ($ZEN_PROFILE_DIR/chrome)${NC}"
     else
         echo -e "${YELLOW}[WARNING] Zen Browser profile directory not found: $ZEN_PROFILE_DIR${NC}"
     fi
 
     if [ -n "$ZEN_APP_DIR" ] && [ -d "$ZEN_APP_DIR" ]; then
-        echo -e "${BLUE}[INFO] Installing Zen program configuration into application directory: $ZEN_APP_DIR ...${NC}"
+        echo -e "${BLUE}[INFO] ${ACTION_VERB_ING} Zen program configuration ${ACTION_PREP} application directory: $ZEN_APP_DIR ...${NC}"
         cp "$REPO_DIR/zen/program/config.js" "$ZEN_APP_DIR/"
         mkdir -p "$ZEN_APP_DIR/defaults/pref"
         cp "$REPO_DIR/zen/program/defaults/pref/config-prefs.js" "$ZEN_APP_DIR/defaults/pref/"
         chmod 644 "$ZEN_APP_DIR/config.js" "$ZEN_APP_DIR/defaults/pref/config-prefs.js"
-        echo -e "${GREEN}[SUCCESS] Installed config.js and defaults/pref/config-prefs.js into $ZEN_APP_DIR${NC}"
+        echo -e "${GREEN}[SUCCESS] ${ACTION_VERB_ED} config.js and defaults/pref/config-prefs.js ${ACTION_PREP} $ZEN_APP_DIR${NC}"
     else
         echo -e "${YELLOW}[WARNING] Zen application directory not found: $ZEN_APP_DIR${NC}"
     fi
 fi
 
-echo -e "\n${GREEN}[SUCCESS] Re:fox setup and native messaging host installation completed successfully!${NC}"
+echo -e "\n${GREEN}[SUCCESS] Re:fox ${ACTION_TITLE} completed successfully!${NC}"
 echo -e "${GREEN}[SUCCESS] Supported browsers: Firefox, LibreWolf, Floorp, Mercury, Zen.${NC}"
 echo -e "${YELLOW}[NOTE] Remember to open about:config in your browser and verify toolkit.legacyUserProfileCustomizations.stylesheets is set to true!${NC}"
