@@ -59,6 +59,9 @@
     root.style.setProperty("--zen-background", c.color0, "important");
     root.style.setProperty("--zen-text", c.color15, "important");
     root.style.setProperty("--zen-text-focus", "#ffffff", "important");
+    root.style.setProperty("--zen-primary-color", c.color3, "important");
+
+    ensureStyleElement();
   }
 
   async function readTheme(force = false) {
@@ -74,6 +77,25 @@
       applyTheme(data.colors);
     } catch {}
   }
+
+  // Wait for Zen UI
+  function waitForZen() {
+    const interval = setInterval(() => {
+      if (
+        document.querySelector("zen-workspace") ||
+        document.querySelector("#zen-appcontent-wrapper")
+      ) {
+        clearInterval(interval);
+
+        // Multi-pass apply (handles lazy UI)
+        readTheme(true);
+        setTimeout(() => readTheme(true), 300);
+        setTimeout(() => readTheme(true), 1000);
+      }
+    }, 100);
+  }
+
+  waitForZen();
 
   setInterval(() => readTheme(), 800);
 })();
