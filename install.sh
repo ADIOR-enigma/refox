@@ -51,8 +51,10 @@ else
     else
         echo -e "${BLUE}[INFO] Pulling latest changes in canonical directory ($REPO_DIR)...${NC}"
         if [ "$EUID" -eq 0 ] && [ "$ACTUAL_USER" != "root" ]; then
+            sudo -u "$ACTUAL_USER" git -C "$REPO_DIR" reset --hard HEAD 2>/dev/null || true
             sudo -u "$ACTUAL_USER" git -C "$REPO_DIR" pull --ff-only || sudo -u "$ACTUAL_USER" git -C "$REPO_DIR" pull
         else
+            git -C "$REPO_DIR" reset --hard HEAD 2>/dev/null || true
             git -C "$REPO_DIR" pull --ff-only || git -C "$REPO_DIR" pull
         fi
     fi
