@@ -9,15 +9,30 @@ NC='\033[0m'
 
 echo -e "${BLUE}[INFO] Starting Re:fox Uninstallation...${NC}"
 
-if [ "$EUID" -ne 0 ]; then
-    echo -e "${YELLOW}[INFO] Root privileges required. Elevating with sudo...${NC}"
-    exec sudo bash "$0" "$@"
-fi
-
 ACTUAL_USER="${SUDO_USER:-$USER}"
 USER_HOME=$(eval echo "~$ACTUAL_USER")
 REFOX_DIR="$USER_HOME/.config/refox"
 CONFIG_FILE="$REFOX_DIR/install.conf"
+
+SCRIPT_PATH="$0"
+if [ ! -f "$SCRIPT_PATH" ] || [[ "$SCRIPT_PATH" =~ bash$ || "$SCRIPT_PATH" =~ sh$ ]]; then
+    if [ -f "$REFOX_DIR/uninstall.sh" ]; then
+        SCRIPT_PATH="$REFOX_DIR/uninstall.sh"
+    else
+        mkdir -p "$REFOX_DIR"
+        if [ "$ACTUAL_USER" != "root" ] && [ -n "$ACTUAL_USER" ]; then
+            chown "$ACTUAL_USER" "$REFOX_DIR" 2>/dev/null || true
+        fi
+        curl -fsSL https://raw.githubusercontent.com/ADIOR-enigma/refox/main/uninstall.sh > "$REFOX_DIR/uninstall.sh"
+        chmod +x "$REFOX_DIR/uninstall.sh"
+        SCRIPT_PATH="$REFOX_DIR/uninstall.sh"
+    fi
+fi
+
+if [ "$EUID" -ne 0 ]; then
+    echo -e "${YELLOW}[INFO] Root privileges required. Elevating with sudo...${NC}"
+    exec sudo bash "$SCRIPT_PATH" "$@"
+fi
 
 detect_browser_name() {
     local path_lower="${1,,}"

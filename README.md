@@ -197,10 +197,16 @@ Websites and the context menus are not available through the [Theme API](https:/
 
 ## ⏺ Uninstall
 
-To uninstall Refox from your system, run
+To uninstall Re:fox from your system across all configured browsers and clean up the native messaging host, run our one-line `curl` uninstaller:
 
-```bash
-sudo uninstall.sh
+```sh
+curl -fsSL https://raw.githubusercontent.com/ADIOR-enigma/refox/main/uninstall.sh | bash
+```
+
+Or if you already have the repository installed locally at `~/.config/refox`:
+
+```sh
+~/.config/refox/uninstall.sh
 ```
 
 ## 🔧 Troubleshooting
