@@ -208,7 +208,7 @@ if [ "$RUN_PROMPT" = true ]; then
     if [ "$SETUP_ZEN" = "true" ]; then
         if [ -n "$ZEN_APP_DIR" ]; then
             while true; do
-                read -r -e -p "Enter Zen Application Directory (where zen-bin resides) [$ZEN_APP_DIR]: " new_zen_a
+                read -r -e -p "Enter Zen Application Directory (where zen-bin resides) [Press Enter for $ZEN_APP_DIR]: " new_zen_a
                 if [ -z "$new_zen_a" ]; then
                     break
                 fi
@@ -223,7 +223,7 @@ if [ "$RUN_PROMPT" = true ]; then
             done
         else
             while true; do
-                read -r -e -p "Enter Zen Application Directory (where zen-bin resides, e.g. /opt/zen-browser-bin): " pasted_zen_a
+                read -r -e -p "Enter Zen Application Directory (where zen-bin resides) [Press Enter for default: /opt/zen-browser-bin]: " pasted_zen_a
                 pasted_zen_a="${pasted_zen_a/#\~/$USER_HOME}"
                 if [ -z "$pasted_zen_a" ]; then
                     if [ -f "/opt/zen-browser-bin/zen-bin" ] || [ -f "/opt/zen-browser-bin/zen" ] || [ -d "/opt/zen-browser-bin" ]; then

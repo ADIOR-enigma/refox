@@ -71,6 +71,10 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/temp_omni/"
+    ],
     "moduleNameMapper": {
       "^@ui/(.*)$": [
         "<rootDir>/src/ui/$1"
