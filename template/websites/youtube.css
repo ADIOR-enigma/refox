@@ -1,25 +1,19 @@
 @-moz-document domain("youtube.com") {
     * {
         --t3e41d7b17b187f69: var(--refox-background, #0f0f0f) !important;
-        --ta889dfda9605a358: var(
-            --refox-background,
-            rgba(15, 15, 15, 0.8)
-        ) !important;
+        --ta889dfda9605a358: var(--refox-background,
+                rgba(15, 15, 15, 0.8)) !important;
         --t08a7c6c176cbc5c2: var(--refox-background-light, #282828) !important;
-        --t7f4f2c6d54836ce0: var(
-            --refox-background-light,
-            rgba(255, 255, 255, 0.1)
-        ) !important;
+        --t7f4f2c6d54836ce0: var(--refox-background-light,
+                rgba(255, 255, 255, 0.1)) !important;
         --t4a6da19e16bf221a: var(--refox-text, #aaa) !important;
         --t518e925f61bdcb91: var(--refox-background-light, #212121) !important;
         --t7e34d5baa4ea6277: var(--refox-background-extra, #717171) !important;
     }
 
     .ytSearchboxComponentInputBoxDark {
-        border-color: var(
-            --refox-background-light,
-            hsl(0, 0%, 18.82%)
-        ) !important;
+        border-color: var(--refox-background-light,
+                hsl(0, 0%, 18.82%)) !important;
         background-color: var(--refox-background, hsl(0, 0%, 7%)) !important;
     }
 
@@ -29,53 +23,43 @@
 
     .ytSearchboxComponentSearchButtonDark {
         border: 1px solid var(--refox-background-light, hsl(0, 0%, 18.82%)) !important;
-        background-color: var(
-            --refox-background-light,
-            hsla(0, 0%, 100%, 0.08)
-        ) !important;
+        background-color: var(--refox-background-light,
+                hsla(0, 0%, 100%, 0.08)) !important;
     }
 
-    #yt-ringo2-svg_yt9 > g:nth-child(1) > path:nth-child(1) {
+    #logo yt-icon svg>g:nth-child(1)>path:nth-child(1),
+    ytd-topbar-logo-renderer yt-icon svg>g:nth-child(1)>path:nth-child(1) {
         fill: var(--refox-accent-primary, rgb(255, 0, 51)) !important;
     }
 
-    #yt-ringo2-svg_yt9 > g:nth-child(1) > path:nth-child(2) {
+    #logo yt-icon svg>g:nth-child(1)>path:nth-child(2),
+    ytd-topbar-logo-renderer yt-icon svg>g:nth-child(1)>path:nth-child(2) {
         fill: var(--refox-background, white) !important;
     }
 
     .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
-        background: var(
-            --refox-accent-primary,
-            linear-gradient(90deg, #f03 80%, #ff2791)
-        ) !important;
+        background: var(--refox-accent-primary,
+                linear-gradient(90deg, #f03 80%, #ff2791)) !important;
     }
 
     .ytp-progress-list {
-        background: var(
-            --refox-background-extra,
-            rgba(40, 40, 40, 0.6)
-        ) !important;
+        background: var(--refox-background-extra,
+                rgba(40, 40, 40, 0.6)) !important;
     }
 
     .ytp-play-progress {
-        background: var(
-            --refox-accent-secondary,
-            linear-gradient(90deg, #f03 80%, #ff2791)
-        ) !important;
+        background: var(--refox-accent-secondary,
+                linear-gradient(90deg, #f03 80%, #ff2791)) !important;
     }
 
     .ytp-scrubber-button {
-        background-color: var(
-            --refox-accent-primary,
-            --yt-sys-color-baseline--static-brand-red,
-            #f03
-        ) !important;
+        background-color: var(--refox-accent-primary,
+                --yt-sys-color-baseline--static-brand-red,
+                #f03) !important;
     }
 
     #progress.ytd-thumbnail-overlay-resume-playback-renderer {
-        background: var(
-            --refox-accent-primary,
-            linear-gradient(90deg, #f03 80%, #ff2791)
-        ) !important;
+        background: var(--refox-accent-primary,
+                linear-gradient(90deg, #f03 80%, #ff2791)) !important;
     }
 }

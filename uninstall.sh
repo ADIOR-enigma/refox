@@ -111,7 +111,7 @@ case "$rm_profiles" in
     if [ "$SETUP_ZEN" = "true" ] || [ -n "$ZEN_PROFILE_DIR" ]; then
         if [ -n "$ZEN_PROFILE_DIR" ] && [ -d "$ZEN_PROFILE_DIR/chrome" ]; then
             echo -e "${BLUE}[INFO] Removing Re:fox scripts & templates from Zen Browser profile ($ZEN_PROFILE_DIR/chrome) ...${NC}"
-            rm -f "$ZEN_PROFILE_DIR/chrome/userContent.css"
+            rm -f "$ZEN_PROFILE_DIR/chrome/userChrome.css" "$ZEN_PROFILE_DIR/chrome/userContent.css"
             rm -rf "$ZEN_PROFILE_DIR/chrome/websites"
             rm -f "$ZEN_PROFILE_DIR/chrome/JS/refox_accent_watch.uc.js"
             rmdir --ignore-fail-on-non-empty "$ZEN_PROFILE_DIR/chrome/JS" 2>/dev/null || true

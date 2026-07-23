@@ -360,6 +360,7 @@ if [ "$SETUP_ZEN" = "true" ]; then
     if [ -n "$ZEN_PROFILE_DIR" ] && [ -d "$ZEN_PROFILE_DIR" ]; then
         echo -e "${BLUE}[INFO] ${ACTION_VERB_ING} Zen Browser userChromeJS & templates ${ACTION_PREP} profile ($ZEN_PROFILE_DIR/chrome) ...${NC}"
         mkdir -p "$ZEN_PROFILE_DIR/chrome"
+        rm -f "$ZEN_PROFILE_DIR/chrome/userChrome.css"
         cp -r "$REPO_DIR/zen/chrome/JS" "$REPO_DIR/zen/chrome/utils" "$REPO_DIR/template/userContent.css" "$REPO_DIR/template/websites" "$ZEN_PROFILE_DIR/chrome/"
 
         # Dynamically replace hardcoded colors.json path in refox_accent_watch.uc.js
