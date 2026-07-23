@@ -41,7 +41,7 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
 
 ## ⏺ Installation
 
-1. Get the latest add-on from [Releases Page](https://github.com/ADIOR-enigma/refox/releases/latest) and pin it to toolbar for a surprise.
+1. Get the latest add-on from [Releases Page](https://github.com/ADIOR-enigma/refox/releases/tag/v3.0.9) and pin it to toolbar for a surprise.
 
    > - It does autoupdate 😅
 
