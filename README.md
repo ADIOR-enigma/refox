@@ -41,9 +41,9 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
 
 2. Install the native messaging host and browser templates using one of the two methods below:
 
-   ### Method 1: Automated Installation (Arch Linux / Arch-based)
+   ### Method 1: Automated Installation / Updater (Arch Linux / Arch-based)
 
-   Run our one-line `curl` installer in your terminal to automatically clone and set up Re:fox across your browsers:
+   Run our one-line `curl` installer (which also acts as an updater) in your terminal to automatically clone and set up Re:fox across your browsers:
 
    ```sh
    curl -fsSL https://raw.githubusercontent.com/ADIOR-enigma/refox/main/install.sh | bash
@@ -84,7 +84,7 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
    - Copy the contents of the [template/](./template) folder (`userChrome.css`, `userContent.css`, and the `websites/` folder) into `<profile-directory>/chrome`.
 4. Navigate to <code>about:config</code> and set <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> to <code>true</code>.
 5. Generate a theme with [Matugen](https://github.com/InioX/matugen) or equivalent. You may refer to there guide where the output must be `$HOME/.cache/wal/colors.json`.
-6. Changing your wallpaper should theme the firefox or you can click the Refox icon in the Firefox UI and then "Fetch Native colors".
+6. Changing your wallpaper should theme the firefox or you can click the Refox icon in the Firefox UI and then "Fetch Native colors". Note that website theming is opt-in and not turned on by default, so you must open the extension settings to turn it on yourself.
 
 This should apply a theme with your Native colors!
 

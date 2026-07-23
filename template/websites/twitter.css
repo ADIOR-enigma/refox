@@ -1,4 +1,5 @@
-@-moz-document url-prefix("https://x.com/"), url-prefix("https://twitter.com/") {
+@-moz-document url-prefix("https://x.com/"), url-prefix("https://twitter.com/")
+{
     body.LightsOut {
         --border-color: var(--refox-background-extra, #333333) !important;
         --color: var(--refox-text, #ffffff);
@@ -27,26 +28,14 @@
     /* Background */
     body.LightsOut .r-5zmot,
     [data-theme="dark"] .r-5zmot,
-    .r-5zmot {
-        background-color: var(--refox-background, #121212) !important;
-    }
-
+    .r-5zmot,
     body.LightsOut,
     body,
-    [aria-label="Loading…"] {
-        background-color: var(--refox-background, #121212) !important;
-    }
-
+    [aria-label="Loading…"],
     body.LightsOut .r-kemksi,
     [data-theme="dark"] .r-kemksi,
-    .r-kemksi {
-        background-color: var(--refox-background, #121212) !important;
-    }
-
-    [style="background-color: rgb(0, 0, 0);"] {
-        background-color: var(--refox-background, #121212) !important;
-    }
-
+    .r-kemksi,
+    [style="background-color: rgb(0, 0, 0);"],
     body.LightsOut .bg-background,
     [data-theme="dark"] .bg-background,
     .bg-background {
@@ -63,7 +52,19 @@
     /* Border */
     body.LightsOut .r-kemksi,
     [data-theme="dark"] .r-kemksi,
-    .r-kemksi {
+    .r-kemksi,
+    body.LightsOut .r-1kqtdi0,
+    [data-theme="dark"] .r-1kqtdi0,
+    .r-1kqtdi0,
+    body.LightsOut [id="cpftInteractionLinks"] > .r-37j5jr,
+    [data-theme="dark"] [id="cpftInteractionLinks"] > .r-37j5jr,
+    [id="cpftInteractionLinks"] > .r-37j5jr,
+    body.LightsOut .r-2sztyj,
+    [data-theme="dark"] .r-2sztyj,
+    .r-2sztyj,
+    body.LightsOut .r-1roi411,
+    [data-theme="dark"] .r-1roi411,
+    .r-1roi411 {
         border-color: var(--refox-background-extra, #333333) !important;
     }
 
@@ -73,34 +74,10 @@
         border-bottom-color: var(--refox-background-extra, #333333) !important;
     }
 
-    body.LightsOut .r-1kqtdi0,
-    [data-theme="dark"] .r-1kqtdi0,
-    .r-1kqtdi0 {
-        border-color: var(--refox-background-extra, #333333) !important;
-    }
-
     body.LightsOut .r-gu4em3,
     [data-theme="dark"] .r-gu4em3,
     .r-gu4em3 {
         background-color: var(--refox-background-extra, #333333) !important;
-    }
-
-    body.LightsOut [id="cpftInteractionLinks"] > .r-37j5jr,
-    [data-theme="dark"] [id="cpftInteractionLinks"] > .r-37j5jr,
-    [id="cpftInteractionLinks"] > .r-37j5jr {
-        border-color: var(--refox-background-extra, #333333) !important;
-    }
-
-    body.LightsOut .r-2sztyj,
-    [data-theme="dark"] .r-2sztyj,
-    .r-2sztyj {
-        border-color: var(--refox-background-extra, #333333) !important;
-    }
-
-    body.LightsOut .r-1roi411,
-    [data-theme="dark"] .r-1roi411,
-    .r-1roi411 {
-        border-color: var(--refox-background-extra, #333333) !important;
     }
 
     /* Reply */
@@ -131,7 +108,8 @@
     }
 
     * {
-        scrollbar-color: var(--refox-background-extra, #404040) var(--refox-background, #121212) !important;
+        scrollbar-color: var(--refox-background-extra, #404040)
+            var(--refox-background, #121212) !important;
         scrollbar-width: thin !important;
     }
 
@@ -139,7 +117,8 @@
     [data-testid="sidebarColumn"],
     [role="region"][aria-label*="Timeline"],
     [role="dialog"] {
-        scrollbar-color: var(--refox-background-extra, #404040) var(--refox-background, #121212) !important;
+        scrollbar-color: var(--refox-background-extra, #404040)
+            var(--refox-background, #121212) !important;
         scrollbar-width: thin !important;
     }
 

@@ -10,7 +10,6 @@
             --refox-background-light,
             rgba(255, 255, 255, 0.1)
         ) !important;
-        --t3e41d7b17b187f69: var(--refox-background, #0f0f0f) !important;
         --t4a6da19e16bf221a: var(--refox-text, #aaa) !important;
         --t518e925f61bdcb91: var(--refox-background-light, #212121) !important;
         --t7e34d5baa4ea6277: var(--refox-background-extra, #717171) !important;
@@ -70,6 +69,13 @@
             --refox-accent-primary,
             --yt-sys-color-baseline--static-brand-red,
             #f03
+        ) !important;
+    }
+
+    #progress.ytd-thumbnail-overlay-resume-playback-renderer {
+        background: var(
+            --refox-accent-primary,
+            linear-gradient(90deg, #f03 80%, #ff2791)
         ) !important;
     }
 }
