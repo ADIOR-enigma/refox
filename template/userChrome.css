@@ -1,14 +1,28 @@
 /* Popup */
-menupopup {
+menupopup, panel {
+    appearance: none !important;
+    -moz-default-appearance: none !important;
+    --panel-background-color: var(--lwt-accent-color) !important;
     --panel-background: var(--lwt-accent-color) !important;
-    --panel-border-color: var(
-        --toolbar-field-focus-background-color
-    ) !important;
+    --panel-text-color: var(--lwt-text-color) !important;
+    --panel-color: var(--lwt-text-color) !important;
+    --panel-border-color: var(--toolbar-field-focus-background-color) !important;
+    --menu-background-color: var(--lwt-accent-color) !important;
+    --menu-color: var(--lwt-text-color) !important;
+    --menu-border-color: var(--toolbar-field-focus-background-color) !important;
+}
+
+menupopup::part(content) {
+    background-color: var(--lwt-accent-color) !important;
+    color: var(--lwt-text-color) !important;
+    border: 1px solid var(--toolbar-field-focus-background-color) !important;
 }
 
 /* Items */
 menu,
 menuitem {
+    appearance: none !important;
+    -moz-default-appearance: none !important;
     border-radius: 6px !important;
     padding: 6px 12px !important;
 
@@ -21,10 +35,10 @@ menuitem {
 }
 
 /* Hover */
-menu[_moz-menuactive]:not([disabled]),
-menuitem[_moz-menuactive]:not([disabled]) {
-    background-color: var(--toolbarbutton-hover-background) !important;
-    color: var(--toolbarbutton-icon-fill) !important;
+menu:is(:hover, [_moz-menuactive="true"]):not([disabled]),
+menuitem:is(:hover, [_moz-menuactive="true"]):not([disabled]) {
+    background-color: var(--toolbar-field-focus-background-color, color-mix(in srgb, currentColor 15%, transparent)) !important;
+    color: var(--lwt-text-color) !important;
 }
 
 /* Menubar */
@@ -47,6 +61,11 @@ menuitem[type="checkbox"] > .menu-icon,
 menuitem[type="radio"] > .menu-icon {
     appearance: none !important;
     -moz-default-appearance: none !important;
+    
+    width: 14px !important;
+    height: 14px !important;
+    display: inline-block !important;
+    box-sizing: border-box !important;
 
     border: 2px solid var(--toolbar-field-focus-background-color) !important;
     border-radius: 50%;
@@ -60,19 +79,23 @@ menuitem[type="checkbox"] > .menu-icon {
 }
 
 /* Checked */
+menuitem[type="checkbox"][checked="true"] > .menu-icon,
+menuitem[type="radio"][checked="true"] > .menu-icon,
 menuitem[type="checkbox"][checked] > .menu-icon,
 menuitem[type="radio"][checked] > .menu-icon {
-    background-color: var(--toolbarbutton-icon-fill) !important;
-    border-color: var(--toolbarbutton-icon-fill) !important;
+    background-color: var(--toolbarbutton-icon-fill, var(--toolbar-field-focus-background-color)) !important;
+    border-color: var(--toolbarbutton-icon-fill, var(--toolbar-field-focus-background-color)) !important;
 }
 
 /* Hover effect on toggle */
-menuitem[_moz-menuactive] > .menu-icon {
-    border-color: var(--toolbarbutton-icon-fill) !important;
+menu:is(:hover, [_moz-menuactive="true"]) > .menu-icon,
+menuitem:is(:hover, [_moz-menuactive="true"]) > .menu-icon {
+    border-color: var(--toolbarbutton-icon-fill, var(--toolbar-field-focus-background-color)) !important;
 }
 
 /* Hover + checked */
-menuitem[_moz-menuactive][checked] > .menu-icon {
+menuitem:is(:hover, [_moz-menuactive="true"])[checked="true"] > .menu-icon,
+menuitem:is(:hover, [_moz-menuactive="true"])[checked] > .menu-icon {
     filter: brightness(1.1);
 }
 
