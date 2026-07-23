@@ -30,7 +30,7 @@
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "*://*/*"
       ],
       "js": [
         "dist/website.js"
@@ -87,6 +87,6 @@
     "storage",
     "tabs",
     "alarms",
-    "<all_urls>"
+    "*://*/*"
   ]
 }

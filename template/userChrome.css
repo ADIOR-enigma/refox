@@ -1,5 +1,6 @@
 /* Popup */
-menupopup, panel {
+menupopup,
+panel {
     appearance: none !important;
     -moz-default-appearance: none !important;
     --panel-background-color: var(--lwt-accent-color) !important;
@@ -37,12 +38,12 @@ menuitem {
 /* Hover */
 menu:is(:hover, [_moz-menuactive="true"]):not([disabled]),
 menuitem:is(:hover, [_moz-menuactive="true"]):not([disabled]) {
-    background-color: var(--toolbar-field-focus-background-color, color-mix(in srgb, currentColor 15%, transparent)) !important;
-    color: var(--lwt-text-color) !important;
+    background-color: var(--toolbarbutton-hover-background, var(--toolbarbutton-background-color-hover)) !important;
+    color: var(--toolbarbutton-icon-fill) !important;
 }
 
 /* Menubar */
-menubar > menu[open] {
+menubar>menu[open] {
     border-bottom: 2px solid var(--tab-loading-fill) !important;
 }
 
@@ -61,13 +62,21 @@ menuitem[type="checkbox"] > .menu-icon,
 menuitem[type="radio"] > .menu-icon {
     appearance: none !important;
     -moz-default-appearance: none !important;
-    
+
+    /* Added these to fix modern Firefox shrinking the icon to 0x0 */
     width: 14px !important;
     height: 14px !important;
     display: inline-block !important;
     box-sizing: border-box !important;
+    content: "" !important;
+    list-style-image: none !important;
+    -moz-context-properties: fill, fill-opacity;
 
-    border: 2px solid var(--toolbar-field-focus-background-color) !important;
+    /* Instead of outline, use a light themed color for turned off */
+    border: 1px solid transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: var(--toolbar-field-background-color) !important;
     border-radius: 50%;
 
     transition: all 120ms ease;
@@ -79,22 +88,17 @@ menuitem[type="checkbox"] > .menu-icon {
 }
 
 /* Checked */
-menuitem[type="checkbox"][checked="true"] > .menu-icon,
-menuitem[type="radio"][checked="true"] > .menu-icon,
 menuitem[type="checkbox"][checked] > .menu-icon,
 menuitem[type="radio"][checked] > .menu-icon {
-    background-color: var(--toolbarbutton-icon-fill, var(--toolbar-field-focus-background-color)) !important;
-    border-color: var(--toolbarbutton-icon-fill, var(--toolbar-field-focus-background-color)) !important;
+    background-color: var(--toolbarbutton-icon-fill) !important;
 }
 
 /* Hover effect on toggle */
-menu:is(:hover, [_moz-menuactive="true"]) > .menu-icon,
 menuitem:is(:hover, [_moz-menuactive="true"]) > .menu-icon {
-    border-color: var(--toolbarbutton-icon-fill, var(--toolbar-field-focus-background-color)) !important;
+    border-color: var(--toolbarbutton-icon-fill) !important;
 }
 
 /* Hover + checked */
-menuitem:is(:hover, [_moz-menuactive="true"])[checked="true"] > .menu-icon,
 menuitem:is(:hover, [_moz-menuactive="true"])[checked] > .menu-icon {
     filter: brightness(1.1);
 }
