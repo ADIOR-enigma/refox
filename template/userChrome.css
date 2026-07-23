@@ -7,16 +7,16 @@ panel {
     --panel-background: var(--lwt-accent-color) !important;
     --panel-text-color: var(--lwt-text-color) !important;
     --panel-color: var(--lwt-text-color) !important;
-    --panel-border-color: var(--toolbar-field-focus-background-color) !important;
+    --panel-border-color: var(--toolbar-field-background-color-focus) !important;
     --menu-background-color: var(--lwt-accent-color) !important;
     --menu-color: var(--lwt-text-color) !important;
-    --menu-border-color: var(--toolbar-field-focus-background-color) !important;
+    --menu-border-color: var(--toolbar-field-background-color-focus) !important;
 }
 
 menupopup::part(content) {
     background-color: var(--lwt-accent-color) !important;
     color: var(--lwt-text-color) !important;
-    border: 1px solid var(--toolbar-field-focus-background-color) !important;
+    border: 1px solid var(--toolbar-field-background-color-focus) !important;
 }
 
 /* Items */
@@ -49,7 +49,7 @@ menubar>menu[open] {
 
 /* Separator */
 menuseparator::before {
-    border-top: 1px solid var(--toolbar-field-focus-background-color) !important;
+    border-top: 1px solid var(--toolbar-field-background-color-focus) !important;
 }
 
 /* Disabled */
@@ -58,8 +58,8 @@ menuitem[disabled] {
 }
 
 /* Checkbox */
-menuitem[type="checkbox"] > .menu-icon,
-menuitem[type="radio"] > .menu-icon {
+menuitem[type="checkbox"]>.menu-icon,
+menuitem[type="radio"]>.menu-icon {
     appearance: none !important;
     -moz-default-appearance: none !important;
 
@@ -83,23 +83,23 @@ menuitem[type="radio"] > .menu-icon {
 }
 
 /* Checkbox shape */
-menuitem[type="checkbox"] > .menu-icon {
+menuitem[type="checkbox"]>.menu-icon {
     border-radius: 4px;
 }
 
 /* Checked */
-menuitem[type="checkbox"][checked] > .menu-icon,
-menuitem[type="radio"][checked] > .menu-icon {
+menuitem[type="checkbox"][checked]>.menu-icon,
+menuitem[type="radio"][checked]>.menu-icon {
     background-color: var(--toolbarbutton-icon-fill) !important;
 }
 
 /* Hover effect on toggle */
-menuitem:is(:hover, [_moz-menuactive="true"]) > .menu-icon {
+menuitem:is(:hover, [_moz-menuactive="true"])>.menu-icon {
     border-color: var(--toolbarbutton-icon-fill) !important;
 }
 
 /* Hover + checked */
-menuitem:is(:hover, [_moz-menuactive="true"])[checked] > .menu-icon {
+menuitem:is(:hover, [_moz-menuactive="true"])[checked]>.menu-icon {
     filter: brightness(1.1);
 }
 
