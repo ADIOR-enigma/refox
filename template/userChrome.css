@@ -15,6 +15,8 @@ panel {
     --menu-color: var(--lwt-text-color, #fbfbfe) !important;
     --menu-border-color: var(--toolbar-field-background-color-focus,
             #42414d) !important;
+    --panel-item-hover-bgcolor: var(--toolbarbutton-background-color-hover, rgba(255, 255, 255, 0.1)) !important;
+    --panel-menuitem-border-radius: 6px !important;
 }
 
 menupopup::part(content) {
@@ -25,8 +27,7 @@ menupopup::part(content) {
 
 /* Items */
 menu,
-menuitem,
-.subviewbutton {
+menuitem {
     appearance: none !important;
     -moz-default-appearance: none !important;
     border-radius: 6px !important;
@@ -42,10 +43,15 @@ menuitem,
 
 /* Hover */
 menu:is(:hover, [_moz-menuactive="true"]):not([disabled]),
-menuitem:is(:hover, [_moz-menuactive="true"]):not([disabled]),
-.subviewbutton:not([disabled]):is(:hover, [_moz-menuactive="true"]) {
+menuitem:is(:hover, [_moz-menuactive="true"]):not([disabled]) {
     background-color: var(--toolbarbutton-background-color-hover,
             rgba(255, 255, 255, 0.1)) !important;
+    color: var(--toolbarbutton-icon-fill, #00ddff) !important;
+}
+
+/* Subview Hover (Hamburger menu text color) */
+panelview .toolbarbutton-1:not([disabled]):is(:hover, :active),
+.subviewbutton:not([disabled]):not(#appMenu-zoomReduce-button2, #appMenu-zoomReset-button2, #appMenu-zoomEnlarge-button2, #appMenu-fullscreen-button2):is(:hover, :active) {
     color: var(--toolbarbutton-icon-fill, #00ddff) !important;
 }
 
