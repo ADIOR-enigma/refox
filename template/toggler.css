@@ -1,0 +1,24 @@
+/* ========================================================================= *
+ * TOGGLER SUPPORT                                                           *
+ * ========================================================================= *
+ * This file acts as a separate list of settings and is a manual opt-in for  *
+ * super users. It allows users to hide colors or do whatever they want with *
+ * their customizations.                                                     *
+ *                                                                           *
+ * ATTENTION USERS:                                                  *
+ * This file is NOT included in the automatic scripts and will NEVER be      *
+ * included. DO NOT add this file to the automatic system.                   *
+ * ========================================================================= */
+
+/* Hide bottom sidebar buttons */
+#vertical-tabs-newtab-button,
+#sidebar-tools-and-extensions-splitter,
+#tabs-newtab-button,
+.buttons-wrapper {
+    display: none !important;
+}
+
+/* Hides Edit button */
+.personalizeButtonWrapper {
+    display: none !important;
+}
