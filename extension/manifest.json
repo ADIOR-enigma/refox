@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Re:Fox",
-  "version": "3.0.9",
+  "version": "3.1.0",
   "description": "Dynamic theming of the browser using your native color scheme generator",
   "browser_specific_settings": {
     "gecko": {
