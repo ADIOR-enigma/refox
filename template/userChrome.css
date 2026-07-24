@@ -25,7 +25,8 @@ menupopup::part(content) {
 
 /* Items */
 menu,
-menuitem {
+menuitem,
+.subviewbutton {
     appearance: none !important;
     -moz-default-appearance: none !important;
     border-radius: 6px !important;
@@ -41,7 +42,8 @@ menuitem {
 
 /* Hover */
 menu:is(:hover, [_moz-menuactive="true"]):not([disabled]),
-menuitem:is(:hover, [_moz-menuactive="true"]):not([disabled]) {
+menuitem:is(:hover, [_moz-menuactive="true"]):not([disabled]),
+.subviewbutton:not([disabled]):is(:hover, [_moz-menuactive="true"]) {
     background-color: var(--toolbarbutton-background-color-hover,
             rgba(255, 255, 255, 0.1)) !important;
     color: var(--toolbarbutton-icon-fill, #00ddff) !important;
