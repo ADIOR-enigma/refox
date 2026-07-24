@@ -1,3 +1,4 @@
+@import url("toggler.css");
 @import url("websites/github.css");
 @import url("websites/reddit.css");
 @import url("websites/twitter.css");
@@ -17,8 +18,3 @@
 @import url("websites/claude.css");
 @import url("websites/monkeytype.css");
 @import url("websites/pdfviewer.firefox.css");
-
-/* Hides Edit button
-.personalizeButtonWrapper {
-    display: none !important;
-} */

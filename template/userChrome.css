@@ -1,3 +1,5 @@
+@import url("toggler.css");
+
 /* Popup */
 menupopup,
 panel {
@@ -105,14 +107,6 @@ menuitem:is(:hover, [_moz-menuactive="true"])>.menu-icon {
 menuitem:is(:hover, [_moz-menuactive="true"])[checked]>.menu-icon {
     filter: brightness(1.1);
 }
-
-/* Hide bottom sidebar buttons
-#vertical-tabs-newtab-button,
-#sidebar-tools-and-extensions-splitter,
-#tabs-newtab-button,
-.buttons-wrapper {
-    display: none !important;
-} */
 
 /* Popup Notifications */
 moz-message-bar,
