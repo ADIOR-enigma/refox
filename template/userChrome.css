@@ -3,20 +3,22 @@ menupopup,
 panel {
     appearance: none !important;
     -moz-default-appearance: none !important;
-    --panel-background-color: var(--lwt-accent-color) !important;
-    --panel-background: var(--lwt-accent-color) !important;
-    --panel-text-color: var(--lwt-text-color) !important;
-    --panel-color: var(--lwt-text-color) !important;
-    --panel-border-color: var(--toolbar-field-background-color-focus) !important;
-    --menu-background-color: var(--lwt-accent-color) !important;
-    --menu-color: var(--lwt-text-color) !important;
-    --menu-border-color: var(--toolbar-field-background-color-focus) !important;
+    --panel-background-color: var(--lwt-accent-color, #1c1b22) !important;
+    --panel-background: var(--lwt-accent-color, #1c1b22) !important;
+    --panel-text-color: var(--lwt-text-color, #fbfbfe) !important;
+    --panel-color: var(--lwt-text-color, #fbfbfe) !important;
+    --panel-border-color: var(--toolbar-field-background-color-focus,
+            #42414d) !important;
+    --menu-background-color: var(--lwt-accent-color, #1c1b22) !important;
+    --menu-color: var(--lwt-text-color, #fbfbfe) !important;
+    --menu-border-color: var(--toolbar-field-background-color-focus,
+            #42414d) !important;
 }
 
 menupopup::part(content) {
-    background-color: var(--lwt-accent-color) !important;
-    color: var(--lwt-text-color) !important;
-    border: 1px solid var(--toolbar-field-background-color-focus) !important;
+    background-color: var(--lwt-accent-color, #1c1b22) !important;
+    color: var(--lwt-text-color, #fbfbfe) !important;
+    border: 1px solid var(--toolbar-field-background-color-focus, #42414d) !important;
 }
 
 /* Items */
@@ -28,7 +30,7 @@ menuitem {
     padding: 6px 12px !important;
 
     background-color: transparent !important;
-    color: var(--lwt-text-color) !important;
+    color: var(--lwt-text-color, #fbfbfe) !important;
 
     transition:
         background-color 120ms ease,
@@ -38,23 +40,24 @@ menuitem {
 /* Hover */
 menu:is(:hover, [_moz-menuactive="true"]):not([disabled]),
 menuitem:is(:hover, [_moz-menuactive="true"]):not([disabled]) {
-    background-color: var(--toolbarbutton-hover-background, var(--toolbarbutton-background-color-hover)) !important;
-    color: var(--toolbarbutton-icon-fill) !important;
+    background-color: var(--toolbarbutton-background-color-hover,
+            rgba(255, 255, 255, 0.1)) !important;
+    color: var(--toolbarbutton-icon-fill, #00ddff) !important;
 }
 
 /* Menubar */
 menubar>menu[open] {
-    border-bottom: 2px solid var(--tab-loading-fill) !important;
+    border-bottom: 2px solid var(--tab-loading-fill, #00ddff) !important;
 }
 
 /* Separator */
 menuseparator::before {
-    border-top: 1px solid var(--toolbar-field-background-color-focus) !important;
+    border-top: 1px solid var(--toolbar-field-background-color-focus, #42414d) !important;
 }
 
 /* Disabled */
 menuitem[disabled] {
-    color: var(--toolbar-field-background-color) !important;
+    color: var(--toolbar-field-background-color, #2b2a33) !important;
 }
 
 /* Checkbox */
@@ -76,7 +79,7 @@ menuitem[type="radio"]>.menu-icon {
     border: 1px solid transparent !important;
     outline: none !important;
     box-shadow: none !important;
-    background-color: var(--toolbar-field-background-color) !important;
+    background-color: var(--toolbar-field-background-color, #2b2a33) !important;
     border-radius: 50%;
 
     transition: all 120ms ease;
@@ -90,12 +93,12 @@ menuitem[type="checkbox"]>.menu-icon {
 /* Checked */
 menuitem[type="checkbox"][checked]>.menu-icon,
 menuitem[type="radio"][checked]>.menu-icon {
-    background-color: var(--toolbarbutton-icon-fill) !important;
+    background-color: var(--toolbarbutton-icon-fill, #00ddff) !important;
 }
 
 /* Hover effect on toggle */
 menuitem:is(:hover, [_moz-menuactive="true"])>.menu-icon {
-    border-color: var(--toolbarbutton-icon-fill) !important;
+    border-color: var(--toolbarbutton-icon-fill, #00ddff) !important;
 }
 
 /* Hover + checked */
@@ -110,3 +113,44 @@ menuitem:is(:hover, [_moz-menuactive="true"])[checked]>.menu-icon {
 .buttons-wrapper {
     display: none !important;
 } */
+
+/* Popup Notifications */
+moz-message-bar,
+notification-message,
+notification {
+    --message-bar-background-color: var(--toolbar-field-background-color,
+            #2b2a33) !important;
+    --message-bar-text-color: var(--lwt-text-color, #fbfbfe) !important;
+    --message-bar-icon-color: var(--toolbarbutton-icon-fill, #00ddff) !important;
+    background-color: var(--toolbar-field-background-color, #2b2a33) !important;
+    color: var(--lwt-text-color, #fbfbfe) !important;
+    border: 1px solid var(--toolbar-field-background-color-focus, #42414d) !important;
+    border-radius: 6px !important;
+}
+
+moz-message-bar .container,
+notification-message .container {
+    background-color: transparent !important;
+}
+
+moz-message-bar .icon,
+notification-message .icon {
+    fill: var(--toolbarbutton-icon-fill, #00ddff) !important;
+    color: var(--toolbarbutton-icon-fill, #00ddff) !important;
+}
+
+moz-message-bar moz-button.close,
+notification-message moz-button.close {
+    background-color: transparent !important;
+    fill: var(--lwt-text-color, #fbfbfe) !important;
+    color: var(--lwt-text-color, #fbfbfe) !important;
+    border: none !important;
+}
+
+moz-message-bar moz-button.close:hover,
+notification-message moz-button.close:hover {
+    background-color: var(--toolbarbutton-background-color-hover,
+            rgba(255, 255, 255, 0.1)) !important;
+    fill: var(--toolbarbutton-icon-fill, #00ddff) !important;
+    color: var(--toolbarbutton-icon-fill, #00ddff) !important;
+}
