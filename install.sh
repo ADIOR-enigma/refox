@@ -116,12 +116,6 @@ if [ -f "$CONFIG_FILE" ]; then
             b_name=$(detect_browser_name "$p")
             echo "  - $b_name: $p"
         done
-        if [ "$SETUP_ZEN" = "true" ] && [ -n "$ZEN_PROFILE_DIR" ]; then
-            echo "  - Zen Browser: $ZEN_PROFILE_DIR"
-            if [ -n "$ZEN_APP_DIR" ]; then
-                echo "  - Zen Application Directory: $ZEN_APP_DIR"
-            fi
-        fi
     fi
 
     read -r -p "Do you want to add another browser profile or modify configuration? [y/N]: " modify_conf
@@ -138,8 +132,8 @@ if [ "$RUN_PROMPT" = true ]; then
 
     while true; do
         while true; do
-            if [ ${#GECKO_PROFILES[@]} -eq 0 ] && [ -z "$ZEN_PROFILE_DIR" ]; then
-                read -r -e -p "Enter Profile Directory path from your browser's about:support page (Firefox, LibreWolf, Floorp, Mercury, Zen): " pasted_path
+            if [ ${#GECKO_PROFILES[@]} -eq 0 ]; then
+                read -r -e -p "Enter Profile Directory path from your browser's about:support page (Firefox, LibreWolf, Floorp, Mercury): " pasted_path
             else
                 read -r -e -p "Enter additional Profile Directory path from about:support: " pasted_path
             fi
@@ -150,24 +144,18 @@ if [ "$RUN_PROMPT" = true ]; then
                 echo -e "${RED}[ERROR] Directory does not exist or is invalid: $pasted_path. Please enter a valid Profile Directory path.${NC}"
             else
                 b_name=$(detect_browser_name "$pasted_path")
-                if [ "$b_name" = "Zen Browser" ]; then
-                    ZEN_PROFILE_DIR="$pasted_path"
-                    SETUP_ZEN="true"
-                    echo -e "${GREEN}[SUCCESS] Detected and set Zen Browser profile: $pasted_path${NC}"
-                else
-                    exists=false
-                    for p in "${GECKO_PROFILES[@]}"; do
-                        if [ "$p" = "$pasted_path" ]; then
-                            exists=true
-                            break
-                        fi
-                    done
-                    if [ "$exists" = false ]; then
-                        GECKO_PROFILES+=("$pasted_path")
-                        echo -e "${GREEN}[SUCCESS] Added $b_name profile: $pasted_path${NC}"
-                    else
-                        echo -e "${YELLOW}[INFO] $b_name profile already added: $pasted_path${NC}"
+                exists=false
+                for p in "${GECKO_PROFILES[@]}"; do
+                    if [ "$p" = "$pasted_path" ]; then
+                        exists=true
+                        break
                     fi
+                done
+                if [ "$exists" = false ]; then
+                    GECKO_PROFILES+=("$pasted_path")
+                    echo -e "${GREEN}[SUCCESS] Added $b_name profile: $pasted_path${NC}"
+                else
+                    echo -e "${YELLOW}[INFO] $b_name profile already added: $pasted_path${NC}"
                 fi
                 break
             fi
@@ -179,79 +167,6 @@ if [ "$RUN_PROMPT" = true ]; then
         fi
     done
 
-    # --- Zen Browser Setup ---
-    if [ "$SETUP_ZEN" = "true" ] && [ -n "$ZEN_PROFILE_DIR" ] && [ -d "$ZEN_PROFILE_DIR" ]; then
-        echo -e "\n${GREEN}[INFO] Using detected Zen Browser profile for Matugen UI & page theming: $ZEN_PROFILE_DIR${NC}"
-    else
-        echo -e "\n${YELLOW}Do you want to set up Matugen UI & page theming for Zen Browser? [y/N]: ${NC}"
-        read -r -p "> " zen_ans
-        if [[ "$zen_ans" =~ ^[Yy] ]]; then
-            SETUP_ZEN="true"
-            while true; do
-                read -r -e -p "Paste Zen Profile Directory from Zen's about:support page: " pasted_zen_p
-                pasted_zen_p="${pasted_zen_p/#\~/$USER_HOME}"
-                if [ -z "$pasted_zen_p" ]; then
-                    echo -e "${RED}[ERROR] Zen Profile Directory path cannot be empty. Please enter a valid path.${NC}"
-                elif [ -d "$pasted_zen_p" ]; then
-                    ZEN_PROFILE_DIR="$pasted_zen_p"
-                    echo -e "${GREEN}[SUCCESS] Set Zen Browser profile: $ZEN_PROFILE_DIR${NC}"
-                    break
-                else
-                    echo -e "${RED}[ERROR] Directory does not exist or is invalid: $pasted_zen_p. Please enter a valid path.${NC}"
-                fi
-            done
-        else
-            SETUP_ZEN="false"
-        fi
-    fi
-
-    if [ "$SETUP_ZEN" = "true" ]; then
-        if [ -n "$ZEN_APP_DIR" ]; then
-            while true; do
-                read -r -e -p "Enter Zen Application Directory (where zen-bin resides) [Press Enter for $ZEN_APP_DIR]: " new_zen_a
-                if [ -z "$new_zen_a" ]; then
-                    break
-                fi
-                new_zen_a="${new_zen_a/#\~/$USER_HOME}"
-                if [ -d "$new_zen_a" ] && ([ -f "$new_zen_a/zen-bin" ] || [ -f "$new_zen_a/zen" ] || [ -d "$new_zen_a" ]); then
-                    ZEN_APP_DIR="$new_zen_a"
-                    echo -e "${GREEN}[SUCCESS] Set Zen application directory: $ZEN_APP_DIR${NC}"
-                    break
-                else
-                    echo -e "${RED}[ERROR] Directory or binary not found in: $new_zen_a. Please enter a valid directory.${NC}"
-                fi
-            done
-        else
-            while true; do
-                read -r -e -p "Enter Zen Application Directory (where zen-bin resides) [Press Enter for default: /opt/zen-browser-bin]: " pasted_zen_a
-                pasted_zen_a="${pasted_zen_a/#\~/$USER_HOME}"
-                if [ -z "$pasted_zen_a" ]; then
-                    if [ -f "/opt/zen-browser-bin/zen-bin" ] || [ -f "/opt/zen-browser-bin/zen" ] || [ -d "/opt/zen-browser-bin" ]; then
-                        ZEN_APP_DIR="/opt/zen-browser-bin"
-                        echo -e "${GREEN}[SUCCESS] Auto-detected Zen application directory: $ZEN_APP_DIR${NC}"
-                        break
-                    elif [ -f "/opt/zen-browser/zen-bin" ] || [ -f "/opt/zen-browser/zen" ] || [ -d "/opt/zen-browser" ]; then
-                        ZEN_APP_DIR="/opt/zen-browser"
-                        echo -e "${GREEN}[SUCCESS] Auto-detected Zen application directory: $ZEN_APP_DIR${NC}"
-                        break
-                    elif [ -f "/usr/lib/zen-browser/zen-bin" ] || [ -f "/usr/lib/zen-browser/zen" ] || [ -d "/usr/lib/zen-browser" ]; then
-                        ZEN_APP_DIR="/usr/lib/zen-browser"
-                        echo -e "${GREEN}[SUCCESS] Auto-detected Zen application directory: $ZEN_APP_DIR${NC}"
-                        break
-                    else
-                        echo -e "${RED}[ERROR] Zen Application Directory cannot be empty and auto-detection failed. Please enter the directory where zen-bin resides.${NC}"
-                    fi
-                elif [ -d "$pasted_zen_a" ] && ([ -f "$pasted_zen_a/zen-bin" ] || [ -f "$pasted_zen_a/zen" ] || [ -d "$pasted_zen_a" ]); then
-                    ZEN_APP_DIR="$pasted_zen_a"
-                    echo -e "${GREEN}[SUCCESS] Set Zen application directory: $ZEN_APP_DIR${NC}"
-                    break
-                else
-                    echo -e "${RED}[ERROR] Directory or binary not found in: $pasted_zen_a. Please enter a valid directory where zen-bin resides.${NC}"
-                fi
-            done
-        fi
-    fi
-
     # Save settings to config file
     echo -e "${BLUE}[INFO] Saving configuration to $CONFIG_FILE...${NC}"
     cat <<EOF >"$CONFIG_FILE"
@@ -262,9 +177,6 @@ EOF
     done
     cat <<EOF >>"$CONFIG_FILE"
 )
-SETUP_ZEN="$SETUP_ZEN"
-ZEN_PROFILE_DIR="$ZEN_PROFILE_DIR"
-ZEN_APP_DIR="$ZEN_APP_DIR"
 EOF
     if [ "$ACTUAL_USER" != "root" ] && [ -n "$ACTUAL_USER" ]; then
         chown "$ACTUAL_USER" "$CONFIG_FILE" 2>/dev/null || true
@@ -355,41 +267,6 @@ for prof in "${GECKO_PROFILES[@]}"; do
     fi
 done
 
-# --- Zen Browser Setup ---
-if [ "$SETUP_ZEN" = "true" ]; then
-    if [ -n "$ZEN_PROFILE_DIR" ] && [ -d "$ZEN_PROFILE_DIR" ]; then
-        echo -e "${BLUE}[INFO] ${ACTION_VERB_ING} Zen Browser userChromeJS & templates ${ACTION_PREP} profile ($ZEN_PROFILE_DIR/chrome) ...${NC}"
-        mkdir -p "$ZEN_PROFILE_DIR/chrome"
-        rm -f "$ZEN_PROFILE_DIR/chrome/userChrome.css"
-        cp -r "$REPO_DIR/zen/chrome/JS" "$REPO_DIR/zen/chrome/utils" "$REPO_DIR/template/userContent.css" "$REPO_DIR/template/websites" "$ZEN_PROFILE_DIR/chrome/"
-
-        # Dynamically replace hardcoded colors.json path in refox_accent_watch.uc.js
-        WATCH_FILE="$ZEN_PROFILE_DIR/chrome/JS/refox_accent_watch.uc.js"
-        if [ -f "$WATCH_FILE" ]; then
-            CACHE_PATH="$USER_HOME/.cache/wal/colors.json"
-            sed -i "s|const PATH = .*|const PATH = \"$CACHE_PATH\";|g" "$WATCH_FILE"
-            echo -e "${GREEN}[INFO] Updated watch script target to $CACHE_PATH${NC}"
-        fi
-        if [ "$ACTUAL_USER" != "root" ] && [ -n "$ACTUAL_USER" ]; then
-            chown -R "$ACTUAL_USER" "$ZEN_PROFILE_DIR/chrome" 2>/dev/null || true
-        fi
-        echo -e "${GREEN}[SUCCESS] ${ACTION_VERB_ED} Zen Browser chrome scripts ${ACTION_PREP} profile ($ZEN_PROFILE_DIR/chrome)${NC}"
-    else
-        echo -e "${YELLOW}[WARNING] Zen Browser profile directory not found: $ZEN_PROFILE_DIR${NC}"
-    fi
-
-    if [ -n "$ZEN_APP_DIR" ] && [ -d "$ZEN_APP_DIR" ]; then
-        echo -e "${BLUE}[INFO] ${ACTION_VERB_ING} Zen program configuration ${ACTION_PREP} application directory: $ZEN_APP_DIR ...${NC}"
-        cp "$REPO_DIR/zen/program/config.js" "$ZEN_APP_DIR/"
-        mkdir -p "$ZEN_APP_DIR/defaults/pref"
-        cp "$REPO_DIR/zen/program/defaults/pref/config-prefs.js" "$ZEN_APP_DIR/defaults/pref/"
-        chmod 644 "$ZEN_APP_DIR/config.js" "$ZEN_APP_DIR/defaults/pref/config-prefs.js"
-        echo -e "${GREEN}[SUCCESS] ${ACTION_VERB_ED} config.js and defaults/pref/config-prefs.js ${ACTION_PREP} $ZEN_APP_DIR${NC}"
-    else
-        echo -e "${YELLOW}[WARNING] Zen application directory not found: $ZEN_APP_DIR${NC}"
-    fi
-fi
-
 echo -e "\n${GREEN}[SUCCESS] Re:fox ${ACTION_TITLE} completed successfully!${NC}"
-echo -e "${GREEN}[SUCCESS] Supported browsers: Firefox, LibreWolf, Floorp, Mercury, Zen.${NC}"
+echo -e "${GREEN}[SUCCESS] Supported browsers: Firefox, LibreWolf, Floorp, Mercury.${NC}"
 echo -e "${YELLOW}[NOTE] Remember to open about:config in your browser and verify toolkit.legacyUserProfileCustomizations.stylesheets is set to true!${NC}"

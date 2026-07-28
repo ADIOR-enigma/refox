@@ -1,0 +1,15 @@
+:root {
+  --refox-primary-color: var(--refox-accent-primary) !important;
+}
+
+#navigator-toolbox {
+  background: var(--refox-background) !important;
+}
+
+#zen-appcontent-wrapper {
+  background: var(--refox-background) !important;
+}
+
+#tabbrowser-tabs .tabbrowser-tab[selected] .tab-background {
+  background: var(--refox-primary-color) !important;
+}

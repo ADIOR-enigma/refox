@@ -115,6 +115,8 @@ case "$rm_profiles" in
             rm -rf "$ZEN_PROFILE_DIR/chrome/websites"
             rm -f "$ZEN_PROFILE_DIR/chrome/JS/refox_accent_watch.uc.js"
             rmdir --ignore-fail-on-non-empty "$ZEN_PROFILE_DIR/chrome/JS" 2>/dev/null || true
+            rm -f "$ZEN_PROFILE_DIR/chrome/CSS/refox.css"
+            rmdir --ignore-fail-on-non-empty "$ZEN_PROFILE_DIR/chrome/CSS" 2>/dev/null || true
             for uf in boot.sys.mjs chrome.manifest fs.sys.mjs module_loader.mjs uc_api.sys.mjs utils.sys.mjs; do
                 rm -f "$ZEN_PROFILE_DIR/chrome/utils/$uf"
             done

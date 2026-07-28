@@ -2,66 +2,49 @@
 
 (function () {
   const PATH = "/home/adior/.cache/wal/colors.json";
-  const STYLE_ID = "wal-theme";
-
   let last = 0;
   let cache = {};
 
-  const CSS = `
-:root {
-  --zen-primary-color: var(--zen-accent-primary) !important;
-}
-
-#navigator-toolbox {
-  background: var(--zen-background) !important;
-}
-
-#zen-appcontent-wrapper {
-  background: var(--zen-background) !important;
-}
-
-#tabbrowser-tabs .tabbrowser-tab[selected] .tab-background {
-  background: var(--zen-primary-color) !important;
-}
-`;
-
-  function ensureStyleElement() {
-    let style = document.getElementById(STYLE_ID);
-
-    if (!style) {
-      style = document.createElement("style");
-      style.id = STYLE_ID;
-      document.documentElement.appendChild(style);
-    }
-
-    if (style.textContent !== CSS) {
-      style.textContent = CSS;
-    }
-  }
+  const sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
+  let registeredUri = null;
 
   function applyTheme(c) {
-    const root = document.documentElement;
+    const bg = c.background || c.color0;
+    const prm = c.primary || c.color3;
+    const sec = c.secondary || c.color5;
+    const txt = c.text || c.color15;
 
     // Avoid redundant reapply
     if (
-      cache.color0 === c.color0 &&
-      cache.color3 === c.color3 &&
-      cache.color5 === c.color5 &&
-      cache.color15 === c.color15
+      cache.background === bg &&
+      cache.primary === prm &&
+      cache.secondary === sec &&
+      cache.text === txt
     ) {
       return;
     }
-    cache = { ...c };
+    cache = { background: bg, primary: prm, secondary: sec, text: txt };
 
-    // Core mapping
-    root.style.setProperty("--zen-accent-primary", c.color3, "important");
-    root.style.setProperty("--zen-accent-secondary", c.color5, "important");
-    root.style.setProperty("--zen-background", c.color0, "important");
-    root.style.setProperty("--zen-text", c.color15, "important");
-    root.style.setProperty("--zen-text-focus", "#ffffff", "important");
-    root.style.setProperty("--zen-primary-color", c.color3, "important");
+    const css = `
+      :root {
+        --refox-accent-primary: ${prm} !important;
+        --refox-accent-secondary: ${sec} !important;
+        --refox-background: ${bg} !important;
+        --refox-text: ${txt} !important;
+        --refox-text-focus: #ffffff !important;
+      }
+    `;
 
-    ensureStyleElement();
+    const uri = Services.io.newURI("data:text/css;charset=utf-8," + encodeURIComponent(css), null, null);
+
+    if (registeredUri) {
+      if (sss.sheetRegistered(registeredUri, sss.USER_SHEET)) {
+        sss.unregisterSheet(registeredUri, sss.USER_SHEET);
+      }
+    }
+
+    sss.loadAndRegisterSheet(uri, sss.USER_SHEET);
+    registeredUri = uri;
   }
 
   async function readTheme(force = false) {
@@ -75,7 +58,7 @@
       if (!data.colors) return;
 
       applyTheme(data.colors);
-    } catch {}
+    } catch { }
   }
 
   // Wait for Zen UI
