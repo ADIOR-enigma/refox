@@ -84,9 +84,7 @@ fi
 
 detect_browser_name() {
     local path_lower="${1,,}"
-    if [[ "$path_lower" =~ /(zen|\.zen)/ || "$path_lower" =~ zen ]]; then
-        echo "Zen Browser"
-    elif [[ "$path_lower" =~ /(librewolf|\.librewolf)/ || "$path_lower" =~ librewolf ]]; then
+    if [[ "$path_lower" =~ /(librewolf|\.librewolf)/ || "$path_lower" =~ librewolf ]]; then
         echo "LibreWolf"
     elif [[ "$path_lower" =~ /(floorp|\.floorp)/ || "$path_lower" =~ floorp ]]; then
         echo "Floorp"
@@ -102,15 +100,12 @@ detect_browser_name() {
 # Configuration Management
 CONFIG_FILE="$REFOX_CONFIG_DIR/install.conf"
 GECKO_PROFILES=()
-SETUP_ZEN="false"
-ZEN_PROFILE_DIR=""
-ZEN_APP_DIR=""
 
 RUN_PROMPT=true
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
     echo -e "${GREEN}[INFO] Loaded saved configuration from $CONFIG_FILE${NC}"
-    if [ ${#GECKO_PROFILES[@]} -gt 0 ] || ([ "$SETUP_ZEN" = "true" ] && [ -n "$ZEN_PROFILE_DIR" ]); then
+    if [ ${#GECKO_PROFILES[@]} -gt 0 ]; then
         echo -e "${BLUE}Configured browser profiles:${NC}"
         for p in "${GECKO_PROFILES[@]}"; do
             b_name=$(detect_browser_name "$p")

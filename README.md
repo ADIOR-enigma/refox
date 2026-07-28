@@ -57,7 +57,7 @@ https://github.com/user-attachments/assets/a50f4e77-ea29-446f-a3f9-175781ec95bc
    ```
 
    > - **Canonical Location & Automatic Updates:** The installer automatically clones (and on subsequent runs automatically pulls the latest updates to) the repository at `~/.config/refox`.
-   > - **Multi-Profile Setup:** You will be prompted to paste your Profile Directory paths directly from `about:support` (supports multiple profiles across Firefox, LibreWolf, Floorp, Mercury) and whether you want to set up Matugen UI theming for **Zen Browser**.
+   > - **Multi-Profile Setup:** You will be prompted to paste your Profile Directory paths directly from `about:support` (supports multiple profiles across Firefox, LibreWolf, Floorp, Mercury).
    > - **Saved Configuration:** Your profile paths are saved to `~/.config/refox/install.conf`. Re-running `~/.config/refox/install.sh` (or the one-line curl command) automatically updates all saved profiles without prompting, unless you choose to add more profiles.
    > - **Note:** After installation completes, remember to open `about:config` in your browser(s) and verify `toolkit.legacyUserProfileCustomizations.stylesheets` is set to `true`.
 
@@ -97,27 +97,6 @@ This should apply a theme with your Native colors!
 
 > [!NOTE]
 > If you have problems: please review the Troubleshooting section below before opening a Github issue/PR.
-
-### 🧘 Zen Browser Matugen Support
-
-Dynamic UI theming for **Zen Browser** using Matugen (`$HOME/.cache/wal/colors.json`) is fully supported and can be automatically installed via `install.sh` (`Method 1`). E.g.:
-
-```sh
-curl -fsSL https://raw.githubusercontent.com/ADIOR-enigma/refox/main/install.sh | bash
-```
-
-During automated setup, `install.sh` will prompt for your Zen profile and application directories, install `config.js`/`defaults/` into your Zen binary folder, copy the `userChromeJS` watch scripts (`refox_accent_watch.uc.js`) to your Zen profile's `chrome/` directory, and automatically configure the target cache path (`$HOME/.cache/wal/colors.json`) for your user.
-
-#### Manual Zen Setup (if not using `install.sh`)
-
-If you prefer manual installation:
-
-1. Copy the contents of [zen/program/](./zen/program) (`config.js` and `defaults/`) directly into your Zen browser application directory (where the `zen-bin` binary is installed).
-2. Copy the contents of [zen/chrome/](./zen/chrome) (`JS/` and `utils/`) into your Zen profile's `chrome/` directory (`about:support` -> **Profile Directory** -> `chrome/`).
-3. The script [refox_accent_watch.uc.js](./zen/chrome/JS/refox_accent_watch.uc.js) will monitor your Matugen `colors.json` and hot-reload your theme.
-
-> [!NOTE]
-> If installing manually, be sure to update `const PATH` inside `refox_accent_watch.uc.js` to match your actual `$HOME/.cache/wal/colors.json` directory!
 
 ## ⏺ Usage
 
