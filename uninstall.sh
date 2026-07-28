@@ -36,9 +36,7 @@ fi
 
 detect_browser_name() {
     local path_lower="${1,,}"
-    if [[ "$path_lower" =~ /(zen|\.zen)/ || "$path_lower" =~ zen ]]; then
-        echo "Zen Browser"
-    elif [[ "$path_lower" =~ /(librewolf|\.librewolf)/ || "$path_lower" =~ librewolf ]]; then
+    if [[ "$path_lower" =~ /(librewolf|\.librewolf)/ || "$path_lower" =~ librewolf ]]; then
         echo "LibreWolf"
     elif [[ "$path_lower" =~ /(floorp|\.floorp)/ || "$path_lower" =~ floorp ]]; then
         echo "Floorp"
@@ -52,9 +50,6 @@ detect_browser_name() {
 }
 
 GECKO_PROFILES=()
-SETUP_ZEN="false"
-ZEN_PROFILE_DIR=""
-ZEN_APP_DIR=""
 
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
@@ -107,30 +102,6 @@ case "$rm_profiles" in
             echo -e "${GREEN}[INFO] Cleaned templates in $b_name profile ($prof).${NC}"
         fi
     done
-
-    if [ "$SETUP_ZEN" = "true" ] || [ -n "$ZEN_PROFILE_DIR" ]; then
-        if [ -n "$ZEN_PROFILE_DIR" ] && [ -d "$ZEN_PROFILE_DIR/chrome" ]; then
-            echo -e "${BLUE}[INFO] Removing Re:fox scripts & templates from Zen Browser profile ($ZEN_PROFILE_DIR/chrome) ...${NC}"
-            rm -f "$ZEN_PROFILE_DIR/chrome/userChrome.css" "$ZEN_PROFILE_DIR/chrome/userContent.css"
-            rm -rf "$ZEN_PROFILE_DIR/chrome/websites"
-            rm -f "$ZEN_PROFILE_DIR/chrome/JS/refox_accent_watch.uc.js"
-            rmdir --ignore-fail-on-non-empty "$ZEN_PROFILE_DIR/chrome/JS" 2>/dev/null || true
-            for uf in boot.sys.mjs chrome.manifest fs.sys.mjs module_loader.mjs uc_api.sys.mjs utils.sys.mjs; do
-                rm -f "$ZEN_PROFILE_DIR/chrome/utils/$uf"
-            done
-            rmdir --ignore-fail-on-non-empty "$ZEN_PROFILE_DIR/chrome/utils" 2>/dev/null || true
-            rmdir --ignore-fail-on-non-empty "$ZEN_PROFILE_DIR/chrome" 2>/dev/null || true
-            echo -e "${GREEN}[INFO] Cleaned Zen Browser profile scripts ($ZEN_PROFILE_DIR).${NC}"
-        fi
-
-        if [ -n "$ZEN_APP_DIR" ] && [ -d "$ZEN_APP_DIR" ]; then
-            echo -e "${BLUE}[INFO] Removing config.js and preferences from Zen Browser application directory ($ZEN_APP_DIR) ...${NC}"
-            rm -f "$ZEN_APP_DIR/config.js" "$ZEN_APP_DIR/defaults/pref/config-prefs.js"
-            rmdir --ignore-fail-on-non-empty "$ZEN_APP_DIR/defaults/pref" 2>/dev/null || true
-            rmdir --ignore-fail-on-non-empty "$ZEN_APP_DIR/defaults" 2>/dev/null || true
-            echo -e "${GREEN}[INFO] Cleaned Zen Browser application directory scripts ($ZEN_APP_DIR).${NC}"
-        fi
-    fi
     ;;
 esac
 
@@ -141,7 +112,7 @@ case "$answer" in
         rm -f "$SYSTEM_MANIFEST"
         echo -e "${GREEN}[INFO] Removed system manifest: $SYSTEM_MANIFEST${NC}"
     fi
-    for browser_dir in "$USER_HOME/.config/mozilla" "$USER_HOME/.mozilla" "$USER_HOME/.config/librewolf" "$USER_HOME/.librewolf" "$USER_HOME/.config/zen" "$USER_HOME/.zen" "$USER_HOME/.config/floorp" "$USER_HOME/.floorp"; do
+    for browser_dir in "$USER_HOME/.config/mozilla" "$USER_HOME/.mozilla" "$USER_HOME/.config/librewolf" "$USER_HOME/.librewolf" "$USER_HOME/.config/floorp" "$USER_HOME/.floorp"; do
         rm -f "$browser_dir/native-messaging-hosts/pywalfox.json" 2>/dev/null || true
     done
 
